@@ -4,13 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jūrasmala - pārdod zemi</title>
-    <!-- Critical: Preload the background image and logo with high priority -->
     <link rel="preload" href="data/coastal_image.jpg" as="image" fetchpriority="high" />
     <link rel="preload" href="data/logo.png" as="image" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css" />
-    <!-- Inline critical CSS for immediate background display -->
     <style>
-      /* Critical CSS for immediate background rendering */
       body {
         font-family: "Montserrat", sans-serif;
         background: linear-gradient(135deg, rgba(15, 42, 31, 0.6) 0%, rgba(26, 58, 42, 0.55) 50%, rgba(37, 58, 48, 0.6) 100%),
@@ -25,7 +22,6 @@
         box-sizing: border-box;
       }
       
-      /* Prevent flash of unstyled content - fade in header and main content together */
       .header,
       .main-content {
         opacity: 0;
@@ -45,38 +41,59 @@
     </style>
   </head>
   <body>
-    <!-- Header -->
     <header class="header">
       <div class="container">
         <div class="logo">
           <img src="data/logo.png" alt="Logo" class="logo-img" />
         </div>
-        <nav class="navigation">
-          <ul class="nav-menu">
-            <li><a href="#par-mums">Par mums</a></li>
-            <li><a href="#lokacija">Lokācija</a></li>
-            <li><a href="#buvnieciba">Būvniecība</a></li>
-            <li><a href="#telpu-galerija">Telpu galerija</a></li>
-            <li><a href="#zemes-plans">Zemes plāns</a></li>
-            <li><a href="#galerija">Galerija</a></li>
-            <li><a href="#footer">Kontakti</a></li>
-          </ul>
-        </nav>
+        <div class="nav-container">
+          <nav class="navigation">
+            <ul class="nav-menu">
+              <li><a href="#par-mums" data-translate="nav-about">Par mums</a></li>
+              <li><a href="#lokacija" data-translate="nav-location">Lokācija</a></li>
+              <li><a href="#buvnieciba" data-translate="nav-construction">Būvniecība</a></li>
+              <li><a href="#telpu-galerija" data-translate="nav-rooms">Telpu galerija</a></li>
+              <li><a href="#zemes-plans" data-translate="nav-plans">Zemes plāns</a></li>
+              <li><a href="#galerija" data-translate="nav-gallery">Galerija</a></li>
+              <li><a href="#footer" data-translate="nav-contacts">Kontakti</a></li>
+            </ul>
+          </nav>
+          <div class="language-dropdown">
+            <button class="lang-dropdown-btn" id="langDropdownBtn" type="button">
+              <span class="current-lang">LV</span>
+              <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7 10l5 5 5-5z"/>
+              </svg>
+            </button>
+            <div class="lang-dropdown-menu" id="langDropdownMenu">
+              <button class="lang-option" data-lang="lv" type="button">
+                <span class="lang-code">LV</span>
+                <span class="lang-name">Latviešu</span>
+              </button>
+              <button class="lang-option" data-lang="en" type="button">
+                <span class="lang-code">EN</span>
+                <span class="lang-name">English</span>
+              </button>
+              <button class="lang-option" data-lang="ru" type="button">
+                <span class="lang-code">RU</span>
+                <span class="lang-name">Русский</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
-    <!-- Main Content -->
     <main class="main-content">
       <div class="container">
-        <!-- Par mums Section -->
         <section id="par-mums" class="section">
           <div class="two-block-layout">
             <div class="block image-block">
               <img src="data/main.jpeg" alt="Par mums" class="section-image" />
             </div>
             <div class="block text-block">
-              <h2 class="section-title-par-mums">Tava sapņu māja "Jūrasmalā"</h2>
-              <p class="section-text">
+              <h2 class="section-title-par-mums" data-translate="about-title">Tava sapņu māja "Jūrasmalā"</h2>
+              <p class="section-text" data-translate="about-text">
                 Piejūras ciemats "Jūrasmala" atrodas Lembužos gleznainajā
                 Vidzemes jūrmalas piekrastē, kurai raksturīga īpaši liela dabas
                 un ainavu daudzveidība, kā arī bagāta kultūrvēsture. Šeit
@@ -94,12 +111,11 @@
           </div>
         </section>
 
-        <!-- Lokācija Section -->
         <section id="lokacija" class="section">
           <div class="single-column-layout">
             <div class="block text-block">
-              <h2 class="section-title">Lokācija</h2>
-              <p class="section-text-center">
+              <h2 class="section-title" data-translate="location-title">Lokācija</h2>
+              <p class="section-text-center" data-translate="location-text">
                 Īpašums atrodas Liepupes pagastā, Limbažu novadā, ciematā
                 Lembužos. Šī ir lieliska vieta, kur skaisti un klusi dzīvot, nav
                 tālu no galvaspilsētas pasakainajā Ziemeļvidzemes jūras
@@ -110,25 +126,22 @@
               </p>
             </div>
             <div class="block map-block">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4727.158869393929!2d24.3941950789476!3d57.4670815960261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1753264332454!5m2!1sen!2sus"
-                width="600"
-                height="450"
-                style="border: 0"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
+              <div class="map-placeholder" id="mapPlaceholder">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 1rem; opacity: 0.7;">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                <p>Click to load map</p>
+                <p style="font-size: 0.8rem; opacity: 0.7;">Requires cookie consent</p>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- Būvniecība Section -->
         <section id="buvnieciba" class="section">
           <div class="multi-block-layout">
             <div class="block text-block full-width">
-              <h2 class="section-title">Būvniecība</h2>
-              <p class="section-text-center">
+              <h2 class="section-title" data-translate="construction-title">Būvniecība</h2>
+              <p class="section-text-center" data-translate="construction-text">
                 Piedāvājam pilnu pakalpojumu spektru sākot ar projektēšanu un
                 beidzot ar teritorijas ainavisko labiekārtošanu. Veicam
                 konstruktīvos aprēķinus un celtniecības tāmju sastādīšanu.
@@ -173,10 +186,9 @@
           </div>
         </section>
 
-        <!-- Telpu galerija Section -->
         <section id="telpu-galerija" class="section">
           <div class="multi-block-layout">
-            <h2 class="section-title">Telpu galerija</h2>
+            <h2 class="section-title" data-translate="rooms-title">Telpu galerija</h2>
             <div class="image-grid two-columns">
               <img
                 src="data/interior_1.webp"
@@ -212,10 +224,9 @@
           </div>
         </section>
 
-        <!-- Zemes plāns Section -->
         <section id="zemes-plans" class="section">
           <div class="multi-block-layout">
-            <h2 class="section-title">Zemes plāns</h2>
+            <h2 class="section-title" data-translate="plans-title">Zemes plāns</h2>
             <div class="image-grid two-columns">
               <img src="data/land_1.jpeg" alt="Plāns 1" class="grid-image" />
               <img src="data/land_2.jpeg" alt="Plāns 2" class="grid-image" />
@@ -227,160 +238,160 @@
               <table class="plan-table">
                 <thead>
                   <tr>
-                    <th>Adrese</th>
-                    <th>Piedāvājums</th>
-                    <th>Zemes platība, m<sup>2</sup></th>
-                    <th>Cena, EUR</th>
-                    <th>Zemes gabala pieejamība</th>
+                    <th data-translate="table-address">Adrese</th>
+                    <th data-translate="table-offer">Piedāvājums</th>
+                    <th data-translate="table-area">Zemes platība, m<sup>2</sup></th>
+                    <th data-translate="table-price">Cena, EUR</th>
+                    <th data-translate="table-availability">Zemes gabala pieejamība</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>Jūras iela 1a</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1251</td>
                     <td>34598.50</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 1b</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1251</td>
                     <td>34598.50</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 2</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>2632</td>
                     <td>61852.00</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 3</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>2511</td>
                     <td>59008.50</td>
-                    <td class="status-reserved">Rezervēts</td>
+                    <td class="status-reserved" data-translate="status-reserved">Rezervēts</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 4a</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1205</td>
                     <td>33517.50</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 4b</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1320</td>
                     <td>36220.00</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 5</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>2500</td>
                     <td>0.00</td>
-                    <td class="status-sold">Pārdots</td>
+                    <td class="status-sold" data-translate="status-sold">Pārdots</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 6a</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1193</td>
                     <td>33235.50</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 6b</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1298</td>
                     <td>35703.00</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 7a</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1257</td>
                     <td>0.00</td>
-                    <td class="status-sold">Pārdots</td>
+                    <td class="status-sold" data-translate="status-sold">Pārdots</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 7b</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1256</td>
                     <td>0.00</td>
-                    <td class="status-sold">Pārdots</td>
+                    <td class="status-sold" data-translate="status-sold">Pārdots</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 8a</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1155</td>
                     <td>32342.50</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 8b</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1260</td>
                     <td>34810.00</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 9a</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1149</td>
                     <td>0.00</td>
-                    <td class="status-sold">Pārdots</td>
+                    <td class="status-sold" data-translate="status-sold">Pārdots</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 9b</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1254</td>
                     <td>0.00</td>
-                    <td class="status-sold">Pārdots</td>
+                    <td class="status-sold" data-translate="status-sold">Pārdots</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 10</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>2505</td>
                     <td>58867.50</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 11</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>2508</td>
                     <td>58938.00</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 12a</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1342</td>
                     <td>36737.00</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 12b</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>1342</td>
                     <td>36737.00</td>
-                    <td class="status-available">Pieejams</td>
+                    <td class="status-available" data-translate="status-available">Pieejams</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 13</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>2549</td>
                     <td>0.00</td>
-                    <td class="status-sold">Pārdots</td>
+                    <td class="status-sold" data-translate="status-sold">Pārdots</td>
                   </tr>
                   <tr>
                     <td>Jūras iela 15</td>
-                    <td>Zeme</td>
+                    <td data-translate="table-land">Zeme</td>
                     <td>2521</td>
                     <td>0.00</td>
-                    <td class="status-sold">Pārdots</td>
+                    <td class="status-sold" data-translate="status-sold">Pārdots</td>
                   </tr>
                 </tbody>
               </table>
@@ -388,7 +399,6 @@
           </div>
         </section>
 
-        <!-- Galerija Section -->
         <section id="galerija" class="section section-no-title">
           <div class="image-grid two-columns">
             <img
@@ -423,41 +433,39 @@
             />
           </div>
           <div class="video-block">
-            <iframe
-              class="youtube-video"
-              src="https://www.youtube.com/embed/wWxJt7tkz2Y?si=7LxXuTjeZLZTD0-w"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            >
-            </iframe>
+            <div class="video-placeholder" id="videoPlaceholder">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 1rem; opacity: 0.7;">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <p>Click to load YouTube video</p>
+              <p style="font-size: 0.8rem; opacity: 0.7;">Requires cookie consent</p>
+            </div>
           </div>
         </section>
 
-        <!-- Māju finansējuma partneri Section -->
         <section id="finansejums" class="section">
           <div class="multi-block-layout">
-            <h2 class="section-title">Māju finansējuma partneri</h2>
+            <h2 class="section-title" data-translate="financing-title">Māju finansējuma partneri</h2>
             <div class="partners-grid">
               <div class="partner-block">
                 <img src="data/bank1.png" alt="Banka 1" class="bank-logo" />
-                <a href="https://www.swedbank.lv/private/loans/home" target="_blank" class="loan-button">Pieteikties aizdevumam</a>
+                <a href="https://www.swedbank.lv/private/loans/home" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
               <div class="partner-block">
                 <img src="data/bank2.webp" alt="Banka 2" class="bank-logo" />
-                <a href="https://www.seb.lv/lv/private/loans/home-loans" target="_blank" class="loan-button">Pieteikties aizdevumam</a>
+                <a href="https://www.seb.lv/lv/private/loans/home-loans" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
               <div class="partner-block">
                 <img src="data/bank3.png" alt="Banka 3" class="bank-logo" />
-                <a href="https://www.luminor.lv/lv/private/loans/home-loans" target="_blank" class="loan-button">Pieteikties aizdevumam</a>
+                <a href="https://www.luminor.lv/lv/private/loans/home-loans" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
               <div class="partner-block">
                 <img src="data/bank4.png" alt="Banka 4" class="bank-logo" />
-                <a href="https://www.citadele.lv/lv/private/loans/home-loans" target="_blank" class="loan-button">Pieteikties aizdevumam</a>
+                <a href="https://www.citadele.lv/lv/private/loans/home-loans" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
               <div class="partner-block">
                 <img src="data/bank5.jpg" alt="Banka 5" class="bank-logo" />
-                <a href="https://www.blueorangbank.com/lv/private/loans" target="_blank" class="loan-button">Pieteikties aizdevumam</a>
+                <a href="https://www.blueorangbank.com/lv/private/loans" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
             </div>
           </div>
@@ -465,15 +473,14 @@
       </div>
     </main>
 
-    <!-- Footer -->
     <footer id="footer" class="footer">
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
             <div class="footer-contact">
-              <h3>Sazinieties ar mums</h3>
-              <p><strong>Tālrunis:</strong> +371 2044 0777</p>
-              <p><strong>E-pasts:</strong> kristine@kilupa.lv</p>
+              <h3 data-translate="contact-title">Sazinieties ar mums</h3>
+              <p><strong data-translate="phone-label">Tālrunis:</strong> +371 2044 0777</p>
+              <p><strong data-translate="email-label">E-pasts:</strong> kristine@kilupa.lv</p>
             </div>
           </div>
           <div class="footer-section footer-center">
@@ -483,7 +490,7 @@
           </div>
           <div class="footer-section">
             <div class="footer-social">
-              <h3>Sekojiet mums</h3>
+              <h3 data-translate="social-title">Sekojiet mums</h3>
               <div class="social-icons">
                 <a href="https://www.facebook.com/jurasmala" class="social-icon facebook" aria-label="Facebook">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -505,10 +512,20 @@
           </div>
         </div>
         <div class="footer-copyright">
-          <p>Visas tiesības aizsargātas © 2025 jurasmala.lv</p>
+          <p data-translate="copyright">Visas tiesības aizsargātas © 2025 jurasmala.lv</p>
         </div>
       </div>
     </footer>
+
+    <div id="cookie-banner" class="cookie-banner">
+      <div class="cookie-content">
+        <p data-translate="cookie-text">Mēs izmantojam sīkdatnes, lai uzlabotu jūsu pieredzi mūsu vietnē. Turpinot lietot šo vietni, jūs piekrītat sīkdatņu izmantošanai.</p>
+        <div class="cookie-buttons">
+          <button id="accept-cookies" class="cookie-btn accept" data-translate="cookie-accept">Piekrītu</button>
+          <button id="decline-cookies" class="cookie-btn decline" data-translate="cookie-decline">Noraidīt</button>
+        </div>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>
