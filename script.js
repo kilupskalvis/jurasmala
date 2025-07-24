@@ -117,15 +117,4 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     })
   })
-
-  // Loan button functionality
-  const loanButtons = document.querySelectorAll(".loan-button")
-
-  loanButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      alert("Pāradresējam uz bankas aizdevuma pieteikuma formu...")
-      // Here you would redirect to the actual bank loan application
-      // window.open('bank-loan-url', '_blank');
-    })
-  })
 })
