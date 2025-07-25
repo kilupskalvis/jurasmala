@@ -1,6 +1,7 @@
 @font-face {
   font-display: block;
   font-family: "Montserrat";
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 100 900;
   src: url("fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
@@ -10,15 +11,28 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .header {
+  background: transparent;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 1rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: auto;
   background: transparent;
   position: relative;
   display: block;
@@ -189,9 +203,19 @@
   color: #ffffff;
   margin-bottom: 1.5rem;
   text-align: left;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  text-align: left;
 }
 
 .section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  text-align: center;
   font-size: 28px;
   font-weight: 700;
   color: #ffffff;
@@ -204,9 +228,18 @@
   line-height: 1.8;
   color: #ffffff;
   margin-bottom: 3rem;
+  font-size: 19px;
+  line-height: 1.8;
+  color: #ffffff;
+  margin-bottom: 3rem;
 }
 
 .section-text-center {
+  font-size: 19px;
+  line-height: 1.8;
+  color: #ffffff;
+  margin-bottom: 3rem;
+  text-align: center;
   font-size: 19px;
   line-height: 1.8;
   color: #ffffff;
@@ -219,9 +252,16 @@
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
 }
 
 .single-column-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -239,14 +279,23 @@
   border-radius: 0;
   backdrop-filter: none;
   border: none;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  backdrop-filter: none;
+  border: none;
 }
 
 .text-block {
   background: transparent;
   padding: 1rem 0;
+  background: transparent;
+  padding: 1rem 0;
 }
 
 .image-block {
+  padding: 0;
+  overflow: hidden;
   padding: 0;
   overflow: hidden;
 }
@@ -257,13 +306,20 @@
   object-fit: cover;
   border-radius: 15px;
   box-shadow: 0 8px 24px rgba(15, 58, 31, 0.15);
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(15, 58, 31, 0.15);
 }
 
 .section-image[src="data/main.jpeg"] {
   height: 600px;
+  height: 600px;
 }
 
 .full-width {
+  width: 100%;
   width: 100%;
 }
 
@@ -271,9 +327,13 @@
   display: grid;
   gap: 1.5rem;
   margin: 2rem 0;
+  display: grid;
+  gap: 1.5rem;
+  margin: 2rem 0;
 }
 
 .two-columns {
+  grid-template-columns: repeat(2, 1fr);
   grid-template-columns: repeat(2, 1fr);
 }
 
@@ -290,6 +350,8 @@
 .grid-image:hover {
   transform: scale(1.02) translateY(-4px);
   box-shadow: 0 12px 32px rgba(15, 58, 31, 0.2);
+  transform: scale(1.02) translateY(-4px);
+  box-shadow: 0 12px 32px rgba(15, 58, 31, 0.2);
 }
 
 .grid-image[src="data/land_5.webp"],
@@ -298,9 +360,14 @@
   height: 500px;
   grid-column: span 2;
   max-width: 100%;
+  height: 500px;
+  grid-column: span 2;
+  max-width: 100%;
 }
 
 .map-block {
+  padding: 0;
+  overflow: hidden;
   padding: 0;
   overflow: hidden;
 }
@@ -329,9 +396,18 @@
   border-radius: 15px;
   border: none;
   box-shadow: 0 8px 24px rgba(15, 58, 31, 0.15);
+  width: 100%;
+  height: 400px;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 8px 24px rgba(15, 58, 31, 0.15);
 }
 
 .partners-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+  margin: 2rem 0;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
@@ -350,6 +426,14 @@
 }
 
 .bank-logo {
+  width: 160px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(15, 58, 31, 0.1);
   width: 160px;
   height: 80px;
   object-fit: contain;
@@ -382,6 +466,11 @@
   box-shadow: none;
   color: #4caf50;
   text-decoration: underline;
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+  color: #4caf50;
+  text-decoration: underline;
 }
 
 .table-block {
@@ -394,6 +483,12 @@
 }
 
 .plan-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 1.1rem;
   width: 100%;
   border-collapse: collapse;
   background: transparent;
@@ -415,9 +510,14 @@
   font-weight: 600;
   color: #e0e0e0;
   font-size: 1.1rem;
+  background: rgba(76, 175, 80, 0.1);
+  font-weight: 600;
+  color: #e0e0e0;
+  font-size: 1.1rem;
 }
 
 .plan-table td {
+  color: #e0e0e0;
   color: #e0e0e0;
 }
 
@@ -428,9 +528,13 @@
 .status-available {
   color: #379f5f !important;
   font-weight: bold;
+  color: #379f5f !important;
+  font-weight: bold;
 }
 
 .status-reserved {
+  color: #ea580c !important;
+  font-weight: bold;
   color: #ea580c !important;
   font-weight: bold;
 }
@@ -438,9 +542,15 @@
 .status-sold {
   color: #dc2626 !important;
   font-weight: bold;
+  color: #dc2626 !important;
+  font-weight: bold;
 }
 
 .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
@@ -455,14 +565,27 @@
   transition: all 0.3s ease;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(15, 58, 31, 0.1);
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(15, 58, 31, 0.1);
 }
 
 .gallery-image:hover {
   transform: scale(1.02) translateY(-4px);
   box-shadow: 0 12px 32px rgba(15, 58, 31, 0.2);
+  transform: scale(1.02) translateY(-4px);
+  box-shadow: 0 12px 32px rgba(15, 58, 31, 0.2);
 }
 
 .footer {
+  background: transparent;
+  padding: 3rem 0 1rem;
+  margin-top: 6rem;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
   background: transparent;
   padding: 3rem 0 1rem;
   margin-top: 6rem;
@@ -475,18 +598,27 @@
   gap: 3rem;
   align-items: center;
   margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 .footer-section {
+  display: flex;
+  flex-direction: column;
   display: flex;
   flex-direction: column;
 }
 
 .footer-contact {
   text-align: left;
+  text-align: left;
 }
 
 .footer-social {
+  text-align: right;
   text-align: right;
 }
 
@@ -503,9 +635,16 @@
   color: #e0e0e0;
   margin-bottom: 0.5rem;
   font-size: 0.95rem;
+  color: #e0e0e0;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
 }
 
 .footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -519,6 +658,10 @@
 }
 
 .social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  justify-content: flex-end;
   display: flex;
   gap: 1rem;
   margin-top: 0.5rem;
@@ -537,9 +680,23 @@
   color: #0f2a1f;
   text-decoration: none;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  color: #0f2a1f;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .social-icon:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
   background: rgba(255, 255, 255, 1);
   border-color: rgba(255, 255, 255, 0.8);
   transform: translateY(-2px);
@@ -549,9 +706,14 @@
   text-align: center;
   padding-top: 2rem;
   border-top: 1px solid rgba(15, 58, 31, 0.1);
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(15, 58, 31, 0.1);
 }
 
 .footer-copyright p {
+  color: #ccc;
+  font-size: 0.9rem;
   color: #ccc;
   font-size: 0.9rem;
 }
@@ -1348,5 +1510,17 @@ html {
   .map-consent-content {
     max-width: 320px;
     margin: 0.25rem;
+  }
+}
+
+/* Content fade-in animation is now handled by inline CSS */
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
