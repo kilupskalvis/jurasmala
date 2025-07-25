@@ -197,9 +197,9 @@ function createOverlayDropdown() {
   
   if (isMobile) {
     dropdownMenu.style.cssText = `
-      background: rgba(15, 42, 31, 0.98);
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(20px);
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
       box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
       min-width: 200px;
@@ -213,9 +213,9 @@ function createOverlayDropdown() {
     `;
   } else {
     dropdownMenu.style.cssText = `
-      background: rgba(15, 42, 31, 0.98);
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(20px);
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
       box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
       min-width: 140px;
