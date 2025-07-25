@@ -12,8 +12,6 @@
   box-sizing: border-box;
 }
 
-/* Body styles are now inline to prevent flash */
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -72,8 +70,7 @@
 
 .nav-menu a:hover,
 .nav-menu a.active {
-  color: #4caf50;
-  background: rgba(76, 175, 80, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   transform: translateY(-1px);
 }
 
@@ -118,75 +115,7 @@
 }
 
 .lang-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  background: rgba(15, 42, 31, 0.95);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  min-width: 140px;
-  max-height: 300px; /* Ensure enough height */
-  overflow: visible !important; /* Never clip content */
-  z-index: 999999 !important; /* Highest possible z-index */
-  pointer-events: none;
-}
-
-.lang-dropdown-menu.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.lang-option {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  text-align: left;
-  font-family: inherit;
-  outline: none;
-  user-select: none;
-  -webkit-user-select: none;
-  position: relative;
-  z-index: 1;
-  pointer-events: auto;
-}
-
-.lang-option:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.lang-option:active {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.lang-option.active {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.lang-option span {
-  pointer-events: none;
-}
-
-/* Ensure the RU option specifically is clickable */
-.lang-option[data-lang="ru"] {
-  pointer-events: auto !important;
-  position: relative;
-  z-index: 2;
+  display: none !important;
 }
 
 .lang-code {
@@ -376,7 +305,7 @@
   overflow: hidden;
 }
 
-.map-placeholder, .video-placeholder {
+.map-placeholder {
   width: 100%;
   height: 400px;
   background: rgba(255, 255, 255, 0.1);
@@ -390,24 +319,16 @@
   transition: all 0.3s ease;
 }
 
-.video-placeholder {
-  height: 450px;
-}
-
-.map-placeholder:hover, .video-placeholder:hover {
+.map-placeholder:hover {
   background: rgba(255, 255, 255, 0.15);
 }
 
-.map-block iframe, .youtube-video {
+.map-block iframe {
   width: 100%;
   height: 400px;
   border-radius: 15px;
   border: none;
   box-shadow: 0 8px 24px rgba(15, 58, 31, 0.15);
-}
-
-.youtube-video {
-  height: 450px;
 }
 
 .partners-grid {
@@ -461,14 +382,6 @@
   box-shadow: none;
   color: #4caf50;
   text-decoration: underline;
-}
-
-.video-block {
-  text-align: center;
-  margin: 3rem auto;
-  position: relative;
-  width: 100%;
-  max-width: 800px;
 }
 
 .table-block {
@@ -716,6 +629,177 @@
   border-color: rgba(255, 255, 255, 0.5);
 }
 
+/* Map Consent Modal Styles */
+.map-consent-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.map-consent-modal.show {
+  display: flex;
+}
+
+.map-consent-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.map-consent-content {
+  background: rgba(15, 42, 31, 0.98);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  z-index: 2001;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.map-consent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 0;
+}
+
+.map-consent-header h3 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.map-consent-close {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-consent-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.map-consent-body {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.map-consent-icon {
+  margin: 0 auto 1rem;
+  width: 64px;
+  height: 64px;
+  background: rgba(76, 175, 80, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4caf50;
+}
+
+.map-consent-body p {
+  color: #e0e0e0;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.map-consent-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.consent-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.consent-feature svg {
+  color: #4caf50;
+  flex-shrink: 0;
+}
+
+.consent-feature span {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+}
+
+.map-consent-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.map-consent-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.map-consent-btn.accept {
+  background: #4caf50;
+  color: #ffffff;
+}
+
+.map-consent-btn.accept:hover {
+  background: #45a049;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.map-consent-btn.decline {
+  background: transparent;
+  color: #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.map-consent-btn.decline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -743,7 +827,6 @@ html {
   position: static;
 }
 
-/* Mobile Styles */
 @media (max-width: 1024px) {
   .container {
     padding: 0 15px;
@@ -790,13 +873,9 @@ html {
     min-width: 70px;
   }
 
-  /* Mobile overlay styling is handled in JavaScript */
-  
   .lang-name {
     font-size: 0.75rem;
   }
-
-  /* Mobile overlay styling is handled in JavaScript */
 
   .nav-menu {
     flex-direction: row;
@@ -927,14 +1006,6 @@ html {
     height: 300px;
   }
 
-  .youtube-video {
-    height: 280px;
-  }
-
-  .video-block {
-    margin: 2rem auto;
-  }
-
   .table-block {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -985,6 +1056,33 @@ html {
   .cookie-buttons {
     justify-content: center;
   }
+
+  /* Mobile Map Consent Modal */
+  .map-consent-content {
+    max-width: 400px;
+    margin: 1rem;
+  }
+
+  .map-consent-header {
+    padding: 1rem 1rem 0;
+  }
+
+  .map-consent-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .map-consent-body {
+    padding: 1rem;
+  }
+
+  .map-consent-actions {
+    flex-direction: column;
+    padding: 0 1rem 1rem;
+  }
+
+  .map-consent-btn {
+    padding: 0.75rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1005,8 +1103,6 @@ html {
     font-size: 0.8rem;
     min-width: 65px;
   }
-
-  /* Mobile overlay styling is handled in JavaScript */
 
   .nav-menu {
     gap: 0.5rem;
@@ -1101,14 +1197,6 @@ html {
     height: 250px;
   }
 
-  .youtube-video {
-    height: 220px;
-  }
-
-  .video-block {
-    margin: 1.5rem auto;
-  }
-
   .table-block {
     margin: 1rem -10px;
   }
@@ -1151,6 +1239,41 @@ html {
 
   .cookie-btn {
     padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  /* Small Mobile Map Consent Modal */
+  .map-consent-content {
+    max-width: 350px;
+    margin: 0.5rem;
+  }
+
+  .map-consent-header {
+    padding: 0.75rem 0.75rem 0;
+  }
+
+  .map-consent-header h3 {
+    font-size: 1rem;
+  }
+
+  .map-consent-body {
+    padding: 0.75rem;
+  }
+
+  .map-consent-body p {
+    font-size: 0.9rem;
+  }
+
+  .consent-feature span {
+    font-size: 0.8rem;
+  }
+
+  .map-consent-actions {
+    padding: 0 0.75rem 0.75rem;
+  }
+
+  .map-consent-btn {
+    padding: 0.6rem;
     font-size: 0.8rem;
   }
 }
@@ -1219,5 +1342,11 @@ html {
   .cookie-btn {
     padding: 0.5rem 0.8rem;
     font-size: 0.75rem;
+  }
+
+  /* Tiny Mobile Map Consent Modal */
+  .map-consent-content {
+    max-width: 320px;
+    margin: 0.25rem;
   }
 }

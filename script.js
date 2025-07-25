@@ -33,7 +33,15 @@ const translations = {
     'copyright': 'Visas tiesības aizsargātas © 2025 jurasmala.lv',
     'cookie-text': 'Mēs izmantojam sīkdatnes, lai uzlabotu jūsu pieredzi mūsu vietnē. Turpinot lietot šo vietni, jūs piekrītat sīkdatņu izmantošanai.',
     'cookie-accept': 'Piekrītu',
-    'cookie-decline': 'Noraidīt'
+    'cookie-decline': 'Noraidīt',
+    'map-click-text': 'Noklikšķiniet, lai ielādētu karti',
+    'map-consent-text': 'Nepieciešama sīkdatņu piekrišana',
+    'map-consent-title': 'Iespējot interaktīvo karti',
+    'map-consent-description': 'Lai parādītu interaktīvo karti, mums jāielādē Google Maps, kas izmanto sīkdatnes un var koplietot datus ar Google. Vai piekrītat interaktīvās kartes ielādēšanai?',
+    'map-feature-interactive': 'Interaktīva karte ar tālummaiņu un navigāciju',
+    'map-feature-directions': 'Iegūstiet norādes un izpētiet apkārtni',
+    'map-consent-accept': 'Jā, iespējot karti',
+    'map-consent-decline': 'Nē, atstāt atspējotu'
   },
   en: {
     'nav-about': 'About Us',
@@ -69,7 +77,15 @@ const translations = {
     'copyright': 'All rights reserved © 2025 jurasmala.lv',
     'cookie-text': 'We use cookies to improve your experience on our website. By continuing to use this site, you agree to the use of cookies.',
     'cookie-accept': 'Accept',
-    'cookie-decline': 'Decline'
+    'cookie-decline': 'Decline',
+    'map-click-text': 'Click to load map',
+    'map-consent-text': 'Requires cookie consent',
+    'map-consent-title': 'Enable Interactive Map',
+    'map-consent-description': 'To display the interactive map, we need to load Google Maps which uses cookies and may share data with Google. Do you consent to loading the interactive map?',
+    'map-feature-interactive': 'Interactive map with zoom and navigation',
+    'map-feature-directions': 'Get directions and explore the area',
+    'map-consent-accept': 'Yes, enable map',
+    'map-consent-decline': 'No, keep it disabled'
   },
   ru: {
     'nav-about': 'О нас',
@@ -105,7 +121,15 @@ const translations = {
     'copyright': 'Все права защищены © 2025 jurasmala.lv',
     'cookie-text': 'Мы используем файлы cookie для улучшения вашего опыта на нашем сайте. Продолжая использовать этот сайт, вы соглашаетесь на использование файлов cookie.',
     'cookie-accept': 'Принять',
-    'cookie-decline': 'Отклонить'
+    'cookie-decline': 'Отклонить',
+    'map-click-text': 'Нажмите, чтобы загрузить карту',
+    'map-consent-text': 'Требуется согласие на файлы cookie',
+    'map-consent-title': 'Включить интерактивную карту',
+    'map-consent-description': 'Для отображения интерактивной карты нам нужно загрузить Google Maps, которые используют файлы cookie и могут передавать данные Google. Согласны ли вы на загрузку интерактивной карты?',
+    'map-feature-interactive': 'Интерактивная карта с масштабированием и навигацией',
+    'map-feature-directions': 'Получите маршруты и исследуйте район',
+    'map-consent-accept': 'Да, включить карту',
+    'map-consent-decline': 'Нет, оставить отключенной'
   }
 };
 
@@ -128,14 +152,6 @@ function translatePage(lang) {
   if (currentLangSpan) {
     currentLangSpan.textContent = lang.toUpperCase();
   }
-  
-  document.querySelectorAll('.lang-option').forEach(btn => {
-    btn.classList.remove('active');
-  });
-  const activeLangBtn = document.querySelector(`[data-lang="${lang}"]`);
-  if (activeLangBtn) {
-    activeLangBtn.classList.add('active');
-  }
 }
 
 function toggleLanguageDropdown() {
@@ -149,20 +165,15 @@ function closeLanguageDropdown() {
   }
 }
 
-// Create a completely new dropdown overlay
 function createOverlayDropdown() {
   const button = document.getElementById('langDropdownBtn');
   const existingOverlay = document.getElementById('lang-overlay');
   
-  // Close if already open
   if (existingOverlay) {
     existingOverlay.remove();
     return;
   }
   
-  console.log('Creating overlay dropdown...');
-  
-  // Create overlay
   const overlay = document.createElement('div');
   overlay.id = 'lang-overlay';
   overlay.style.cssText = `
@@ -180,13 +191,11 @@ function createOverlayDropdown() {
     cursor: pointer;
   `;
   
-  // Create dropdown menu
   const dropdownMenu = document.createElement('div');
   const buttonRect = button.getBoundingClientRect();
   const isMobile = window.innerWidth <= 768;
   
   if (isMobile) {
-    // Mobile: center the dropdown
     dropdownMenu.style.cssText = `
       background: rgba(15, 42, 31, 0.98);
       backdrop-filter: blur(20px);
@@ -203,7 +212,6 @@ function createOverlayDropdown() {
       transition: all 0.3s ease;
     `;
   } else {
-    // Desktop: position relative to button
     dropdownMenu.style.cssText = `
       background: rgba(15, 42, 31, 0.98);
       backdrop-filter: blur(20px);
@@ -220,14 +228,12 @@ function createOverlayDropdown() {
     `;
   }
   
-  // Language options data
   const languages = [
     { code: 'lv', name: 'Latviešu' },
     { code: 'en', name: 'English' },
     { code: 'ru', name: 'Русский' }
   ];
   
-  // Create language options
   languages.forEach((lang, index) => {
     const option = document.createElement('button');
     
@@ -249,17 +255,9 @@ function createOverlayDropdown() {
       ${index === languages.length - 1 ? 'border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;' : ''}
     `;
     
-    // Add active class styling if this is the current language
     if (lang.code === currentLanguage) {
       option.style.background = 'rgba(255, 255, 255, 0.15)';
       option.classList.add('active');
-    }
-    
-    // Special styling for RU option for debugging
-    if (lang.code === 'ru') {
-      option.style.background = 'rgba(255, 100, 100, 0.1)';
-      option.style.border = '1px solid rgba(255, 100, 100, 0.3)';
-      option.style.margin = '1px';
     }
     
     option.innerHTML = `
@@ -267,32 +265,21 @@ function createOverlayDropdown() {
       <span style="font-size: 0.8rem; opacity: 0.8; pointer-events: none;">${lang.name}</span>
     `;
     
-    // Mouse events
     option.addEventListener('mouseenter', () => {
-      console.log(`Mouse entered: ${lang.code}`);
-      if (lang.code === 'ru') {
-        option.style.background = 'rgba(255, 100, 100, 0.3)';
-      } else {
-        option.style.background = 'rgba(255, 255, 255, 0.2)';
-      }
+      option.style.background = 'rgba(255, 255, 255, 0.1)';
     });
     
     option.addEventListener('mouseleave', () => {
       if (lang.code === currentLanguage) {
         option.style.background = 'rgba(255, 255, 255, 0.15)';
-      } else if (lang.code === 'ru') {
-        option.style.background = 'rgba(255, 100, 100, 0.1)';
       } else {
         option.style.background = 'transparent';
       }
     });
     
-    // Click events - multiple event types for reliability
     const handleClick = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log(`Overlay dropdown: ${lang.code} clicked via ${e.type}`);
-      
       translatePage(lang.code);
       overlay.remove();
     };
@@ -301,11 +288,9 @@ function createOverlayDropdown() {
       option.addEventListener(eventType, handleClick, { passive: false });
     });
     
-    // Keyboard support
     option.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        console.log(`Overlay dropdown: ${lang.code} activated via keyboard`);
         translatePage(lang.code);
         overlay.remove();
       }
@@ -314,21 +299,16 @@ function createOverlayDropdown() {
     dropdownMenu.appendChild(option);
   });
   
-  // Prevent dropdown clicks from closing overlay
   dropdownMenu.addEventListener('click', (e) => {
     e.stopPropagation();
   });
   
-  // Close on overlay click
   overlay.addEventListener('click', () => {
-    console.log('Overlay clicked - closing dropdown');
     overlay.remove();
   });
   
-  // Close on Escape key
   const handleEscape = (e) => {
     if (e.key === 'Escape') {
-      console.log('Escape pressed - closing dropdown');
       overlay.remove();
       document.removeEventListener('keydown', handleEscape);
     }
@@ -338,7 +318,6 @@ function createOverlayDropdown() {
   overlay.appendChild(dropdownMenu);
   document.body.appendChild(overlay);
   
-  // Animate in
   requestAnimationFrame(() => {
     dropdownMenu.style.opacity = '1';
     if (isMobile) {
@@ -347,8 +326,6 @@ function createOverlayDropdown() {
       dropdownMenu.style.transform = 'translateY(0)';
     }
   });
-  
-  console.log('Overlay dropdown created successfully');
 }
 
 function showCookieBanner() {
@@ -361,6 +338,39 @@ function showCookieBanner() {
 function hideCookieBanner() {
   const banner = document.getElementById('cookie-banner');
   banner.classList.remove('show');
+}
+
+function showMapConsentModal() {
+  const modal = document.getElementById('map-consent-modal');
+  modal.classList.add('show');
+  
+  // Focus trap
+  const focusableElements = modal.querySelectorAll('button');
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+  
+  firstElement.focus();
+  
+  modal.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    }
+  });
+}
+
+function hideMapConsentModal() {
+  const modal = document.getElementById('map-consent-modal');
+  modal.classList.remove('show');
 }
 
 function loadMap() {
@@ -380,71 +390,79 @@ function loadMap() {
   }
 }
 
-function loadVideo() {
-  const videoPlaceholder = document.getElementById('videoPlaceholder');
-  if (videoPlaceholder && cookiesAccepted) {
-    videoPlaceholder.innerHTML = `
-      <iframe
-        class="youtube-video"
-        src="https://www.youtube.com/embed/wWxJt7tkz2Y?si=7LxXuTjeZLZTD0-w"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        style="width: 100%; height: 450px; border-radius: 15px; border: none;"
-      >
-      </iframe>
-    `;
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   translatePage('lv');
   
-  // Language dropdown functionality - using overlay method
   const dropdownBtn = document.getElementById('langDropdownBtn');
   
   if (dropdownBtn) {
-    // Clean setup - remove any existing listeners and use overlay method
     const newDropdownBtn = dropdownBtn.cloneNode(true);
     dropdownBtn.parentNode.replaceChild(newDropdownBtn, dropdownBtn);
     
     newDropdownBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      console.log('Dropdown button clicked - using overlay method');
       createOverlayDropdown();
     });
   }
   
-  // Close dropdown when clicking outside (cleanup for any existing dropdowns)
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.language-dropdown') && !e.target.closest('#lang-overlay')) {
       closeLanguageDropdown();
     }
   });
 
-  // Map placeholder click
+  // Map placeholder click handler
   const mapPlaceholder = document.getElementById('mapPlaceholder');
   if (mapPlaceholder) {
     mapPlaceholder.addEventListener('click', () => {
       if (cookiesAccepted) {
         loadMap();
       } else {
-        alert('Please accept cookies to load external content.');
+        showMapConsentModal();
       }
     });
   }
 
-  // Video placeholder click
-  const videoPlaceholder = document.getElementById('videoPlaceholder');
-  if (videoPlaceholder) {
-    videoPlaceholder.addEventListener('click', () => {
-      if (cookiesAccepted) {
-        loadVideo();
-      } else {
-        alert('Please accept cookies to load external content.');
-      }
+  // Map consent modal handlers
+  const mapConsentModal = document.getElementById('map-consent-modal');
+  const mapConsentAccept = document.getElementById('map-consent-accept');
+  const mapConsentDecline = document.getElementById('map-consent-decline');
+  const mapConsentClose = document.querySelector('.map-consent-close');
+  const mapConsentOverlay = document.querySelector('.map-consent-overlay');
+
+  if (mapConsentAccept) {
+    mapConsentAccept.addEventListener('click', () => {
+      cookiesAccepted = true;
+      hideMapConsentModal();
+      loadMap();
+      hideCookieBanner(); // Also hide the main cookie banner
     });
   }
+
+  if (mapConsentDecline) {
+    mapConsentDecline.addEventListener('click', () => {
+      hideMapConsentModal();
+    });
+  }
+
+  if (mapConsentClose) {
+    mapConsentClose.addEventListener('click', () => {
+      hideMapConsentModal();
+    });
+  }
+
+  if (mapConsentOverlay) {
+    mapConsentOverlay.addEventListener('click', () => {
+      hideMapConsentModal();
+    });
+  }
+
+  // ESC key to close modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mapConsentModal && mapConsentModal.classList.contains('show')) {
+      hideMapConsentModal();
+    }
+  });
   
   setTimeout(showCookieBanner, 1000);
   
@@ -452,7 +470,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cookiesAccepted = true;
     hideCookieBanner();
     loadMap();
-    loadVideo();
   });
   
   document.getElementById('decline-cookies').addEventListener('click', () => {
@@ -460,7 +477,6 @@ document.addEventListener("DOMContentLoaded", () => {
     hideCookieBanner();
   });
 
-  // Navigation scroll functionality
   const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]')
 
   navLinks.forEach((link) => {
@@ -496,7 +512,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  // Image gallery modal functionality
   const galleryImages = document.querySelectorAll(".gallery-image, .grid-image")
 
   galleryImages.forEach((image) => {

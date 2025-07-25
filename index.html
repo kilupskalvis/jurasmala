@@ -65,20 +65,6 @@
                 <path d="M7 10l5 5 5-5z"/>
               </svg>
             </button>
-            <div class="lang-dropdown-menu" id="langDropdownMenu">
-              <button class="lang-option" data-lang="lv" type="button">
-                <span class="lang-code">LV</span>
-                <span class="lang-name">Latviešu</span>
-              </button>
-              <button class="lang-option" data-lang="en" type="button">
-                <span class="lang-code">EN</span>
-                <span class="lang-name">English</span>
-              </button>
-              <button class="lang-option" data-lang="ru" type="button">
-                <span class="lang-code">RU</span>
-                <span class="lang-name">Русский</span>
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -130,8 +116,8 @@
                 <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 1rem; opacity: 0.7;">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                 </svg>
-                <p>Click to load map</p>
-                <p style="font-size: 0.8rem; opacity: 0.7;">Requires cookie consent</p>
+                <p data-translate="map-click-text">Click to load map</p>
+                <p style="font-size: 0.8rem; opacity: 0.7;" data-translate="map-consent-text">Requires cookie consent</p>
               </div>
             </div>
           </div>
@@ -432,15 +418,6 @@
               class="grid-image"
             />
           </div>
-          <div class="video-block">
-            <div class="video-placeholder" id="videoPlaceholder">
-              <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 1rem; opacity: 0.7;">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-              <p>Click to load YouTube video</p>
-              <p style="font-size: 0.8rem; opacity: 0.7;">Requires cookie consent</p>
-            </div>
-          </div>
         </section>
 
         <section id="finansejums" class="section">
@@ -449,23 +426,23 @@
             <div class="partners-grid">
               <div class="partner-block">
                 <img src="data/bank1.png" alt="Banka 1" class="bank-logo" />
-                <a href="https://www.swedbank.lv/private/loans/home" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
+                <a href="https://www.luminor.lv/lv/apkaimes" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
               <div class="partner-block">
                 <img src="data/bank2.webp" alt="Banka 2" class="bank-logo" />
-                <a href="https://www.seb.lv/lv/private/loans/home-loans" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
+                <a href="https://www.citadele.lv/lv/private/mortgage/" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
               <div class="partner-block">
-                <img src="data/bank3.png" alt="Banka 3" class="bank-logo" />
-                <a href="https://www.luminor.lv/lv/private/loans/home-loans" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
+                <img src="data/bank3.jpg" alt="Banka 3" class="bank-logo" />
+                <a href="https://www.bluorbank.lv/latvija/lv/hipotekarais-kredits-majokla-iegadei" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
               <div class="partner-block">
                 <img src="data/bank4.png" alt="Banka 4" class="bank-logo" />
-                <a href="https://www.citadele.lv/lv/private/loans/home-loans" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
+                <a href="https://www.swedbank.lv/private/credit/loans/home?language=LAT" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
               <div class="partner-block">
                 <img src="data/bank5.jpg" alt="Banka 5" class="bank-logo" />
-                <a href="https://www.blueorangbank.com/lv/private/loans" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
+                <a href="https://www.altum.lv/pakalpojumi/iedzivotajiem/majoklu-atbalsts-gimenem-ar-berniem/#" target="_blank" class="loan-button" data-translate="loan-button">Pieteikties aizdevumam</a>
               </div>
             </div>
           </div>
@@ -523,6 +500,54 @@
         <div class="cookie-buttons">
           <button id="accept-cookies" class="cookie-btn accept" data-translate="cookie-accept">Piekrītu</button>
           <button id="decline-cookies" class="cookie-btn decline" data-translate="cookie-decline">Noraidīt</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Map Consent Modal -->
+    <div id="map-consent-modal" class="map-consent-modal">
+      <div class="map-consent-overlay"></div>
+      <div class="map-consent-content">
+        <div class="map-consent-header">
+          <h3 data-translate="map-consent-title">Enable Interactive Map</h3>
+          <button class="map-consent-close" aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="map-consent-body">
+          <div class="map-consent-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+          </div>
+          <p data-translate="map-consent-description">
+            To display the interactive map, we need to load Google Maps which uses cookies and may share data with Google. 
+            Do you consent to loading the interactive map?
+          </p>
+          <div class="map-consent-features">
+            <div class="consent-feature">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              <span data-translate="map-feature-interactive">Interactive map with zoom and navigation</span>
+            </div>
+            <div class="consent-feature">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+              <span data-translate="map-feature-directions">Get directions and explore the area</span>
+            </div>
+          </div>
+        </div>
+        <div class="map-consent-actions">
+          <button class="map-consent-btn decline" id="map-consent-decline" data-translate="map-consent-decline">
+            No, keep it disabled
+          </button>
+          <button class="map-consent-btn accept" id="map-consent-accept" data-translate="map-consent-accept">
+            Yes, enable map
+          </button>
         </div>
       </div>
     </div>
