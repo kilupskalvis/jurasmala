@@ -12,6 +12,21 @@
   box-sizing: border-box;
 }
 
+/* DESKTOP STYLES - Keep original desktop background exactly as it was */
+body {
+  font-family: "Montserrat", sans-serif;
+  background: linear-gradient(135deg, rgba(15, 42, 31, 0.6) 0%, rgba(26, 58, 42, 0.55) 50%, rgba(37, 58, 48, 0.6) 100%),
+    url("data/coastal_image.jpg") center / cover fixed;
+  color: #ffffff;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: static;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -827,6 +842,7 @@ html {
   position: static;
 }
 
+/* TABLET STYLES */
 @media (max-width: 1024px) {
   .container {
     padding: 0 15px;
@@ -842,280 +858,297 @@ html {
   }
 }
 
+/* MOBILE STYLES - Fixed background using pseudo-element */
 @media (max-width: 768px) {
+  /* Fix HTML/body for mobile devices only */
   html {
-    /* Fix viewport height issues on real mobile devices */
     height: 100%;
     height: -webkit-fill-available;
   }
-
+  
   body {
-    /* Mobile-optimized background that works on real devices */
-    background: linear-gradient(
-        135deg,
-        rgba(15, 42, 31, 0.6) 0%,
-        rgba(26, 58, 42, 0.55) 50%,
-        rgba(37, 58, 48, 0.6) 100%
-      ),
-      url("data/coastal_image.jpg") center top / cover no-repeat;
-
-    /* CRITICAL: Never use background-attachment: fixed on mobile */
-    background-attachment: scroll !important;
-
-    /* Better mobile height handling */
+    /* Remove background from body on mobile */
+    background: none !important;
     min-height: 100%;
     min-height: -webkit-fill-available;
-
-    /* Prevent iOS Safari background issues */
-    background-repeat: no-repeat;
-    background-position: center 0;
-
-    /* Mobile GPU optimization */
+    position: relative;
+  }
+  
+  /* Create truly fixed background with pseudo-element */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 42, 31, 0.6) 0%, rgba(26, 58, 42, 0.55) 50%, rgba(37, 58, 48, 0.6) 100%),
+      url("data/coastal_image.jpg") center center / cover no-repeat;
+    z-index: -1;
+    
+    /* Mobile optimizations */
+    will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    transform: translateZ(0);
+  }
+  
+  /* Ensure content is above background */
+  .header,
+  .main-content,
+  .footer {
+    position: relative;
+    z-index: 1;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+
+  .header {
+    padding: 0.8rem 0;
+  }
+
+  .header .container {
+    flex-direction: column;
+    gap: 1rem;
+    min-height: auto;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .logo-img {
+    height: 55px;
+  }
+
+  .lang-dropdown-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+    min-width: 70px;
+  }
+
+  .lang-name {
+    font-size: 0.75rem;
+  }
+
+  .nav-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .nav-menu a {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  .language-dropdown {
+    align-self: center;
+  }
+
+  .main-content {
+    margin-top: 0.5rem;
+  }
+
+  .section {
+    margin-bottom: 2.5rem;
+    padding: 2rem 0;
+  }
+
+  .section:first-child {
+    padding-top: 1rem;
+  }
+
+  .section-no-title {
+    padding-top: 0.5rem;
+    margin-top: -4rem;
+  }
+
+  #finansejums {
+    margin-bottom: 1rem;
+  }
+
+  .section-title,
+  .section-title-par-mums {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-text,
+  .section-text-center {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .two-block-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .section-image {
+    height: 250px;
+  }
+
+  .section-image[src="data/main.jpeg"] {
+    height: 300px;
+  }
+
+  .image-grid {
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .grid-image {
+    height: 200px;
+  }
+
+  .grid-image[src="data/land_5.webp"],
+  .grid-image[src="data/land_10.jpeg"],
+  .grid-image[src="data/land_11.jpg"] {
+    height: 250px;
+    grid-column: span 2;
+  }
+
+  .partners-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .bank-logo {
+    width: 140px;
+    height: 70px;
+  }
+
+  .footer {
+    margin-top: 3rem;
+    padding: 2rem 0 1rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .footer-contact,
+  .footer-social {
+    text-align: center;
+  }
+
+  .footer-logo-img {
+    height: 65px;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .gallery-image {
+    height: 180px;
+  }
+
+  .map-block iframe {
+    height: 300px;
+  }
+
+  .table-block {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1rem -15px;
+    border-radius: 0;
+  }
+
+  .plan-table {
+    min-width: 420px;
+    font-size: 0.6rem;
+    width: 100%;
+  }
+
+  .plan-table th,
+  .plan-table td {
+    padding: 0.25rem 0.15rem;
+    font-size: 0.55rem;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: top;
+  }
+
+  .plan-table th {
+    font-size: 0.6rem;
+    font-weight: 700;
+    white-space: normal;
+    line-height: 1.2;
+    padding: 0.4rem 0.2rem;
+  }
+
+  .footer-contact h3,
+  .footer-social h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .loan-button {
+    font-size: 0.85rem;
+    padding: 0.3rem 0;
+  }
+
+  .cookie-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .cookie-buttons {
+    justify-content: center;
+  }
+
+  .map-consent-content {
+    max-width: 400px;
+    margin: 1rem;
+  }
+
+  .map-consent-header {
+    padding: 1rem 1rem 0;
+  }
+
+  .map-consent-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .map-consent-body {
+    padding: 1rem;
+  }
+
+  .map-consent-actions {
+    flex-direction: column;
+    padding: 0 1rem 1rem;
+  }
+
+  .map-consent-btn {
+    padding: 0.75rem;
   }
 }
 
-.container {
-  padding: 0 15px;
-}
-
-.header {
-  padding: 0.8rem 0;
-}
-
-.header .container {
-  flex-direction: column;
-  gap: 1rem;
-  min-height: auto;
-}
-
-.nav-container {
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-}
-
-.logo-img {
-  height: 55px;
-}
-
-.lang-dropdown-btn {
-  padding: 0.4rem 0.6rem;
-  font-size: 0.85rem;
-  min-width: 70px;
-}
-
-.lang-name {
-  font-size: 0.75rem;
-}
-
-.nav-menu {
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  justify-content: center;
-  width: 100%;
-}
-
-.nav-menu a {
-  font-size: 0.85rem;
-  padding: 0.4rem 0.6rem;
-  white-space: nowrap;
-}
-
-.language-dropdown {
-  align-self: center;
-}
-
-.main-content {
-  margin-top: 0.5rem;
-}
-
-.section {
-  margin-bottom: 2.5rem;
-  padding: 2rem 0;
-}
-
-.section:first-child {
-  padding-top: 1rem;
-}
-
-.section-no-title {
-  padding-top: 0.5rem;
-  margin-top: -4rem;
-}
-
-#finansejums {
-  margin-bottom: 1rem;
-}
-
-.section-title,
-.section-title-par-mums {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.section-text,
-.section-text-center {
-  font-size: 0.9rem;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-}
-
-.two-block-layout {
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-.section-image {
-  height: 250px;
-}
-
-.section-image[src="data/main.jpeg"] {
-  height: 300px;
-}
-
-.image-grid {
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.grid-image {
-  height: 200px;
-}
-
-.grid-image[src="data/land_5.webp"],
-.grid-image[src="data/land_10.jpeg"],
-.grid-image[src="data/land_11.jpg"] {
-  height: 250px;
-  grid-column: span 2;
-}
-
-.partners-grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-.bank-logo {
-  width: 140px;
-  height: 70px;
-}
-
-.footer {
-  margin-top: 3rem;
-  padding: 2rem 0 1rem;
-}
-
-.footer-content {
-  grid-template-columns: 1fr;
-  text-align: center;
-  gap: 2rem;
-}
-
-.footer-contact,
-.footer-social {
-  text-align: center;
-}
-
-.footer-logo-img {
-  height: 65px;
-}
-
-.social-icons {
-  justify-content: center;
-}
-
-.gallery-grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.gallery-image {
-  height: 180px;
-}
-
-.map-block iframe {
-  height: 300px;
-}
-
-.table-block {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin: 1rem -15px;
-  border-radius: 0;
-}
-
-.plan-table {
-  min-width: 420px;
-  font-size: 0.6rem;
-  width: 100%;
-}
-
-.plan-table th,
-.plan-table td {
-  padding: 0.25rem 0.15rem;
-  font-size: 0.55rem;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: top;
-}
-
-.plan-table th {
-  font-size: 0.6rem;
-  font-weight: 700;
-  white-space: normal;
-  line-height: 1.2;
-  padding: 0.4rem 0.2rem;
-}
-
-.footer-contact h3,
-.footer-social h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.8rem;
-}
-
-.loan-button {
-  font-size: 0.85rem;
-  padding: 0.3rem 0;
-}
-
-.cookie-content {
-  flex-direction: column;
-  text-align: center;
-  gap: 1rem;
-}
-
-.cookie-buttons {
-  justify-content: center;
-}
-
-/* Mobile Map Consent Modal */
-.map-consent-content {
-  max-width: 400px;
-  margin: 1rem;
-}
-
-.map-consent-header {
-  padding: 1rem 1rem 0;
-}
-
-.map-consent-header h3 {
-  font-size: 1.1rem;
-}
-
-.map-consent-body {
-  padding: 1rem;
-}
-
-.map-consent-actions {
-  flex-direction: column;
-  padding: 0 1rem 1rem;
-}
-
-.map-consent-btn {
-  padding: 0.75rem;
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 768px) {
+    body {
+      background-attachment: scroll !important;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+  }
 }
 
 @media (max-width: 480px) {
@@ -1123,18 +1156,16 @@ html {
     height: 100%;
     height: -webkit-fill-available;
   }
-
+  
   body {
-    /* More aggressive mobile fixes for small screens */
-    background-size: cover;
-    background-position: center top;
-    background-attachment: scroll !important;
+    background: none !important;
     min-height: 100%;
     min-height: -webkit-fill-available;
-
-    /* Prevent image quality issues on small screens */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
+  }
+  
+  body::before {
+    background-size: cover;
+    background-position: center center;
   }
 
   .container {
@@ -1293,7 +1324,6 @@ html {
     font-size: 0.8rem;
   }
 
-  /* Small Mobile Map Consent Modal */
   .map-consent-content {
     max-width: 350px;
     margin: 0.5rem;
@@ -1398,43 +1428,5 @@ html {
   .map-consent-content {
     max-width: 320px;
     margin: 0.25rem;
-  }
-}
-
-/* High-DPI displays (Retina screens) for crisp images */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  body {
-    /* Ensure crisp image on high-DPI displays */
-    background-image: linear-gradient(
-        135deg,
-        rgba(15, 42, 31, 0.6) 0%,
-        rgba(26, 58, 42, 0.55) 50%,
-        rgba(37, 58, 48, 0.6) 100%
-      ),
-      url("data/coastal_image.jpg");
-  }
-}
-
-/* iOS Safari specific fixes */
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 768px) {
-    body {
-      /* iOS Safari background fixes */
-      background-attachment: scroll !important;
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-      background-size: cover;
-      -webkit-background-size: cover;
-    }
-  }
-}
-
-/* Very high DPI mobile devices (iPhone Pro, Samsung Galaxy S series) */
-@media (max-width: 768px) and (-webkit-min-device-pixel-ratio: 3),
-  (max-width: 768px) and (min-resolution: 288dpi) {
-  body {
-    /* Adjust background size for ultra-high DPI */
-    background-size: auto 120vh;
-    background-position: center top;
   }
 }
