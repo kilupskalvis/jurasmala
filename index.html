@@ -4,7 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jūrasmala - pārdod zemi</title>
+    <!-- Critical: Preload the background image and logo with high priority -->
+    <link rel="preload" href="data/coastal_image.jpg" as="image" fetchpriority="high" />
+    <link rel="preload" href="data/logo.png" as="image" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css" />
+    <!-- Inline critical CSS for immediate background display -->
+    <style>
+      /* Critical CSS for immediate background rendering */
+      body {
+        font-family: "Montserrat", sans-serif;
+        background: linear-gradient(135deg, rgba(15, 42, 31, 0.85) 0%, rgba(26, 58, 42, 0.8) 50%, rgba(37, 58, 48, 0.85) 100%),
+          url("data/coastal_image.jpg") center / cover fixed;
+        color: #ffffff;
+        line-height: 1.6;
+        min-height: 100vh;
+        position: static;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      /* Prevent flash of unstyled content - fade in header and main content together */
+      .header,
+      .main-content {
+        opacity: 0;
+        animation: fadeInContent 0.4s ease-out 0.1s forwards;
+      }
+
+      @keyframes fadeInContent {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
@@ -380,7 +418,7 @@
         </section>
 
         <!-- Galerija Section -->
-        <section id="galerija" class="section">
+        <section id="galerija" class="section section-no-title">
           <div class="image-grid two-columns">
             <img
               src="data/land_11.jpg"
