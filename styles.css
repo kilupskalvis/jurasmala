@@ -12,7 +12,7 @@
   box-sizing: border-box;
 }
 
-/* DESKTOP STYLES - Keep original desktop background exactly as it was */
+/* DESKTOP STYLES */
 body {
   font-family: "Montserrat", sans-serif;
   background: linear-gradient(135deg, rgba(15, 42, 31, 0.6) 0%, rgba(26, 58, 42, 0.55) 50%, rgba(37, 58, 48, 0.6) 100%),
@@ -28,7 +28,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -41,11 +41,12 @@ body {
   padding: 1rem 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   z-index: auto;
+  overflow: hidden;
 }
 
 .header .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
   min-height: 90px;
@@ -60,13 +61,13 @@ body {
 .nav-container {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 1.5rem;
+  gap: 0.6rem;
   flex-wrap: nowrap;
   white-space: nowrap;
 }
@@ -76,11 +77,11 @@ body {
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
-  padding: 0.5rem 0.8rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 8px;
   position: relative;
   white-space: nowrap;
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
 
 .nav-menu a:hover,
@@ -199,7 +200,7 @@ body {
 }
 
 .section-title-par-mums {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1.5rem;
@@ -207,7 +208,7 @@ body {
 }
 
 .section-title {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1.5rem;
@@ -215,14 +216,14 @@ body {
 }
 
 .section-text {
-  font-size: 19px;
+  font-size: 16px;
   line-height: 1.8;
   color: #ffffff;
   margin-bottom: 3rem;
 }
 
 .section-text-center {
-  font-size: 19px;
+  font-size: 16px;
   line-height: 1.8;
   color: #ffffff;
   margin-bottom: 3rem;
@@ -275,8 +276,9 @@ body {
 }
 
 .section-image[src="data/main.jpeg"] {
-  height: 600px;
+  height: 550px;
 }
+
 
 .full-width {
   width: 100%;
@@ -350,7 +352,9 @@ body {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
+  justify-content: center;
+  max-width: 100%;
 }
 
 .partner-block {
@@ -362,6 +366,10 @@ body {
   border: none;
   box-shadow: none;
   transition: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .bank-logo {
@@ -414,7 +422,7 @@ body {
   background: transparent;
   border-radius: 12px;
   overflow: hidden;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
 .plan-table th,
@@ -429,7 +437,7 @@ body {
   background: rgba(76, 175, 80, 0.1);
   font-weight: 600;
   color: #e0e0e0;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
 .plan-table td {
@@ -502,7 +510,7 @@ body {
 }
 
 .footer-social {
-  text-align: right;
+  text-align: center;
 }
 
 .footer-contact h3,
@@ -537,7 +545,7 @@ body {
   display: flex;
   gap: 1rem;
   margin-top: 0.5rem;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .social-icon {
@@ -590,7 +598,7 @@ body {
 }
 
 .cookie-content {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -848,33 +856,40 @@ html {
     padding: 0 15px;
   }
 
+  .nav-container {
+    gap: 0.8rem;
+  }
+
   .nav-menu {
-    gap: 1.2rem;
+    gap: 0.5rem;
   }
 
   .nav-menu a {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.7rem;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.4rem;
+  }
+
+  .lang-dropdown-btn {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+    min-width: 60px;
   }
 }
 
-/* MOBILE STYLES - Fixed background using pseudo-element */
+/* MOBILE STYLES */
 @media (max-width: 768px) {
-  /* Fix HTML/body for mobile devices only */
   html {
     height: 100%;
     height: -webkit-fill-available;
   }
   
   body {
-    /* Remove background from body on mobile */
     background: none !important;
     min-height: 100%;
     min-height: -webkit-fill-available;
     position: relative;
   }
   
-  /* Create truly fixed background with pseudo-element */
   body::before {
     content: '';
     position: fixed;
@@ -885,14 +900,11 @@ html {
     background: linear-gradient(135deg, rgba(15, 42, 31, 0.6) 0%, rgba(26, 58, 42, 0.55) 50%, rgba(37, 58, 48, 0.6) 100%),
       url("data/coastal_image.jpg") center center / cover no-repeat;
     z-index: -1;
-    
-    /* Mobile optimizations */
     will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
   
-  /* Ensure content is above background */
   .header,
   .main-content,
   .footer {
@@ -1019,6 +1031,12 @@ html {
   .partners-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+  }
+
+  .partner-block:nth-child(5) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    max-width: 200px;
   }
 
   .bank-logo {
