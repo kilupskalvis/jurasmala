@@ -8,8 +8,7 @@
   --bg-dark: #2c3038;
   --bg-darkest: #232730;
   --bg-light: #f7f6f3;
-  --bg-light-alt: #f0ede7;
-  --bg-charcoal: #2c3038;
+  --bg-light-alt: #ffffff;
   --text-light: #ffffff;
   --text-dark: #2b2d31;
   --text-muted-light: #b0b0b0;
@@ -100,7 +99,6 @@ body {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  max-width: 680px;
 }
 
 .section-text--left {
@@ -124,12 +122,12 @@ body {
 }
 
 .section-light-alt {
-  background: #ffffff;
+  background: var(--bg-light-alt);
   color: var(--text-dark);
 }
 
 .section-charcoal {
-  background: var(--bg-charcoal);
+  background: var(--bg-dark);
   color: var(--text-light);
 }
 
@@ -388,12 +386,59 @@ body {
   align-items: center;
   text-align: center;
   padding-bottom: 5rem;
-  background: linear-gradient(to top,
+  background: #3a4a50;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top,
       rgba(20, 20, 20, 0.7) 0%,
       rgba(20, 20, 20, 0.35) 35%,
       rgba(20, 20, 20, 0.1) 55%,
       transparent 75%),
     url("data/coastal_image.jpg") center / cover;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.hero.hero-loaded::before {
+  opacity: 1;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: hero-shimmer 1.8s ease-in-out infinite;
+}
+
+.hero.hero-loaded::after {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+@keyframes hero-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.hero-content,
+.hero-scroll-indicator {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-content {
@@ -603,12 +648,12 @@ body {
 
 .room-gallery-wrap::before {
   left: 0;
-  background: linear-gradient(to right, var(--bg-charcoal), transparent);
+  background: linear-gradient(to right, var(--bg-dark), transparent);
 }
 
 .room-gallery-wrap::after {
   right: 0;
-  background: linear-gradient(to left, var(--bg-charcoal), transparent);
+  background: linear-gradient(to left, var(--bg-dark), transparent);
 }
 
 /* --- Land Plan Grid --- */
@@ -674,7 +719,6 @@ body {
 .plots-table-wrap {
   position: relative;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   border-radius: 12px;
   background: #ffffff;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
@@ -993,7 +1037,7 @@ body {
   }
 
   .plots-table tbody tr[data-status="available"]:hover {
-    background: rgba(139, 115, 85, 0.06);
+    background: rgba(90, 122, 111, 0.08);
   }
 
   .filter-tab:not(.active):hover {
@@ -1038,6 +1082,14 @@ body {
   .anim-hero {
     opacity: 1;
     transform: none;
+  }
+
+  .hero::before {
+    opacity: 1;
+  }
+
+  .hero::after {
+    display: none;
   }
 }
 
@@ -1300,10 +1352,6 @@ body {
 
   .about-image {
     height: 220px;
-  }
-
-  .construction-img {
-    aspect-ratio: 3 / 2;
   }
 
   .room-gallery-img {

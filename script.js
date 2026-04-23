@@ -34,6 +34,8 @@ const translations = {
     'table-price': 'Cena, EUR',
     'table-availability': 'Pieejamība',
     'table-land': 'Zeme',
+    'table-land-house': 'Zeme + māja 82m² bez apdares',
+    'table-land-utilities': 'Zeme + kanalizācija/ūdens',
     'plot-area-label': 'Platība',
     'plot-price-label': 'Cena',
     'status-available': 'Pieejams',
@@ -43,7 +45,7 @@ const translations = {
     'phone-label': 'Tālrunis:',
     'email-label': 'E-pasts:',
     'social-title': 'Sekojiet mums',
-    'copyright': 'Visas tiesības aizsargātas © 2025 jurasmala.lv',
+    'copyright': 'Visas tiesības aizsargātas © 2026 jurasmala.lv',
     'map-load-text': 'Noklikšķiniet, lai ielādētu karti',
     'map-load-note': 'Tiks ielādēts Google Maps'
   },
@@ -76,6 +78,8 @@ const translations = {
     'table-price': 'Price, EUR',
     'table-availability': 'Availability',
     'table-land': 'Land',
+    'table-land-house': 'Land + house 82m² without finishing',
+    'table-land-utilities': 'Land + sewage/water',
     'plot-area-label': 'Area',
     'plot-price-label': 'Price',
     'status-available': 'Available',
@@ -85,7 +89,7 @@ const translations = {
     'phone-label': 'Phone:',
     'email-label': 'Email:',
     'social-title': 'Follow Us',
-    'copyright': 'All rights reserved © 2025 jurasmala.lv',
+    'copyright': 'All rights reserved © 2026 jurasmala.lv',
     'map-load-text': 'Click to load map',
     'map-load-note': 'Google Maps will be loaded'
   },
@@ -118,6 +122,8 @@ const translations = {
     'table-price': 'Цена, EUR',
     'table-availability': 'Доступность',
     'table-land': 'Земля',
+    'table-land-house': 'Земля + дом 82м² без отделки',
+    'table-land-utilities': 'Земля + канализация/вода',
     'plot-area-label': 'Площадь',
     'plot-price-label': 'Цена',
     'status-available': 'Доступен',
@@ -127,7 +133,7 @@ const translations = {
     'phone-label': 'Телефон:',
     'email-label': 'Email:',
     'social-title': 'Следите за нами',
-    'copyright': 'Все права защищены © 2025 jurasmala.lv',
+    'copyright': 'Все права защищены © 2026 jurasmala.lv',
     'map-load-text': 'Нажмите, чтобы загрузить карту',
     'map-load-note': 'Будет загружен Google Maps'
   }
@@ -281,10 +287,32 @@ function initNavTracking() {
 
 /* --- Page Load Animation --- */
 function initPageLoad() {
-  window.addEventListener('load', () => {
+  const hero = document.querySelector('.hero');
+
+  function showHero() {
     document.querySelectorAll('.anim-hero').forEach(el => {
       el.classList.add('visible');
     });
+  }
+
+  const img = new Image();
+  img.src = 'data/coastal_image.jpg';
+  img.onload = () => {
+    if (hero) hero.classList.add('hero-loaded');
+    showHero();
+  };
+
+  if (img.complete) {
+    if (hero) hero.classList.add('hero-loaded');
+    showHero();
+  }
+}
+
+/* --- Dynamic Copyright Year --- */
+function updateCopyrightYear() {
+  const year = new Date().getFullYear();
+  document.querySelectorAll('[data-translate="copyright"]').forEach(el => {
+    el.textContent = el.textContent.replace(/© \d{4}/, '© ' + year);
   });
 }
 
@@ -424,10 +452,10 @@ function initPlotFilters() {
     tab.addEventListener('click', () => {
       tabs.forEach(t => {
         t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('aria-pressed', 'false');
       });
       tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('aria-pressed', 'true');
 
       const filter = tab.dataset.filter;
       rows.forEach(row => {
@@ -460,7 +488,12 @@ function initRoomGallery() {
   const rightArrow = document.getElementById('roomArrowRight');
   if (!strip || !leftArrow || !rightArrow) return;
 
-  const scrollAmount = 516;
+  function getScrollAmount() {
+    const firstImg = strip.querySelector('.room-gallery-img');
+    if (!firstImg) return 500;
+    const gap = parseFloat(getComputedStyle(strip).gap) || 0;
+    return firstImg.offsetWidth + gap;
+  }
 
   function updateArrows() {
     const atStart = strip.scrollLeft <= 10;
@@ -470,11 +503,11 @@ function initRoomGallery() {
   }
 
   leftArrow.addEventListener('click', () => {
-    strip.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    strip.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
   });
 
   rightArrow.addEventListener('click', () => {
-    strip.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    strip.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
   });
 
   strip.addEventListener('scroll', updateArrows);
@@ -490,22 +523,8 @@ function initRoomGallery() {
   updateArrows();
 }
 
-/* --- Smooth Scroll for Desktop Nav --- */
-function initSmoothScroll() {
-  document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-}
-
 /* --- Init All --- */
 document.addEventListener('DOMContentLoaded', () => {
-  translatePage('lv');
   updateMobileLangButtons('lv');
   initLangSwitcher();
   initMobileNav();
@@ -518,5 +537,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightbox();
   initPlotFilters();
   initRoomGallery();
-  initSmoothScroll();
+  updateCopyrightYear();
 });
