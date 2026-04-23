@@ -36,8 +36,6 @@ const translations = {
     'table-land': 'Zeme',
     'table-land-house': 'Zeme + māja 82m² bez apdares',
     'table-land-utilities': 'Zeme + kanalizācija/ūdens',
-    'plot-area-label': 'Platība',
-    'plot-price-label': 'Cena',
     'status-available': 'Pieejams',
     'status-sold': 'Pārdots',
     'loan-button': 'Pieteikties aizdevumam',
@@ -80,8 +78,6 @@ const translations = {
     'table-land': 'Land',
     'table-land-house': 'Land + house 82m² without finishing',
     'table-land-utilities': 'Land + sewage/water',
-    'plot-area-label': 'Area',
-    'plot-price-label': 'Price',
     'status-available': 'Available',
     'status-sold': 'Sold',
     'loan-button': 'Apply for Loan',
@@ -124,8 +120,6 @@ const translations = {
     'table-land': 'Земля',
     'table-land-house': 'Земля + дом 82м² без отделки',
     'table-land-utilities': 'Земля + канализация/вода',
-    'plot-area-label': 'Площадь',
-    'plot-price-label': 'Цена',
     'status-available': 'Доступен',
     'status-sold': 'Продан',
     'loan-button': 'Подать заявку на кредит',
@@ -139,11 +133,8 @@ const translations = {
   }
 };
 
-let currentLanguage = 'lv';
-
 /* --- Translation --- */
 function translatePage(lang) {
-  currentLanguage = lang;
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-translate]').forEach(el => {
     const key = el.getAttribute('data-translate');
@@ -359,9 +350,7 @@ function initMap() {
       src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4727.158869393929!2d24.3941950789476!3d57.4670815960261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1753264332454!5m2!1sen!2sus"
       width="100%" height="400" style="border:0; border-radius:12px;"
       allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
-    placeholder.style.cursor = 'default';
-    placeholder.style.border = 'none';
-    placeholder.style.background = 'none';
+    placeholder.classList.add('map-loaded');
   }
 
   placeholder.addEventListener('click', loadMap);
