@@ -1,16 +1,13 @@
-/* ============================================================
-   JŪRASMALA — Nordic Coastal Luxury
-   Static site styles. No build step. GitHub Pages compatible.
-   ============================================================ */
-
-/* --- Self-hosted Fonts --- */
 @font-face {
   font-family: "Cormorant Garamond";
   font-style: normal;
   font-weight: 300 700;
   font-display: swap;
   src: url(fonts/cormorant-garamond-latin-ext.woff2) format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "Cormorant Garamond";
@@ -18,7 +15,10 @@
   font-weight: 300 700;
   font-display: swap;
   src: url(fonts/cormorant-garamond-latin.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
   font-family: "Plus Jakarta Sans";
@@ -26,7 +26,10 @@
   font-weight: 300 600;
   font-display: swap;
   src: url(fonts/plus-jakarta-sans-latin-ext.woff2) format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "Plus Jakarta Sans";
@@ -34,7 +37,10 @@
   font-weight: 300 600;
   font-display: swap;
   src: url(fonts/plus-jakarta-sans-latin.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
 }
 
 /* --- Custom Properties --- */
@@ -192,7 +198,9 @@ body {
   height: var(--header-h);
   z-index: 100;
   color: var(--text-light);
-  transition: background-color var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    background-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .header.scrolled {
@@ -232,7 +240,9 @@ body {
   font-weight: 500;
   padding: 0.4rem 0.6rem;
   border-bottom: 2px solid transparent;
-  transition: opacity var(--transition-base), border-color var(--transition-base);
+  transition:
+    opacity var(--transition-base),
+    border-color var(--transition-base);
   white-space: nowrap;
 }
 
@@ -320,7 +330,9 @@ body {
   height: 2px;
   background: var(--text-light);
   border-radius: 2px;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .hamburger[aria-expanded="true"] span:nth-child(1) {
@@ -355,6 +367,7 @@ body {
   width: 280px;
   height: 100%;
   background: var(--bg-dark);
+  color: var(--text-light);
   z-index: 99;
   transform: translateX(100%);
   transition: transform var(--transition-base);
@@ -396,7 +409,9 @@ body {
   font-weight: 600;
   border-radius: 6px;
   border: 1px solid var(--border-light);
-  transition: background var(--transition-base), border-color var(--transition-base);
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .mobile-lang-btn.active {
@@ -423,11 +438,13 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to top,
+    linear-gradient(
+      to top,
       rgba(20, 20, 20, 0.7) 0%,
       rgba(20, 20, 20, 0.35) 35%,
       rgba(20, 20, 20, 0.1) 55%,
-      transparent 75%),
+      transparent 75%
+    ),
     url("data/coastal_image.jpg") center / cover;
   z-index: 0;
   opacity: 0;
@@ -460,8 +477,12 @@ body {
 }
 
 @keyframes hero-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .hero-content {
@@ -500,15 +521,22 @@ body {
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
 }
 
 /* Hero load animation initial states */
 .anim-hero {
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
 }
 
 .anim-hero.visible {
@@ -654,7 +682,9 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 2;
-  transition: background var(--transition-base), opacity var(--transition-base);
+  transition:
+    background var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .room-gallery-arrow--left {
@@ -742,7 +772,10 @@ body {
   font-weight: 500;
   border: 1px solid var(--border-dark);
   color: var(--text-dark);
-  transition: background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+  transition:
+    background var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .filter-tab.active {
@@ -890,7 +923,9 @@ body {
   padding: 0.45rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 3px;
-  transition: background var(--transition-base), border-color var(--transition-base);
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base);
 }
 
 /* --- Footer --- */
@@ -955,7 +990,9 @@ body {
   border: 1px solid var(--border-light);
   border-radius: 4px;
   color: var(--text-light);
-  transition: background var(--transition-base), transform var(--transition-base);
+  transition:
+    background var(--transition-base),
+    transform var(--transition-base);
 }
 
 .footer-copyright {
@@ -1027,12 +1064,140 @@ body {
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* --- Cookie Consent Banner --- */
+.consent-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  background: var(--bg-light);
+  border-top: 1px solid var(--border-dark);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+  display: none;
+  animation: consent-slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.consent-banner.active {
+  display: block;
+}
+
+.consent-banner--hiding {
+  animation: consent-slide-down 0.35s ease forwards;
+}
+
+@keyframes consent-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes consent-slide-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.consent-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 1.5rem var(--container-pad);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.consent-accent {
+  width: 36px;
+  height: 2px;
+  background: var(--accent);
+  flex-shrink: 0;
+  border-radius: 1px;
+}
+
+.consent-text {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-muted-dark);
+  flex: 1;
+}
+
+.consent-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.consent-btn {
+  white-space: nowrap;
+  transition:
+    background var(--transition-base),
+    color var(--transition-base);
+}
+
+.consent-btn--accept {
+  background: var(--accent);
+  color: var(--text-light);
+  padding: 0.7rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+
+.consent-btn--decline {
+  color: var(--text-muted-dark);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.7rem 0.5rem;
+}
+
+@media (hover: hover) {
+  .consent-btn--accept:hover {
+    background: #4d6b61;
+  }
+
+  .consent-btn--decline:hover {
+    color: var(--accent);
+  }
+}
+
+@media (max-width: 768px) {
+  .consent-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem var(--container-pad);
+  }
+
+  .consent-accent {
+    margin: 0 auto;
+  }
+
+  .consent-actions {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* --- Focus States --- */
@@ -1272,8 +1437,10 @@ body {
     margin: 0 calc(var(--container-pad) * -1);
     border-radius: 0;
     background:
-      linear-gradient(to right, #ffffff 30%, transparent) left center / 40px 100% no-repeat,
-      linear-gradient(to left, #ffffff 30%, transparent) right center / 40px 100% no-repeat,
+      linear-gradient(to right, #ffffff 30%, transparent) left center / 40px
+        100% no-repeat,
+      linear-gradient(to left, #ffffff 30%, transparent) right center / 40px
+        100% no-repeat,
       #ffffff;
     background-attachment: local, local, scroll;
   }

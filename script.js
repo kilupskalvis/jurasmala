@@ -45,7 +45,11 @@ const translations = {
     'social-title': 'Sekojiet mums',
     'copyright': 'Visas tiesības aizsargātas © 2026 jurasmala.lv',
     'map-load-text': 'Noklikšķiniet, lai ielādētu karti',
-    'map-load-note': 'Tiks ielādēts Google Maps'
+    'map-load-note': 'Tiks ielādēts Google Maps',
+    'consent-title': 'Privātuma iestatījumi',
+    'consent-text': 'Mēs izmantojam sīkdatnes un trešo pušu pakalpojumus, lai uzlabotu jūsu pārlūkošanas pieredzi, analizētu vietnes apmeklējumu un nodrošinātu interaktīvu saturu.',
+    'consent-accept': 'Pieņemt visas',
+    'consent-decline': 'Tikai nepieciešamās'
   },
   en: {
     'nav-about': 'About Us',
@@ -87,7 +91,11 @@ const translations = {
     'social-title': 'Follow Us',
     'copyright': 'All rights reserved © 2026 jurasmala.lv',
     'map-load-text': 'Click to load map',
-    'map-load-note': 'Google Maps will be loaded'
+    'map-load-note': 'Google Maps will be loaded',
+    'consent-title': 'Privacy Settings',
+    'consent-text': 'We use cookies and third-party services to improve your browsing experience, analyze site traffic, and provide interactive content.',
+    'consent-accept': 'Accept all',
+    'consent-decline': 'Essential only'
   },
   ru: {
     'nav-about': 'О нас',
@@ -129,7 +137,11 @@ const translations = {
     'social-title': 'Следите за нами',
     'copyright': 'Все права защищены © 2026 jurasmala.lv',
     'map-load-text': 'Нажмите, чтобы загрузить карту',
-    'map-load-note': 'Будет загружен Google Maps'
+    'map-load-note': 'Будет загружен Google Maps',
+    'consent-title': 'Настройки конфиденциальности',
+    'consent-text': 'Мы используем файлы cookie и сторонние сервисы для улучшения вашего опыта просмотра, анализа посещаемости сайта и предоставления интерактивного контента.',
+    'consent-accept': 'Принять все',
+    'consent-decline': 'Только необходимые'
   }
 };
 
@@ -345,14 +357,6 @@ function initMap() {
   const placeholder = document.getElementById('mapPlaceholder');
   if (!placeholder) return;
 
-  function loadMap() {
-    placeholder.innerHTML = `<iframe
-      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4727.158869393929!2d24.3941950789476!3d57.4670815960261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1753264332454!5m2!1sen!2sus"
-      width="100%" height="400" style="border:0; border-radius:12px;"
-      allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
-    placeholder.classList.add('map-loaded');
-  }
-
   placeholder.addEventListener('click', loadMap);
   placeholder.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -512,6 +516,70 @@ function initRoomGallery() {
   updateArrows();
 }
 
+/* --- Cookie Consent & Meta Pixel --- */
+function loadMetaPixel() {
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '634309711849349');
+  fbq('track', 'PageView');
+}
+
+function loadMap() {
+  var placeholder = document.getElementById('mapPlaceholder');
+  if (!placeholder || placeholder.classList.contains('map-loaded')) return;
+  placeholder.innerHTML = '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4727.158869393929!2d24.3941950789476!3d57.4670815960261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1753264332454!5m2!1sen!2sus" width="100%" height="400" style="border:0; border-radius:12px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+  placeholder.classList.add('map-loaded');
+}
+
+function initCookieConsent() {
+  var banner = document.getElementById('consentBanner');
+  var acceptBtn = document.getElementById('consentAccept');
+  var declineBtn = document.getElementById('consentDecline');
+  if (!banner || !acceptBtn || !declineBtn) return;
+
+  var consent = localStorage.getItem('cookie-consent');
+
+  if (consent === 'accepted') {
+    loadMetaPixel();
+    loadMap();
+    return;
+  }
+
+  if (consent === 'essential') {
+    loadMap();
+    return;
+  }
+
+  banner.classList.add('active');
+
+  function hideBanner() {
+    banner.classList.add('consent-banner--hiding');
+    setTimeout(function() {
+      banner.classList.remove('active');
+      banner.classList.remove('consent-banner--hiding');
+    }, 350);
+  }
+
+  acceptBtn.addEventListener('click', function() {
+    localStorage.setItem('cookie-consent', 'accepted');
+    hideBanner();
+    loadMetaPixel();
+    loadMap();
+  });
+
+  declineBtn.addEventListener('click', function() {
+    localStorage.setItem('cookie-consent', 'essential');
+    hideBanner();
+    loadMap();
+  });
+}
+
 /* --- Init All --- */
 document.addEventListener('DOMContentLoaded', () => {
   updateMobileLangButtons('lv');
@@ -523,6 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initImageLoading();
   initMap();
+  initCookieConsent();
   initLightbox();
   initPlotFilters();
   initRoomGallery();
