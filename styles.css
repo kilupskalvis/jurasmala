@@ -726,14 +726,13 @@ body {
 /* --- Land Plan Grid --- */
 .land-plan-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
 }
 
 .land-plan-img {
   width: 100%;
-  height: 300px;
+  height: 180px;
   object-fit: cover;
   border-radius: 3px;
   cursor: pointer;
@@ -745,8 +744,36 @@ body {
   opacity: 1;
 }
 
-.land-plan-img--wide {
-  grid-column: span 2;
+/* --- Plans Group (aerial + thumbnails) --- */
+.plans-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.master-plan {
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.master-plan-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  cursor: pointer;
+}
+
+.master-plan-img.img-loaded {
+  opacity: 1;
+}
+
+/* --- Plots Divider --- */
+.plots-divider {
+  margin-top: 3.5rem;
+  border-top: 1px solid var(--border-dark);
 }
 
 /* --- Plot Listings --- */
@@ -755,7 +782,7 @@ body {
   font-size: 2rem;
   font-weight: 600;
   text-align: center;
-  margin-top: 4rem;
+  margin-top: 2.5rem;
   margin-bottom: 1.5rem;
 }
 
@@ -1303,6 +1330,10 @@ body {
     padding: 0.3rem 0.4rem;
   }
 
+  .land-plan-img {
+    height: 150px;
+  }
+
   .plots-table {
     font-size: 0.85rem;
   }
@@ -1421,15 +1452,11 @@ body {
 
   /* Land plans */
   .land-plan-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .land-plan-img {
-    height: 200px;
-  }
-
-  .land-plan-img--wide {
-    grid-column: span 1;
+    height: 150px;
   }
 
   /* Filter tabs */
@@ -1469,9 +1496,13 @@ body {
     min-width: 120px;
   }
 
+  .plots-divider {
+    margin-top: 2.5rem;
+  }
+
   .plots-heading {
     font-size: 1.6rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
   }
 
   /* Masonry */
@@ -1558,7 +1589,7 @@ body {
   }
 
   .land-plan-img {
-    height: 170px;
+    height: 120px;
   }
 
   .plots-table {
