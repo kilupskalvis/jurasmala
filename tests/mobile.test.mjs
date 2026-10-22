@@ -83,3 +83,28 @@ test('touch targets', async () => {
     assert.deepEqual(await small(), [], 'with the menu open');
   });
 });
+
+test('no line starts with punctuation', async () => {
+  for (const lang of ['lv', 'en']) {
+    for (const [width, height] of [[320, 480], [390, 844]]) {
+      await withPage({ width, height, isMobile: true, storage: { lang } }, async (page) => {
+        await gotoSettled(page, server.url + '/');
+        const orphans = await page.evaluate(() => {
+          const out = [];
+          const walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT);
+          for (let n; (n = walker.nextNode());) {
+            const m = n.textContent.match(/^\s*[.,:;]/);
+            if (!m) continue;
+            const r = document.createRange();
+            r.setStart(n, m[0].length - 1); r.setEnd(n, m[0].length);
+            const rc = r.getBoundingClientRect();
+            const box = n.parentElement.closest('p, li, div').getBoundingClientRect();
+            if (rc.width && rc.left - box.left < 2) out.push(`"${n.textContent.trim().slice(0, 12)}" in ${n.parentElement.tagName}`);
+          }
+          return out;
+        });
+        assert.deepEqual(orphans, [], `${lang} ${width}px`);
+      });
+    }
+  }
+});
