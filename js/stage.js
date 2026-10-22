@@ -158,6 +158,8 @@
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, c);
         return { tex, w: img.naturalWidth, h: img.naturalHeight };
       });
+      // An upload can fail silently (out of memory); keep the plain photos then
+      if (gl.getError() !== gl.NO_ERROR || gl.isContextLost()) return;
 
       const resize = () => {
         const dpr = Math.min(devicePixelRatio || 1, innerWidth < 800 ? 1 : 1.5);
@@ -165,6 +167,9 @@
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.uniform2f(U.uRes, canvas.width, canvas.height);
       };
+      // If the GPU drops the context later, remove the canvas so the photo crossfade shows
+      let lost = false;
+      canvas.addEventListener('webglcontextlost', () => { lost = true; canvas.remove(); });
       media.appendChild(canvas);
       resize();
       addEventListener('resize', resize);
@@ -173,6 +178,7 @@
       new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(section);
       const t0 = performance.now();
       const draw = (now) => {
+        if (lost) return;
         requestAnimationFrame(draw);
         if (!visible) return;
         const a = state.i, b = Math.min(n - 1, state.i + 1);

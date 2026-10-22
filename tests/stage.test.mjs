@@ -61,3 +61,31 @@ for (const [width, height] of [[1440, 900], [1024, 768], [390, 844], [320, 480]]
     });
   });
 }
+
+test('failed texture upload falls back to photos', async () => {
+  await withPage({}, async (page) => {
+    // simulate GL out-of-memory: uploads do nothing and report an error
+    await page.addInitScript(() => {
+      const P = WebGLRenderingContext.prototype;
+      let failed = false;
+      P.texImage2D = function () { failed = true; };
+      const getError = P.getError;
+      P.getError = function () { if (failed) { failed = false; return this.OUT_OF_MEMORY; } return getError.call(this); };
+    });
+    await page.goto(server.url + '/', { waitUntil: 'load' });
+    await page.waitForTimeout(5000);
+    assert.equal(await page.$$eval('[data-stage] canvas.on', (c) => c.length), 0, 'no canvas over the photos');
+    assert.equal(await page.$$eval('[data-frame].on', (f) => f.length), 1, 'a photo is shown');
+  });
+});
+
+test('lost webgl context falls back to photos', async () => {
+  await withPage({}, async (page) => {
+    await page.goto(server.url + '/', { waitUntil: 'load' });
+    await page.waitForSelector('[data-stage] canvas.on', { state: 'attached', timeout: 10000 });
+    await page.evaluate(() => document.querySelector('[data-stage] canvas').getContext('webgl').getExtension('WEBGL_lose_context').loseContext());
+    await page.waitForTimeout(500);
+    assert.equal(await page.$$eval('[data-stage] canvas.on', (c) => c.length), 0);
+    assert.equal(await page.$$eval('[data-frame].on', (f) => f.length), 1);
+  });
+});
