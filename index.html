@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#2c3038" />
+    <meta name="theme-color" content="#1e2521" />
     <title>Jūrasmala - Pārdod zemi</title>
     <meta name="description" content="Piejūras ciemats Jūrasmala Lembužos, Vidzemes jūrmalā — zemes gabali privātmāju apbūvei stundu no Rīgas, 400m no jūras. Elektrība, apgaismota iela, būvniecības pakalpojumi." />
     <meta property="og:title" content="Jūrasmala — Piejūras ciemats Vidzemes jūrmalā" />
@@ -17,346 +17,198 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Jūrasmala — Vidzemes jūrmalas piekraste no putna lidojuma" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preload" href="data/coastal_image.webp" as="image" type="image/webp" fetchpriority="high" />
-    <link rel="preload" href="data/logo.png" as="image" />
+    <link rel="preload" href="data/construction_2.webp" as="image" type="image/webp" fetchpriority="high" />
+    <link rel="preload" href="fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Skip to content</a>
+    <a href="#main-content" class="skip-link" data-i18n="skip">Pāriet uz saturu</a>
 
-    <header class="header" id="header">
-      <div class="container header-inner">
-        <a href="#" class="header-logo">
-          <img src="data/logo.png" alt="Jūrasmala" class="logo-img" width="413" height="138" />
-        </a>
-        <nav class="nav-desktop" aria-label="Main navigation">
-          <ul class="nav-links">
-            <li><a href="#par-mums" data-translate="nav-about">Par mums</a></li>
-            <li><a href="#lokacija" data-translate="nav-location">Lokācija</a></li>
-            <li><a href="#buvnieciba" data-translate="nav-construction">Būvniecība</a></li>
-            <li><a href="#telpu-galerija" data-translate="nav-rooms">Telpu galerija</a></li>
-            <li><a href="#zemes-plans" data-translate="nav-plans">Zemes plāns</a></li>
-            <li><a href="#galerija" data-translate="nav-gallery">Galerija</a></li>
-            <li><a href="#footer" data-translate="nav-contacts">Kontakti</a></li>
-          </ul>
-        </nav>
-        <div class="lang-switcher">
-          <button class="lang-btn" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false">
-            <span class="lang-current">LV</span>
-            <svg class="lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
-          </button>
-          <div class="lang-dropdown" id="langDropdown" role="listbox" aria-label="Language">
-            <button class="lang-option" role="option" data-lang="lv" aria-selected="true">LV <span>Latviešu</span></button>
-            <button class="lang-option" role="option" data-lang="en" aria-selected="false">EN <span>English</span></button>
-            <button class="lang-option" role="option" data-lang="ru" aria-selected="false">RU <span>Русский</span></button>
-          </div>
-        </div>
-        <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+    <header class="header sans">
+      <a class="logo" href="#"><img src="data/logo.png" alt="Jūrasmala" width="413" height="138" /></a>
+      <nav aria-label="Galvenā navigācija">
+        <a href="#gabali" data-i18n="nav-plots">Zemes gabali</a><a href="#majas" data-i18n="nav-houses">Mājas</a><a href="#lokacija" data-i18n="nav-location">Lokācija</a><a href="#kontakti" data-i18n="nav-contacts">Kontakti</a>
+        <span class="lang"><button type="button" data-set-lang="lv" aria-pressed="true">LV</button> <button type="button" data-set-lang="en" aria-pressed="false">EN</button></span>
+      </nav>
     </header>
 
-    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
-    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
-      <ul class="mobile-nav-links">
-        <li><a href="#par-mums" data-translate="nav-about">Par mums</a></li>
-        <li><a href="#lokacija" data-translate="nav-location">Lokācija</a></li>
-        <li><a href="#buvnieciba" data-translate="nav-construction">Būvniecība</a></li>
-        <li><a href="#telpu-galerija" data-translate="nav-rooms">Telpu galerija</a></li>
-        <li><a href="#zemes-plans" data-translate="nav-plans">Zemes plāns</a></li>
-        <li><a href="#galerija" data-translate="nav-gallery">Galerija</a></li>
-        <li><a href="#footer" data-translate="nav-contacts">Kontakti</a></li>
-      </ul>
-      <div class="mobile-lang-switcher">
-        <button class="mobile-lang-btn" data-lang="lv">LV</button>
-        <button class="mobile-lang-btn" data-lang="en">EN</button>
-        <button class="mobile-lang-btn" data-lang="ru">RU</button>
-      </div>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-i18n="menu">Izvēlne</button>
+    <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Izvēlne">
+      <div class="menu-top"><img src="data/logo.png" alt="Jūrasmala" width="413" height="138" /><button class="sans" type="button" data-menu-close data-i18n="menu-close">Aizvērt</button></div>
+      <ol>
+        <li style="--i:0"><a href="#gabali" data-i18n="nav-plots">Zemes gabali</a></li>
+        <li style="--i:1"><a href="#majas" data-i18n="nav-houses">Mājas</a></li>
+        <li style="--i:2"><a href="#telpas" data-i18n="nav-rooms">Telpas</a></li>
+        <li style="--i:3"><a href="#lokacija" data-i18n="nav-location">Lokācija</a></li>
+        <li style="--i:4"><a href="#kontakti" data-i18n="nav-contacts">Kontakti</a></li>
+      </ol>
+      <p class="contacts"><a href="tel:+37120440777">+371 2044 0777</a><br /><a href="mailto:kristine@kilupa.lv">kristine@kilupa.lv</a></p>
+      <p class="lang sans"><button type="button" data-set-lang="lv" aria-pressed="true">LV</button>  <button type="button" data-set-lang="en" aria-pressed="false">EN</button></p>
+    </div>
+
+    <nav class="dock" aria-label="Ātrās darbības">
+      <button class="dock-menu" type="button" aria-controls="menu" aria-expanded="false" data-i18n="menu">Izvēlne</button>
+      <span class="dock-info" aria-live="polite"></span>
+      <a class="dock-cta" href="tel:+37120440777" data-i18n="call">Zvanīt</a>
     </nav>
 
-    <section class="hero" id="hero">
-      <div class="hero-content">
-        <h1 class="hero-tagline anim-hero" data-translate="hero-tagline">Jūrasmala</h1>
-        <p class="hero-subtitle anim-hero" data-translate="hero-subtitle">Tava sapņu māja Vidzemes jūrmalā</p>
-      </div>
-      <div class="hero-scroll-indicator anim-hero">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 10l5 5 5-5"/></svg>
+    <section class="stage" data-stage data-delay="1400">
+      <div class="stage-pin">
+        <div class="stage-media">
+          <img data-frame src="data/construction_2.webp" data-zoom="1 1.12" data-origin="0.5 0.55" alt="Koka māja vakara gaismā" />
+          <img data-frame src="data/land_10.webp" data-zoom="1.02 1.18" data-origin="0.42 0.62" alt="Ciemata zemes gabali no putna lidojuma" />
+          <img data-frame src="data/land_7.webp" data-zoom="1 1.2" data-origin="0.62 0.55" alt="Koka laipa priežu mežā" />
+          <img data-frame src="data/land_6.webp" data-zoom="1 1.22" data-origin="0.45 0.45" alt="Taka caur priedēm uz jūru" />
+          <img data-frame src="data/coastal_image.webp" data-zoom="1.12 1" data-origin="0.5 0.5" alt="Vidzemes jūrmalas pludmale no putna lidojuma" />
+        </div>
+        <div class="stage-shade"></div>
+        <div class="walkline" aria-hidden="true"><span class="fill"></span><span class="a" data-i18n="walk-house">māja</span><span class="b" data-i18n="walk-sea">jūra</span></div>
+
+        <div class="stage-caption hero-cap" data-caption="0">
+          <div>
+            <h1 data-load-item>Jūrasmala</h1>
+            <span class="s" data-load-item data-i18n="hero-sub">Piejūras ciemats Lembužos, Vidzemes jūrmalā. Zeme un mājas 400 metru no jūras.</span>
+          </div>
+          <a class="side sans" href="#gabali" data-load-item><b data-i18n="hero-count">7 no 22</b><span data-i18n="hero-count-label">gabaliem vēl brīvi</span></a>
+        </div>
+        <div class="stage-caption" data-caption="1"><span class="t" data-i18n="cap-village">Ciemats</span><span class="s" data-i18n="cap-village-sub">22 zemes gabali privātmājām un dvīņu mājām. Elektrība katram gabalam, asfaltēta un apgaismota iela.</span></div>
+        <div class="stage-caption" data-caption="2"><span class="t" data-i18n="cap-forest">Priežu mežs</span><span class="s" data-i18n="cap-forest-sub">Piekrastes priežu meži.</span></div>
+        <div class="stage-caption" data-caption="3"><span class="t" data-i18n="cap-path">Taka uz jūru</span></div>
+        <div class="stage-caption" data-caption="4"><span class="t" data-i18n="cap-sea">400 metru līdz jūrai</span><span class="s" data-i18n="cap-sea-sub">Stundas brauciens no Rīgas.</span></div>
       </div>
     </section>
 
     <main id="main-content">
-
-      <section id="par-mums" class="section section-light reveal">
-        <div class="container about-grid">
-          <div class="about-copy">
-            <h2 class="section-heading" data-translate="nav-about">Par mums</h2>
-            <p class="section-text section-text--left" data-translate="about-text">
-              Piejūras ciemats "Jūrasmala" atrodas Lembužos gleznainajā
-              Vidzemes jūrmalas piekrastē, kurai raksturīga īpaši liela dabas
-              un ainavu daudzveidība, kā arī bagāta kultūrvēsture. Šeit
-              sastopamas gandrīz visu iespējamo tipu pludmales, stāvkrasti un
-              kāpas. Lembužciema pirmsākumi meklējami vēl tālajā 16. gadsimtā.
-              Ciemats atrodas stundas braucienā no Rīgas, 400 metrus no jūras.
-              Arvien vairāk cilvēki ikdienas dzīvesvietu izvēlas ārpus
-              pilsētas tuvāk dabai – klusumā un harmonijā, lieliska vieta, kur
-              baudīt dabu un smelties enerģiju. Ciemata zemesgabali paredzēti
-              privātmāju vai dvīņu māju apbūvei. Ciemata iedzīvotāju ērtībām
-              izbūvēts elektrības pieslēgums katram zemes gabalam, kā arī
-              asfaltēta un apgaismota iela.
-            </p>
-          </div>
-          <div class="about-image-wrap">
-            <img src="data/main.webp" alt="Jūrasmala piejūras ciemats" class="about-image" loading="lazy" width="1600" height="1066" />
-          </div>
+      <section class="block village" id="par-mums">
+        <p class="lead-in" data-i18n="about-lead">Lembužciema pirmsākumi meklējami 16. gadsimtā. Šeit sastopamas gandrīz visu iespējamo tipu pludmales, stāvkrasti un kāpas.</p>
+        <div class="prose">
+          <p data-i18n="about-1">Piejūras ciemats "Jūrasmala" atrodas Lembužos, gleznainajā Vidzemes jūrmalas piekrastē, kurai raksturīga īpaši liela dabas un ainavu daudzveidība, kā arī bagāta kultūrvēsture.</p>
+          <p data-i18n="about-2">Arvien vairāk cilvēku ikdienas dzīvesvietu izvēlas ārpus pilsētas, tuvāk dabai. Ciemata zemes gabali paredzēti privātmāju vai dvīņu māju apbūvei. Katram gabalam ir izbūvēts elektrības pieslēgums, iela ir asfaltēta un apgaismota.</p>
+        </div>
+        <div class="strip" data-strip>
+        <figure class="f1" data-reveal-image><div class="ph"><img data-zoomable src="data/land_9.webp" alt="Rudens mežs gar jūras krastu" loading="lazy" /></div><figcaption data-i18n="fig-coast-autumn">Piekraste rudenī</figcaption></figure>
+        <figure class="f2" data-reveal-image><div class="ph"><img data-zoomable src="data/land_3.webp" alt="Lembuži un pludmale no putna lidojuma" loading="lazy" /></div><figcaption data-i18n="fig-lembuzi">Lembuži no jūras puses</figcaption></figure>
+        <figure class="f3" data-reveal-image><div class="ph"><img data-zoomable src="data/land_8.webp" alt="Pļavas un mežs līdz jūrai" loading="lazy" style="object-position:30% 50%" /></div><figcaption data-i18n="fig-meadows">Pļavas starp ciematu un jūru</figcaption></figure>
+        <figure class="f4" data-reveal-image><div class="ph"><img data-zoomable src="data/land_2.webp" alt="Ciemats un piekraste no jūras puses" loading="lazy" /></div><figcaption data-i18n="fig-village-sea">Ciemats no jūras puses</figcaption></figure>
         </div>
       </section>
 
-      <section id="lokacija" class="section section-light-alt reveal">
-        <div class="container location-grid">
-          <div class="location-copy">
-            <h2 class="section-heading" data-translate="location-title">Lokācija</h2>
-            <p class="section-text section-text--left" data-translate="location-text">
-              Īpašums atrodas Liepupes pagastā, Limbažu novadā, ciematā
-              Lembužos. Šī ir lieliska vieta, kur skaisti un klusi dzīvot, nav
-              tālu no galvaspilsētas pasakainajā Ziemeļvidzemes jūras
-              piekrastē. Ciemats atrodas vien 15 līdz 40 minūšu brauciena attālumā no
-              skolām, pirmskolas izglītības iestādēm, veikaliem, ārstniecības
-              iestādēm un citiem svarīgiem objektiem. Vien 10 minūšu brauciena
-              attālumā tiks izbūvēta Rail Baltic dzelzceļa stacija "Tūja".
-            </p>
+      <section class="block place" id="lokacija">
+        <div class="copy">
+          <h2>Lembuži</h2>
+          <p class="dim" data-i18n="location-text">Liepupes pagasts, Limbažu novads. Skaista un klusa vieta Ziemeļvidzemes jūras piekrastē, netālu no galvaspilsētas.</p>
+          <ul class="timetable">
+            <li><span><span data-i18n="tt-station">Rail Baltica stacija "Tūja"</span><small data-i18n="tt-station-note">tiks izbūvēta</small></span><span class="lead"></span><span class="v">10 min</span></li>
+            <li><span data-i18n="tt-services">Skolas, bērnudārzi, veikali, ārstniecības iestādes</span><span class="lead"></span><span class="v">15–40 min</span></li>
+            <li><span data-i18n="tt-riga">Rīga</span><span class="lead"></span><span class="v" data-i18n="tt-riga-time">1 h</span></li>
+          </ul>
+        </div>
+        <figure class="bleed map"><div class="ph"><iframe title="Jūrasmala kartē" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4727.158869393929!2d24.3941950789476!3d57.4670815960261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1753264332454!5m2!1sen!2sus"></iframe></div><figcaption>Jūras iela, Lembuži</figcaption></figure>
+      </section>
+
+      <section class="block" id="gabali">
+        <div class="plots-head">
+          <h2 data-i18n="plots-title">Brīvie zemes gabali</h2>
+          <p class="dim" data-i18n="plots-text">Izvēlieties gabalu plānā vai sarakstā. Dzeltenie gabali vēl ir brīvi.</p>
+        </div>
+        <div class="sheet" data-plan-print>
+          <div class="sheet-map"><img src="data/land_5-clean.webp" alt="Ciemata zemes gabalu plāns no putna lidojuma" width="1667" height="944" /></div>
+          <div class="sheet-note" aria-live="polite"></div>
+          <div class="sheet-list">
+            <ol class="pricelist">
+            <li data-plot="1a" data-status="available" data-offer="land" data-area="1300" data-price="35000" data-x="0.517" data-y="0.7687"><button type="button"><span class="addr">Jūras iela 1a</span><span class="what"><span data-i18n="offer-land">Zeme</span>, 1 300 m²</span><span class="lead" aria-hidden="true"></span><span class="price">35 000 EUR</span></button></li>
+            <li data-plot="2a" data-status="available" data-offer="house-60" data-area="1136" data-price="169000" data-x="0.6068" data-y="0.8276"><button type="button"><span class="addr">Jūras iela 2a</span><span class="what"><span data-i18n="offer-house-60">Zeme un māja 60 m²</span>, 1 136 m²</span><span class="lead" aria-hidden="true"></span><span class="price">169 000 EUR</span></button></li>
+            <li data-plot="2b" data-status="available" data-offer="house-25" data-area="1494" data-price="105000" data-x="0.6782" data-y="0.904"><button type="button"><span class="addr">Jūras iela 2b</span><span class="what"><span data-i18n="offer-house-25">Zeme un māja 25 m²</span>, 1 494 m²</span><span class="lead" aria-hidden="true"></span><span class="price">105 000 EUR</span></button></li>
+            <li data-plot="3a" data-status="available" data-offer="house-60" data-area="1345" data-price="169000" data-x="0.4174" data-y="0.713"><button type="button"><span class="addr">Jūras iela 3a</span><span class="what"><span data-i18n="offer-house-60">Zeme un māja 60 m²</span>, 1 345 m²</span><span class="lead" aria-hidden="true"></span><span class="price">169 000 EUR</span></button></li>
+            <li data-plot="3b" data-status="available" data-offer="house-60" data-area="1165" data-price="169000" data-x="0.4592" data-y="0.7391"><button type="button"><span class="addr">Jūras iela 3b</span><span class="what"><span data-i18n="offer-house-60">Zeme un māja 60 m²</span>, 1 165 m²</span><span class="lead" aria-hidden="true"></span><span class="price">169 000 EUR</span></button></li>
+            <li data-plot="4a" data-status="available" data-offer="house-84" data-area="1470" data-price="198000" data-x="0.6529" data-y="0.7755"><button type="button"><span class="addr">Jūras iela 4a</span><span class="what"><span data-i18n="offer-house-84">Zeme un māja 84 m²</span>, 1 470 m²</span><span class="lead" aria-hidden="true"></span><span class="price">198 000 EUR</span></button></li>
+            <li data-plot="4b" data-status="available" data-offer="house-84" data-area="1170" data-price="198000" data-x="0.7163" data-y="0.8447"><button type="button"><span class="addr">Jūras iela 4b</span><span class="what"><span data-i18n="offer-house-84">Zeme un māja 84 m²</span>, 1 170 m²</span><span class="lead" aria-hidden="true"></span><span class="price">198 000 EUR</span></button></li>
+            </ol>
+            <p class="sold-line"><span data-i18n="sold-label">Pārdoti:</span> <span class="item"><button type="button" data-plot="1b" data-status="sold" data-offer="land" data-area="1252" data-x="0.5678" data-y="0.7248">1b</button>,</span> <span class="item"><button type="button" data-plot="5" data-status="sold" data-offer="land" data-area="2500" data-x="0.4994" data-y="0.6557">5</button>,</span> <span class="item"><button type="button" data-plot="6a" data-status="sold" data-offer="land" data-area="1193" data-x="0.692" data-y="0.7332">6a</button>,</span> <span class="item"><button type="button" data-plot="6b" data-status="sold" data-offer="land" data-area="1298" data-x="0.7522" data-y="0.7928">6b</button>,</span> <span class="item"><button type="button" data-plot="7a" data-status="sold" data-offer="land" data-area="1257" data-x="0.5656" data-y="0.6082">7a</button>,</span> <span class="item"><button type="button" data-plot="7b" data-status="sold" data-offer="land" data-area="1256" data-x="0.6139" data-y="0.6678">7b</button>,</span> <span class="item"><button type="button" data-plot="8" data-status="sold" data-offer="land" data-area="2520" data-x="0.7494" data-y="0.7047">8</button>,</span> <span class="item"><button type="button" data-plot="9a" data-status="sold" data-offer="land" data-area="1254" data-x="0.6036" data-y="0.5757">9a</button>,</span> <span class="item"><button type="button" data-plot="9b" data-status="sold" data-offer="house-84" data-area="1149" data-x="0.6466" data-y="0.6234">9b</button>,</span> <span class="item"><button type="button" data-plot="10" data-status="sold" data-offer="land" data-area="2505" data-x="0.7805" data-y="0.6615">10</button>,</span> <span class="item"><button type="button" data-plot="11a" data-status="sold" data-offer="land" data-area="1394" data-x="0.6398" data-y="0.5444">11a</button>,</span> <span class="item"><button type="button" data-plot="11b" data-status="sold" data-offer="house-84" data-area="1114" data-x="0.682" data-y="0.5906">11b</button>,</span> <span class="item"><button type="button" data-plot="12" data-status="sold" data-offer="land" data-area="2684" data-x="0.8098" data-y="0.6148">12</button>,</span> <span class="item"><button type="button" data-plot="13" data-status="sold" data-offer="land" data-area="2549" data-x="0.6955" data-y="0.5408">13</button>,</span> <span class="item"><button type="button" data-plot="15" data-status="sold" data-offer="land" data-area="2521" data-x="0.7289" data-y="0.5151">15</button>.</span></p>
+            <p class="valid sans moss" data-i18n="prices-valid">Cenas spēkā no 2026. gada 30. septembra.</p>
           </div>
-          <div class="map-placeholder" id="mapPlaceholder" role="button" tabindex="0" aria-label="Load interactive map">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" opacity="0.6"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            <p data-translate="map-load-text">Noklikšķiniet, lai ielādētu karti</p>
-            <p class="map-note" data-translate="map-load-note">Tiks ielādēts Google Maps</p>
+        </div>
+        <div class="after-build">
+          <div class="ab-text">
+            <h3 data-i18n="after-title">Pēc apbūves</h3>
+            <p class="dim" data-i18n="after-text">Tā ciemats izskatīsies, kad visas mājas būs uzbūvētas.</p>
           </div>
+          <figure data-reveal-image><div class="ph"><span class="tag" data-i18n="tag-render">Vizualizācija</span><img data-zoomable src="data/land_1.webp" alt="Ciemata vizualizācija pēc apbūves" loading="lazy" /></div></figure>
         </div>
       </section>
 
-      <section id="buvnieciba" class="section section-light reveal">
-        <div class="container">
-          <h2 class="section-heading" data-translate="construction-title">Būvniecība</h2>
-          <p class="section-text section-text--left" data-translate="construction-text">
-            Piedāvājam pilnu pakalpojumu spektru sākot ar projektēšanu un
-            beidzot ar teritorijas ainavisko labiekārtošanu. Veicam
-            konstruktīvos aprēķinus un celtniecības tāmju sastādīšanu.
-            Veicam tehnisko uzraudzību un kontroli katrā būvniecības etapā.
-            Izmantojam sertificētus, videi draudzīgus ekoloģiskus materiālus
-            un tehnoloģijas. Uz šo brīdi piedāvājumā 2 izstrādāti projekti
-            mājām 50 kv. m., un 90 kv.m.
-          </p>
-          <div class="mosaic mosaic--construction">
-            <div class="tile"><img src="data/construction_1.webp" alt="Būvniecības projekts" class="lightbox-trigger" data-group="construction" loading="lazy" width="1024" height="614" /></div>
-            <div class="tile"><img src="data/construction_2.webp" alt="Mājas būvniecība" class="lightbox-trigger" data-group="construction" loading="lazy" width="1024" height="681" /></div>
-            <div class="tile"><img src="data/construction_3.webp" alt="Konstrukcijas detaļas" class="lightbox-trigger" data-group="construction" loading="lazy" width="1024" height="681" /></div>
-            <div class="tile"><img src="data/construction_4.webp" alt="Interjera apdare" class="lightbox-trigger" data-group="construction" loading="lazy" width="1200" height="675" /></div>
-            <div class="tile"><img src="data/construction_5.webp" alt="Ēkas fasāde" class="lightbox-trigger" data-group="construction" loading="lazy" width="1024" height="681" /></div>
-            <div class="tile"><img src="data/construction_6.webp" alt="Gatavais projekts" class="lightbox-trigger" data-group="construction" loading="lazy" width="1024" height="681" /></div>
-          </div>
+      <section class="block houses" id="majas">
+        <h2 data-i18n="houses-title">Zeme ar māju</h2>
+        <div class="prose dim">
+          <p data-i18n="houses-text">Mājas būvējam paši, no projekta līdz dārzam. Pieejamas mājas 25, 60 un 84 m² platībā kopā ar zemi, no 105 000 līdz 198 000 EUR. Izmantojam sertificētus, videi draudzīgus materiālus un tehnoloģijas.</p>
+        </div>
+        <ol class="steps">
+          <li data-i18n="step-1">Projektēšana</li>
+          <li data-i18n="step-2">Konstruktīvie aprēķini un tāmes</li>
+          <li data-i18n="step-3">Būvniecība</li>
+          <li data-i18n="step-4">Tehniskā uzraudzība katrā posmā</li>
+          <li data-i18n="step-5">Teritorijas ainaviskā labiekārtošana</li>
+        </ol>
+        <div class="strip" data-strip>
+        <figure class="g1" data-reveal-image><div class="ph"><img data-zoomable src="data/construction_3.webp" alt="Koka māja ar terasi" loading="lazy" /></div><figcaption data-i18n="fig-house-terrace">Koka māja ar terasi</figcaption></figure>
+        <figure class="g2" data-reveal-image><div class="ph"><img data-zoomable src="data/land_11.webp" alt="Melna koka māja pļavā" loading="lazy" /></div><figcaption data-i18n="fig-house-meadow">Melna koka māja pļavā</figcaption></figure>
+        <figure class="g3" data-reveal-image><div class="ph"><img data-zoomable src="data/construction_5.webp" alt="Neliela melna koka māja" loading="lazy" /></div><figcaption data-i18n="fig-house-small">Neliela māja ar terasi</figcaption></figure>
+        <figure class="g4" data-reveal-image><div class="ph"><img data-zoomable src="data/construction_6.webp" alt="Terase ar ugunskura krāsni" loading="lazy" /></div><figcaption data-i18n="fig-terrace-fire">Terase ar ugunskura krāsni</figcaption></figure>
+        <figure class="g5" data-reveal-image><div class="ph"><img data-zoomable src="data/construction_1.webp" alt="Mājas projekta vizualizācija" loading="lazy" /></div><figcaption data-i18n="fig-render-house">Mājas projekts, vizualizācija</figcaption></figure>
+        <figure class="g6" data-reveal-image><div class="ph"><img data-zoomable src="data/construction_4.webp" alt="Divstāvu mājas projekta vizualizācija" loading="lazy" style="object-position:50% 62%" /></div><figcaption data-i18n="fig-render-two-storey">Divstāvu mājas projekts, vizualizācija</figcaption></figure>
         </div>
       </section>
 
-      <section id="telpu-galerija" class="section section-dark reveal">
-        <div class="container">
-          <h2 class="section-heading" data-translate="rooms-title">Telpu galerija</h2>
-          <div class="room-stage" id="roomStage">
-            <figure class="room-stage-figure">
-              <img id="roomStageImg" class="room-stage-img" src="data/interior_1.webp" alt="Dzīvojamā istaba ar virtuvi" width="2048" height="1363" loading="lazy" />
-              <figcaption class="room-stage-caption">
-                <span id="roomStageCaption" data-translate="room-1">Dzīvojamā istaba ar virtuvi</span>
-                <span class="room-counter" aria-live="polite"><span id="roomIndex">1</span> / 5</span>
-              </figcaption>
-            </figure>
-            <button class="room-stage-arrow room-stage-arrow--prev" id="roomPrev" type="button" aria-label="Previous"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 18l-6-6 6-6"/></svg></button>
-            <button class="room-stage-arrow room-stage-arrow--next" id="roomNext" type="button" aria-label="Next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 18l6-6-6-6"/></svg></button>
-          </div>
-          <div class="room-thumbs" id="roomThumbs">
-            <button class="room-thumb" type="button" data-index="0" data-src="data/interior_1.webp" data-caption="room-1" data-width="2048" data-height="1363" aria-current="true">
-              <img src="data/interior_1.webp" alt="" loading="lazy" width="2048" height="1363" />
-              <span class="visually-hidden" data-translate="room-1">Dzīvojamā istaba ar virtuvi</span>
-            </button>
-            <button class="room-thumb" type="button" data-index="1" data-src="data/interior_3.webp" data-caption="room-3" data-width="1200" data-height="675">
-              <img src="data/interior_3.webp" alt="" loading="lazy" width="1200" height="675" />
-              <span class="visually-hidden" data-translate="room-3">Virtuve un ēdamzona</span>
-            </button>
-            <button class="room-thumb" type="button" data-index="2" data-src="data/interior_4.webp" data-caption="room-4" data-width="1200" data-height="675">
-              <img src="data/interior_4.webp" alt="" loading="lazy" width="1200" height="675" />
-              <span class="visually-hidden" data-translate="room-4">Dzīvojamā zona</span>
-            </button>
-            <button class="room-thumb" type="button" data-index="3" data-src="data/interior_5.webp" data-caption="room-5" data-width="1200" data-height="798">
-              <img src="data/interior_5.webp" alt="" loading="lazy" width="1200" height="798" />
-              <span class="visually-hidden" data-translate="room-5">Vannas istaba</span>
-            </button>
-            <button class="room-thumb" type="button" data-index="4" data-src="data/interior_6.webp" data-caption="room-6" data-width="1200" data-height="798">
-              <img src="data/interior_6.webp" alt="" loading="lazy" width="1200" height="798" />
-              <span class="visually-hidden" data-translate="room-6">Virtuve</span>
-            </button>
-          </div>
+      <section class="block rooms" id="telpas">
+        <h2 data-i18n="rooms-title">Telpas</h2>
+        <div class="strip" data-strip>
+        <figure class="r1" data-reveal-image><div class="ph"><img data-zoomable src="data/interior_1.webp" alt="Dzīvojamā istaba ar virtuvi" loading="lazy" /></div><figcaption data-i18n="room-living-kitchen">Dzīvojamā istaba ar virtuvi</figcaption></figure>
+        <figure class="r2" data-reveal-image><div class="ph"><img data-zoomable src="data/interior_6.webp" alt="Virtuve ar logiem uz pļavu" loading="lazy" /></div><figcaption data-i18n="room-kitchen">Virtuve</figcaption></figure>
+        <figure class="r3" data-reveal-image><div class="ph"><img data-zoomable src="data/interior_5.webp" alt="Vannas istaba" loading="lazy" /></div><figcaption data-i18n="room-bathroom">Vannas istaba</figcaption></figure>
+        <figure class="r4" data-reveal-image><div class="ph"><img data-zoomable src="data/interior_3.webp" alt="Virtuve un ēdamzona" loading="lazy" /></div><figcaption data-i18n="room-dining">Virtuve un ēdamzona</figcaption></figure>
+        <figure class="r5" data-reveal-image><div class="ph"><img data-zoomable src="data/interior_4.webp" alt="Dzīvojamā zona" loading="lazy" /></div><figcaption data-i18n="room-living">Dzīvojamā zona</figcaption></figure>
         </div>
       </section>
 
-      <section id="zemes-plans" class="section section-light reveal">
-        <div class="container">
-          <h2 class="section-heading" data-translate="plans-title">Zemes plāns</h2>
-          <div class="plans-group">
-            <div class="master-plan">
-              <img src="data/land_5.webp" alt="Ciemata ģenerālplāns" class="master-plan-img lightbox-trigger" loading="lazy" width="1667" height="944" />
-            </div>
-            <div class="land-plan-grid">
-              <img src="data/land_2.webp" alt="Zemes plāns 2" class="land-plan-img lightbox-trigger" loading="lazy" width="1024" height="682" />
-              <img src="data/land_3.webp" alt="Zemes plāns 3" class="land-plan-img lightbox-trigger" loading="lazy" width="1024" height="682" />
-            </div>
-          </div>
-
-          <div class="plots-divider"></div>
-
-          <div class="plots-header">
-            <h3 class="plots-heading" data-translate="plots-heading">Zemes gabali</h3>
-            <div class="filter-tabs" role="group" aria-label="Filter plots">
-              <button class="filter-tab active" aria-pressed="true" data-filter="all" data-translate="filter-all">Visi</button>
-              <button class="filter-tab" aria-pressed="false" data-filter="available" data-translate="filter-available">Pieejami</button>
-              <button class="filter-tab" aria-pressed="false" data-filter="sold" data-translate="filter-sold">Pārdoti</button>
-              <button class="filter-tab" aria-pressed="false" data-filter="reserved" data-translate="filter-reserved">Rezervēti</button>
-            </div>
-          </div>
-
-          <div class="plots-table-wrap">
-            <table class="plots-table" id="plotsTable">
-              <thead>
-                <tr>
-                  <th data-translate="table-address">Adrese</th>
-                  <th data-translate="table-offer">Piedāvājums</th>
-                  <th data-translate="table-area">Platība, m²</th>
-                  <th data-translate="table-price">Cena, EUR</th>
-                  <th data-translate="table-availability">Pieejamība</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-status="available" data-plot="1a"><td>Jūras iela 1a</td><td data-translate="table-land">Zeme</td><td>1 300</td><td>35 000</td><td><span class="status-dot status-dot--available"></span> <span data-translate="status-available">Pieejams</span></td></tr>
-                <tr data-status="sold" data-plot="1b"><td>Jūras iela 1b</td><td data-translate="table-land">Zeme</td><td>1 252</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="available" data-plot="2a"><td>Jūras iela 2a</td><td data-translate="table-land-house-60">Zeme un māja (60m²)</td><td>1 136</td><td>169 000</td><td><span class="status-dot status-dot--available"></span> <span data-translate="status-available">Pieejams</span></td></tr>
-                <tr data-status="available" data-plot="2b"><td>Jūras iela 2b</td><td data-translate="table-land-house-25">Zeme un māja (25m²)</td><td>1 494</td><td>105 000</td><td><span class="status-dot status-dot--available"></span> <span data-translate="status-available">Pieejams</span></td></tr>
-                <tr data-status="available" data-plot="3a"><td>Jūras iela 3a</td><td data-translate="table-land-house-60">Zeme un māja (60m²)</td><td>1 345</td><td>169 000</td><td><span class="status-dot status-dot--available"></span> <span data-translate="status-available">Pieejams</span></td></tr>
-                <tr data-status="available" data-plot="3b"><td>Jūras iela 3b</td><td data-translate="table-land-house-60">Zeme un māja (60m²)</td><td>1 165</td><td>169 000</td><td><span class="status-dot status-dot--available"></span> <span data-translate="status-available">Pieejams</span></td></tr>
-                <tr data-status="available" data-plot="4a"><td>Jūras iela 4a</td><td data-translate="table-land-house-84">Zeme un māja (84m²)</td><td>1 470</td><td>198 000</td><td><span class="status-dot status-dot--available"></span> <span data-translate="status-available">Pieejams</span></td></tr>
-                <tr data-status="available" data-plot="4b"><td>Jūras iela 4b</td><td data-translate="table-land-house-84">Zeme un māja (84m²)</td><td>1 170</td><td>198 000</td><td><span class="status-dot status-dot--available"></span> <span data-translate="status-available">Pieejams</span></td></tr>
-                <tr data-status="sold" data-plot="5"><td>Jūras iela 5</td><td data-translate="table-land">Zeme</td><td>2 500</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="6a"><td>Jūras iela 6a</td><td data-translate="table-land">Zeme</td><td>1 193</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="6b"><td>Jūras iela 6b</td><td data-translate="table-land">Zeme</td><td>1 298</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="7a"><td>Jūras iela 7a</td><td data-translate="table-land">Zeme</td><td>1 257</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="7b"><td>Jūras iela 7b</td><td data-translate="table-land">Zeme</td><td>1 256</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="8"><td>Jūras iela 8</td><td data-translate="table-land">Zeme</td><td>2 520</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="9a"><td>Jūras iela 9a</td><td data-translate="table-land">Zeme</td><td>1 254</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="9b"><td>Jūras iela 9b</td><td data-translate="table-land-house-84">Zeme un māja (84m²)</td><td>1 149</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="10"><td>Jūras iela 10</td><td data-translate="table-land">Zeme</td><td>2 505</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="11a"><td>Jūras iela 11a</td><td data-translate="table-land">Zeme</td><td>1 394</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="11b"><td>Jūras iela 11b</td><td data-translate="table-land-house-84">Zeme un māja (84m²)</td><td>1 114</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="12"><td>Jūras iela 12</td><td data-translate="table-land">Zeme</td><td>2 684</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="13"><td>Jūras iela 13</td><td data-translate="table-land">Zeme</td><td>2 549</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-                <tr data-status="sold" data-plot="15"><td>Jūras iela 15</td><td data-translate="table-land">Zeme</td><td>2 521</td><td>-</td><td><span class="status-dot status-dot--sold"></span> <span data-translate="status-sold">Pārdots</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <section class="block finance">
+        <p><span data-i18n="finance-lead">Mājas iegādei var pieteikties kredītam</span>
+          <a href="https://www.luminor.lv/lv/apkaimes" target="_blank" rel="noopener">Luminor</a>,
+          <a href="https://www.citadele.lv/lv/private/mortgage/" target="_blank" rel="noopener">Citadele</a>,
+          <a href="https://www.bluorbank.lv/latvija/lv/hipotekarais-kredits-majokla-iegadei" target="_blank" rel="noopener">BluOr Bank</a>,
+          <a href="https://www.swedbank.lv/private/credit/loans/home?language=LAT" target="_blank" rel="noopener">Swedbank</a>
+          <span data-i18n="finance-or">vai</span> <a href="https://www.altum.lv/pakalpojumi/iedzivotajiem/" target="_blank" rel="noopener">Altum</a>.</p>
       </section>
 
-      <section id="galerija" class="section section-light-alt reveal">
-        <div class="container">
-          <h2 class="section-heading" data-translate="gallery-title">Galerija</h2>
-          <div class="mosaic mosaic--gallery">
-            <div class="tile"><img src="data/land_9.webp" alt="Pludmale" class="lightbox-trigger" data-group="gallery" loading="lazy" width="1024" height="682" /></div>
-            <div class="tile"><img src="data/land_11.webp" alt="Jūrasmala ainava" class="lightbox-trigger" data-group="gallery" loading="lazy" width="1200" height="798" /></div>
-            <div class="tile"><img src="data/land_6.webp" alt="Piejūras mežs" class="lightbox-trigger" data-group="gallery" loading="lazy" width="1024" height="681" /></div>
-            <div class="tile"><img src="data/land_7.webp" alt="Ceļš uz jūru" class="lightbox-trigger" data-group="gallery" loading="lazy" width="1024" height="681" /></div>
-            <div class="tile"><img src="data/land_8.webp" alt="Ciemata apkārtne" class="lightbox-trigger" data-group="gallery" loading="lazy" width="1024" height="682" /></div>
-            <div class="tile"><img src="data/land_10.webp" alt="Jūrasmala no augšas" class="lightbox-trigger" data-group="gallery" loading="lazy" width="2500" height="1665" /></div>
-          </div>
+      <section class="closing" id="kontakti">
+        <img src="data/main.webp" alt="Pludmale un rudens mežs no augšas" loading="lazy" />
+        <div class="c">
+          <h2 data-i18n="closing-title">Atbrauciet apskatīt zemi dabā.</h2>
+          <p class="contacts"><a href="tel:+37120440777">+371 2044 0777</a><br /><a href="mailto:kristine@kilupa.lv">kristine@kilupa.lv</a></p>
         </div>
       </section>
-
-      <section id="finansejums" class="section section-dark reveal">
-        <div class="container">
-          <h2 class="section-heading" data-translate="financing-title">Māju finansējuma partneri</h2>
-          <div class="partners-grid">
-            <div class="partner">
-              <img src="data/bank1.webp" alt="Luminor" class="partner-logo" loading="lazy" width="200" height="90" />
-              <a href="https://www.luminor.lv/lv/apkaimes" target="_blank" rel="noopener" class="partner-link" data-translate="loan-button">Pieteikties aizdevumam</a>
-            </div>
-            <div class="partner">
-              <img src="data/bank2.webp" alt="Citadele" class="partner-logo" loading="lazy" width="512" height="151" />
-              <a href="https://www.citadele.lv/lv/private/mortgage/" target="_blank" rel="noopener" class="partner-link" data-translate="loan-button">Pieteikties aizdevumam</a>
-            </div>
-            <div class="partner">
-              <img src="data/bank3.webp" alt="BlueOrange" class="partner-logo" loading="lazy" width="300" height="300" />
-              <a href="https://www.bluorbank.lv/latvija/lv/hipotekarais-kredits-majokla-iegadei" target="_blank" rel="noopener" class="partner-link" data-translate="loan-button">Pieteikties aizdevumam</a>
-            </div>
-            <div class="partner">
-              <img src="data/bank4.webp" alt="Swedbank" class="partner-logo" loading="lazy" width="300" height="81" />
-              <a href="https://www.swedbank.lv/private/credit/loans/home?language=LAT" target="_blank" rel="noopener" class="partner-link" data-translate="loan-button">Pieteikties aizdevumam</a>
-            </div>
-            <div class="partner">
-              <img src="data/bank5.webp" alt="Altum" class="partner-logo" loading="lazy" width="400" height="266" />
-              <a href="https://www.altum.lv/pakalpojumi/iedzivotajiem/" target="_blank" rel="noopener" class="partner-link" data-translate="loan-button">Pieteikties aizdevumam</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
     </main>
 
-    <footer id="footer" class="footer">
-      <div class="container footer-inner">
-        <div class="footer-contact">
-          <h3 data-translate="contact-title">Sazinieties ar mums</h3>
-          <p><strong data-translate="phone-label">Tālrunis:</strong> +371 2044 0777</p>
-          <p><strong data-translate="email-label">E-pasts:</strong> kristine@kilupa.lv</p>
-        </div>
-        <div class="footer-brand">
-          <img src="data/logo.png" alt="Jūrasmala" class="footer-logo-img" width="413" height="138" />
-        </div>
-        <div class="footer-social">
-          <h3 data-translate="social-title">Sekojiet mums</h3>
-          <div class="social-icons">
-            <a href="https://www.facebook.com/jurasmala" class="social-icon" aria-label="Facebook" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-            <a href="https://www.instagram.com/jurasmala" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-copyright">
-        <p data-translate="copyright">Visas tiesības aizsargātas © 2026 jurasmala.lv</p>
-      </div>
+    <footer class="colophon sans moss">
+      <a class="logo" href="#"><img src="data/logo.png" alt="Jūrasmala" width="413" height="138" /></a>
+      <div>Jūras iela, Lembuži<br /><span data-i18n="address-region">Liepupes pagasts, Limbažu novads</span></div>
+      <div>+371 2044 0777<br />kristine@kilupa.lv</div>
+      <div><a href="https://www.facebook.com/jurasmala">Facebook</a>, <a href="https://www.instagram.com/jurasmala">Instagram</a><br />© <span data-year>2026</span> jurasmala.lv</div>
     </footer>
 
-    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
-      <div class="lightbox-overlay"></div>
-      <button class="lightbox-close" type="button" aria-label="Close">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
-      <button class="lightbox-nav lightbox-nav--prev" type="button" aria-label="Previous"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 18l-6-6 6-6"/></svg></button>
-      <figure class="lightbox-figure">
-        <img class="lightbox-img" src="" alt="" />
-        <figcaption class="lightbox-caption"><span class="lightbox-caption-text"></span><span class="lightbox-counter"></span></figcaption>
-      </figure>
-      <button class="lightbox-nav lightbox-nav--next" type="button" aria-label="Next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 18l6-6-6-6"/></svg></button>
-    </div>
-
-    <div class="consent-banner" id="consentBanner" role="dialog" aria-label="Cookie consent">
-      <div class="consent-inner">
-        <div class="consent-accent"></div>
-        <p class="consent-text" data-translate="consent-text">Mēs izmantojam sīkdatnes un trešo pušu pakalpojumus, lai uzlabotu jūsu pārlūkošanas pieredzi, analizētu vietnes apmeklējumu un nodrošinātu interaktīvu saturu.</p>
-        <div class="consent-actions">
-          <button class="consent-btn consent-btn--accept" id="consentAccept" data-translate="consent-accept">Pieņemt visas</button>
-          <button class="consent-btn consent-btn--decline" id="consentDecline" data-translate="consent-decline">Tikai nepieciešamās</button>
-        </div>
+    <div class="consent-banner" id="consentBanner" role="dialog" aria-label="Sīkdatnes">
+      <p class="consent-text" data-i18n="consent-text">Mēs izmantojam sīkdatnes un trešo pušu pakalpojumus, lai uzlabotu jūsu pārlūkošanas pieredzi, analizētu vietnes apmeklējumu un nodrošinātu interaktīvu saturu.</p>
+      <div class="consent-actions">
+        <button class="consent-btn consent-btn--accept" id="consentAccept" type="button" data-i18n="consent-accept">Pieņemt visas</button>
+        <button class="consent-btn consent-btn--decline" id="consentDecline" type="button" data-i18n="consent-decline">Tikai nepieciešamās</button>
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="js/i18n.js" defer></script>
+    <script src="js/motion.js" defer></script>
+    <script src="js/stage.js" defer></script>
+    <script src="js/plan.js" defer></script>
+    <script src="js/ui.js" defer></script>
+    <script src="js/consent.js" defer></script>
   </body>
 </html>
