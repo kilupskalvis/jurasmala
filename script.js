@@ -24,6 +24,11 @@ const translations = {
     'plans-title': 'Zemes plāns',
     'plots-heading': 'Zemes gabali',
     'gallery-title': 'Galerija',
+    'room-1': 'Dzīvojamā istaba ar virtuvi',
+    'room-3': 'Virtuve un ēdamzona',
+    'room-4': 'Dzīvojamā zona',
+    'room-5': 'Vannas istaba',
+    'room-6': 'Virtuve',
     'financing-title': 'Māju finansējuma partneri',
     'filter-all': 'Visi',
     'filter-available': 'Pieejami',
@@ -73,6 +78,11 @@ const translations = {
     'plans-title': 'Land Plan',
     'plots-heading': 'Land Plots',
     'gallery-title': 'Gallery',
+    'room-1': 'Living room and kitchen',
+    'room-3': 'Kitchen and dining area',
+    'room-4': 'Living area',
+    'room-5': 'Bathroom',
+    'room-6': 'Kitchen',
     'financing-title': 'Home Financing Partners',
     'filter-all': 'All',
     'filter-available': 'Available',
@@ -122,6 +132,11 @@ const translations = {
     'plans-title': 'План земли',
     'plots-heading': 'Земельные участки',
     'gallery-title': 'Галерея',
+    'room-1': 'Гостиная с кухней',
+    'room-3': 'Кухня и столовая',
+    'room-4': 'Жилая зона',
+    'room-5': 'Ванная комната',
+    'room-6': 'Кухня',
     'financing-title': 'Партнеры по финансированию домов',
     'filter-all': 'Все',
     'filter-available': 'Доступные',
@@ -155,7 +170,14 @@ const translations = {
 };
 
 /* --- Translation --- */
+let currentLang = 'lv';
+
+function t(key) {
+  return (translations[currentLang] && translations[currentLang][key]) || translations.lv[key] || '';
+}
+
 function translatePage(lang) {
+  currentLang = lang;
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-translate]').forEach(el => {
     const key = el.getAttribute('data-translate');
@@ -163,6 +185,7 @@ function translatePage(lang) {
       el.textContent = translations[lang][key];
     }
   });
+  document.dispatchEvent(new CustomEvent('site:translated'));
 }
 
 /* --- Language Switcher (Desktop) --- */
@@ -348,6 +371,46 @@ function initScrollReveal() {
   reveals.forEach(el => observer.observe(el));
 }
 
+/* --- Touch Swipe --- */
+function onSwipe(el, handler) {
+  let startX = null;
+  let startY = null;
+
+  el.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  el.addEventListener('touchend', e => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    startX = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      handler(dx < 0 ? 1 : -1);
+    }
+  });
+}
+
+/* --- Image Swap (fade out, preload, fade in) --- */
+function swapImage(img, src, onSwap) {
+  const token = (img._swapToken || 0) + 1;
+  img._swapToken = token;
+  img.classList.add('is-switching');
+
+  const preload = new Image();
+  preload.src = src;
+  const ready = preload.decode ? preload.decode().catch(() => {}) : Promise.resolve();
+  const fadedOut = new Promise(resolve => setTimeout(resolve, 220));
+
+  Promise.all([ready, fadedOut]).then(() => {
+    if (img._swapToken !== token) return;
+    img.src = src;
+    if (onSwap) onSwap();
+    img.classList.remove('is-switching');
+  });
+}
+
 /* --- Image Load Handling --- */
 function initImageLoading() {
   const images = document.querySelectorAll('img');
@@ -376,30 +439,65 @@ function initMap() {
 }
 
 /* --- Lightbox --- */
+let openLightbox = () => {};
+
 function initLightbox() {
   const lightbox = document.getElementById('lightbox');
-  const lightboxImg = lightbox ? lightbox.querySelector('.lightbox-img') : null;
-  const closeBtn = lightbox ? lightbox.querySelector('.lightbox-close') : null;
-  if (!lightbox || !lightboxImg || !closeBtn) return;
+  if (!lightbox) return;
+  const img = lightbox.querySelector('.lightbox-img');
+  const closeBtn = lightbox.querySelector('.lightbox-close');
+  const prevBtn = lightbox.querySelector('.lightbox-nav--prev');
+  const nextBtn = lightbox.querySelector('.lightbox-nav--next');
+  const captionText = lightbox.querySelector('.lightbox-caption-text');
+  const counter = lightbox.querySelector('.lightbox-counter');
+  if (!img || !closeBtn || !prevBtn || !nextBtn || !captionText || !counter) return;
 
+  let items = [];
+  let index = 0;
   let triggerElement = null;
+  let closeTimer = null;
 
-  function openLightbox(src, alt) {
-    lightboxImg.src = src;
-    lightboxImg.alt = alt || '';
+  function updateMeta() {
+    const item = items[index];
+    img.alt = item.alt;
+    captionText.textContent = item.alt;
+    counter.textContent = items.length > 1 ? (index + 1) + ' / ' + items.length : '';
+  }
+
+  function step(delta) {
+    if (items.length < 2) return;
+    index = (index + delta + items.length) % items.length;
+    swapImage(img, items[index].src, updateMeta);
+  }
+
+  openLightbox = (list, start, trigger) => {
+    items = list;
+    index = Math.max(0, start);
+    triggerElement = trigger || null;
+    clearTimeout(closeTimer);
+
+    const multiple = items.length > 1;
+    prevBtn.hidden = !multiple;
+    nextBtn.hidden = !multiple;
+
+    img._swapToken = (img._swapToken || 0) + 1;
+    img.classList.remove('is-switching');
+    img.src = items[index].src;
+    updateMeta();
+
     lightbox.hidden = false;
     requestAnimationFrame(() => {
       lightbox.classList.add('active');
     });
     document.body.style.overflow = 'hidden';
     closeBtn.focus();
-  }
+  };
 
   function closeLightbox() {
     lightbox.classList.remove('active');
-    setTimeout(() => {
+    closeTimer = setTimeout(() => {
       lightbox.hidden = true;
-      lightboxImg.src = '';
+      img.removeAttribute('src');
       document.body.style.overflow = '';
       if (triggerElement) {
         triggerElement.focus();
@@ -408,38 +506,55 @@ function initLightbox() {
     }, 300);
   }
 
-  document.querySelectorAll('.lightbox-trigger').forEach(img => {
-    img.setAttribute('role', 'button');
-    img.setAttribute('tabindex', '0');
+  // Images open together with the rest of their section (data-group)
+  document.querySelectorAll('.lightbox-trigger').forEach(el => {
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
 
-    img.addEventListener('click', () => {
-      triggerElement = img;
-      openLightbox(img.src, img.alt);
-    });
+    const open = () => {
+      const group = el.dataset.group;
+      const members = group
+        ? [...document.querySelectorAll('.lightbox-trigger[data-group="' + group + '"]')]
+        : [el];
+      openLightbox(
+        members.map(m => ({ src: m.currentSrc || m.src, alt: m.alt })),
+        members.indexOf(el),
+        el
+      );
+    };
 
-    img.addEventListener('keydown', e => {
+    el.addEventListener('click', open);
+    el.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        triggerElement = img;
-        openLightbox(img.src, img.alt);
+        open();
       }
     });
   });
 
   closeBtn.addEventListener('click', closeLightbox);
   lightbox.querySelector('.lightbox-overlay').addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', () => step(-1));
+  nextBtn.addEventListener('click', () => step(1));
+  onSwipe(lightbox, step);
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-      closeLightbox();
-    }
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
   });
 
+  // Keep focus inside the dialog
   lightbox.addEventListener('keydown', e => {
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      closeBtn.focus();
-    }
+    if (e.key !== 'Tab') return;
+    e.preventDefault();
+    const focusable = [closeBtn, prevBtn, nextBtn].filter(b => !b.hidden);
+    const i = focusable.indexOf(document.activeElement);
+    const next = e.shiftKey
+      ? (i - 1 + focusable.length) % focusable.length
+      : (i + 1) % focusable.length;
+    focusable[next].focus();
   });
 }
 
@@ -483,46 +598,80 @@ function initPlotFilters() {
   });
 }
 
-/* --- Room Gallery Scroll --- */
-function initRoomGallery() {
-  const strip = document.getElementById('roomGalleryStrip');
-  const leftArrow = document.getElementById('roomArrowLeft');
-  const rightArrow = document.getElementById('roomArrowRight');
-  if (!strip || !leftArrow || !rightArrow) return;
+/* --- Room Gallery (stage + thumbnails) --- */
+function initRoomStage() {
+  const stage = document.getElementById('roomStage');
+  const img = document.getElementById('roomStageImg');
+  const caption = document.getElementById('roomStageCaption');
+  const indexEl = document.getElementById('roomIndex');
+  const prev = document.getElementById('roomPrev');
+  const next = document.getElementById('roomNext');
+  const thumbs = [...document.querySelectorAll('.room-thumb')];
+  if (!stage || !img || !caption || !indexEl || !prev || !next || !thumbs.length) return;
 
-  function getScrollAmount() {
-    const firstImg = strip.querySelector('.room-gallery-img');
-    if (!firstImg) return 500;
-    const gap = parseFloat(getComputedStyle(strip).gap) || 0;
-    return firstImg.offsetWidth + gap;
-  }
+  let current = 0;
 
-  function updateArrows() {
-    const atStart = strip.scrollLeft <= 10;
-    const atEnd = strip.scrollLeft >= strip.scrollWidth - strip.clientWidth - 10;
-    leftArrow.classList.toggle('hidden', atStart);
-    rightArrow.classList.toggle('hidden', atEnd);
-  }
+  function show(i) {
+    const target = (i + thumbs.length) % thumbs.length;
+    if (target === current) return;
+    current = target;
+    const thumb = thumbs[current];
 
-  leftArrow.addEventListener('click', () => {
-    strip.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
-  });
+    thumbs.forEach((b, j) => b.setAttribute('aria-current', j === current ? 'true' : 'false'));
+    indexEl.textContent = current + 1;
 
-  rightArrow.addEventListener('click', () => {
-    strip.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
-  });
-
-  strip.addEventListener('scroll', updateArrows);
-
-  strip.addEventListener('wheel', e => {
-    if (window.innerWidth < 768) return;
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-      e.preventDefault();
-      strip.scrollLeft += e.deltaY;
+    // Keep the active thumbnail in view when the rail scrolls (mobile)
+    const rail = thumb.parentElement;
+    if (rail.scrollWidth > rail.clientWidth) {
+      rail.scrollTo({
+        left: thumb.offsetLeft - (rail.clientWidth - thumb.clientWidth) / 2,
+        behavior: 'smooth'
+      });
     }
-  }, { passive: false });
 
-  updateArrows();
+    swapImage(img, thumb.dataset.src, () => {
+      img.width = thumb.dataset.width;
+      img.height = thumb.dataset.height;
+      caption.setAttribute('data-translate', thumb.dataset.caption);
+      caption.textContent = t(thumb.dataset.caption);
+      img.alt = caption.textContent;
+    });
+  }
+
+  function openCurrent() {
+    openLightbox(
+      thumbs.map(b => ({ src: b.dataset.src, alt: t(b.dataset.caption) })),
+      current,
+      img
+    );
+  }
+
+  thumbs.forEach((thumb, i) => {
+    thumb.addEventListener('click', () => show(i));
+  });
+
+  prev.addEventListener('click', () => show(current - 1));
+  next.addEventListener('click', () => show(current + 1));
+  onSwipe(stage, delta => show(current + delta));
+
+  stage.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') show(current - 1);
+    else if (e.key === 'ArrowRight') show(current + 1);
+  });
+
+  img.setAttribute('role', 'button');
+  img.setAttribute('tabindex', '0');
+  img.addEventListener('click', openCurrent);
+  img.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openCurrent();
+    }
+  });
+
+  document.addEventListener('site:translated', () => {
+    img.alt = caption.textContent;
+  });
 }
 
 /* --- Cookie Consent & Meta Pixel --- */
@@ -542,7 +691,7 @@ function loadMetaPixel() {
 function loadMap() {
   var placeholder = document.getElementById('mapPlaceholder');
   if (!placeholder || placeholder.classList.contains('map-loaded')) return;
-  placeholder.innerHTML = '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4727.158869393929!2d24.3941950789476!3d57.4670815960261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1753264332454!5m2!1sen!2sus" width="100%" height="400" style="border:0; border-radius:12px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+  placeholder.innerHTML = '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4727.158869393929!2d24.3941950789476!3d57.4670815960261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1753264332454!5m2!1sen!2sus" width="100%" height="400" style="border:0; border-radius:3px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
   placeholder.classList.add('map-loaded');
 }
 
@@ -603,6 +752,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCookieConsent();
   initLightbox();
   initPlotFilters();
-  initRoomGallery();
+  initRoomStage();
   updateCopyrightYear();
 });

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="lv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2c3038" />
+    <meta name="robots" content="noindex" />
+    <title>Lapa nav atrasta — Jūrasmala</title>
+    <!-- Served by GitHub Pages for any missing path, so all URLs are absolute -->
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      .not-found {
+        position: relative;
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem var(--container-pad);
+        text-align: center;
+        color: var(--text-light);
+        background:
+          linear-gradient(rgba(22, 26, 30, 0.72), rgba(22, 26, 30, 0.72)),
+          url("/data/coastal_image.webp") center / cover,
+          var(--bg-dark);
+      }
+
+      .not-found-logo img {
+        height: 64px;
+        width: auto;
+        margin: 0 auto 2.5rem;
+      }
+
+      .not-found-title {
+        font-family: var(--font-display);
+        font-size: 3rem;
+        font-weight: 400;
+        line-height: 1.15;
+        letter-spacing: 0.02em;
+        margin-bottom: 0.75rem;
+      }
+
+      .not-found-text {
+        max-width: 42ch;
+        opacity: 0.85;
+        margin-bottom: 2rem;
+      }
+
+      .not-found-btn {
+        display: inline-block;
+        padding: 0.8rem 1.75rem;
+        background: var(--accent);
+        color: var(--text-light);
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 3px;
+        transition: background var(--transition-base);
+      }
+
+      .not-found-alt {
+        margin-top: 0.4rem;
+        font-size: 0.85rem;
+        opacity: 0.7;
+      }
+
+      .not-found-alt:first-of-type {
+        margin-top: 2.5rem;
+      }
+
+      .not-found-alt a {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      @media (hover: hover) {
+        .not-found-btn:hover {
+          background: #4d6b61;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .not-found-title {
+          font-size: 2.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="not-found">
+      <a href="/" class="not-found-logo"><img src="/data/logo.png" alt="Jūrasmala" width="413" height="138" /></a>
+      <h1 class="not-found-title">Lapa nav atrasta</h1>
+      <p class="not-found-text">Šī adrese neeksistē vai lapa ir pārvietota.</p>
+      <a href="/" class="not-found-btn">Uz sākumlapu</a>
+      <p class="not-found-alt" lang="en">Page not found. <a href="/">Go to the home page</a></p>
+      <p class="not-found-alt" lang="ru">Страница не найдена. <a href="/">На главную</a></p>
+    </main>
+  </body>
+</html>
