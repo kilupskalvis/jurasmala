@@ -1,0 +1,134 @@
+/* Phone layout (loaded with media="(max-width: 860px)" after styles.css).
+   Built as its own composition, not the desktop squeezed down:
+   - every screen pairs words with pictures; photo sets are swipe strips with a counter,
+     not a stack of full-width images
+   - the plot plan is cropped to the plots so it fits the screen, stays pinned while the
+     price list scrolls under it, and the chosen plot's action sits in a bottom bar
+   - actions live at the bottom, in reach of the thumb (menu, call, request a viewing)
+   - touch targets at least 44 px, sizes and spacing tuned for a 360-430 px screen */
+
+:root {
+  --m: 20px; --dock-h: 58px;
+  /* phone type scale (same roles as desktop) */
+  --fs-hero: 25vw; --fs-stage: 46px; --fs-h2: 46px; --fs-display: 40px; --fs-lead: 27px; --fs-mid: 27px;
+  --fs-sub: 18px; --fs-body: 18px; --fs-cap: 16px; --fs-ui: 15px; --fs-tag: 13px;
+  /* phone spacing scale */
+  --sp-1: 12px; --sp-2: 16px; --sp-3: 32px; --sp-4: 64px; --sp-section: 96px;
+}
+body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-inset-bottom)); }
+
+/* ---------- Header, menu label, bottom bar ---------- */
+.header { padding: 18px var(--m); }
+.header nav { display: none; }
+.header .logo img { height: 34px; }
+.menu-btn { display: block; position: fixed; top: 10px; right: 8px; z-index: 50; min-height: 44px; padding: 0 14px; font-family: var(--sans); font-size: var(--fs-ui); color: var(--bone); transition: opacity 0.35s var(--ease-soft); }
+.menu-btn.away { opacity: 0; pointer-events: none; }
+
+.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 55; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
+  min-height: var(--dock-h); padding: 0 8px env(safe-area-inset-bottom) 8px; background: rgba(30, 37, 33, 0.96); border-top: 1px solid var(--rule);
+  font-family: var(--sans); font-size: var(--fs-ui); transform: translateY(110%); transition: transform 0.45s var(--ease-out); }
+.dock.on { transform: none; }
+.dock-menu { min-height: 44px; padding: 0 12px; }
+.dock-info { line-height: 1.25; min-width: 0; }
+.dock-info b { display: block; font-family: var(--serif); font-weight: 500; font-size: var(--fs-body); }
+.dock-info span { color: var(--birch); }
+.dock-cta { min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; background: var(--bone); color: var(--night); font-weight: 500; white-space: nowrap; }
+.dock-cta[hidden] { display: none; }
+
+/* ---------- Opening ---------- */
+.walkline { display: none; }
+.stage-pin { height: 100svh; }
+.stage-caption { bottom: calc(6vh + env(safe-area-inset-bottom)); }
+.hero-cap { grid-template-columns: 1fr; gap: 0; }
+.hero-cap h1 { line-height: 0.85; }
+.hero-cap .s { margin-top: var(--sp-2); }
+.hero-cap .side { text-align: left; margin-top: var(--sp-2); padding: 0; }
+.hero-cap .side b { display: inline; font-family: var(--serif); font-size: 1.35em; margin-right: 0.3em; }
+
+/* ---------- Grids collapse to a single column ---------- */
+.village, .place, .plots-head, .sheet, .after-build, .houses, .rooms, .colophon { display: block; }
+.village > *, .place > *, .houses > *, .rooms > * { margin-top: 0; }
+.bleed { margin-left: calc(-1 * var(--m)) !important; margin-right: calc(-1 * var(--m)) !important; }
+.bleed figcaption { padding-left: var(--m); padding-right: var(--m); }
+
+/* ---------- Swipe strips (village, houses, rooms) ---------- */
+.strip { display: flex; gap: 10px; margin: var(--sp-3) calc(-1 * var(--m)) 0; padding: 0 var(--m); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 var(--m); scrollbar-width: none; overscroll-behavior-x: contain; }
+.strip::-webkit-scrollbar { display: none; }
+.strip > figure { flex: 0 0 82%; margin: 0 !important; width: auto !important; scroll-snap-align: start; }
+.strip > figure > .ph { aspect-ratio: 4 / 5 !important; }
+.js .strip > figure > .ph { clip-path: none !important; }
+.js .strip > figure > .ph img { transform: none !important; }
+.strip-count { display: flex; justify-content: space-between; align-items: baseline; margin-top: var(--sp-1); font-family: var(--sans); font-size: var(--fs-tag); color: var(--moss); }
+.strip-count .bar { flex: 1; height: 1px; margin: 0 14px; background: var(--rule); position: relative; transform: translateY(-4px); }
+.strip-count .bar i { position: absolute; left: 0; top: 0; height: 1px; background: var(--bone); width: var(--w, 20%); transform: translateX(var(--x, 0%)); transition: transform 0.25s var(--ease-out); }
+
+/* ---------- Village ---------- */
+.village .prose { columns: 1; margin-top: var(--sp-2); }
+
+/* ---------- Location ---------- */
+.place .copy h2 { margin-bottom: var(--sp-2); }
+.timetable { margin-top: var(--sp-3); }
+.timetable li { display: grid; grid-template-columns: 96px 1fr; gap: 14px; padding: 12px 0; border-top: 1px solid var(--rule); }
+.timetable li:last-child { border-bottom: 1px solid var(--rule); }
+.timetable .lead { display: none; }
+.timetable .v { order: -1; font-weight: 400; }
+.place figure { margin-top: var(--sp-3) !important; }
+.place figure .ph { aspect-ratio: 1 / 1; }
+
+/* ---------- Plots: the whole plan, pinned above the price list ---------- */
+.plots-head p { margin-top: var(--sp-2); }
+.sheet { margin-top: var(--sp-3); }
+/* the full aerial, edge to edge: nothing is cropped */
+.sheet-scroll { position: sticky; top: 0; z-index: 6; margin: 0 calc(-1 * var(--m)); background: var(--night); box-shadow: 0 1px 0 var(--rule); }
+.sheet-scroll .sheet-map { container-type: inline-size; }
+/* At this size the plots are small, so pins are plain dots sized to cover the photo's own
+   markers (2.64% of its width). The chosen plot grows into a labelled pin. */
+.sheet-scroll .pin { width: 3.3cqw; font-size: 0; border-width: 0; }
+.sheet-scroll .pin.sold { width: 2.85cqw; border: 1px solid rgba(139,149,129,0.5); }
+.sheet-scroll .pin::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; }
+.sheet-scroll .pin.selected { width: 7.2cqw; font-size: 3cqw; z-index: 5; box-shadow: 0 0 0 2px var(--night), 0 0 0 3.5px var(--bone); }
+.sheet-scroll .pin.sold.selected { background: var(--bone); color: var(--night); }
+.sheet-legend { position: absolute; left: 0; right: 0; top: 0; z-index: 3; display: flex; gap: 14px; padding: 8px var(--m) 18px; font-family: var(--sans); font-size: var(--fs-tag); color: var(--bone); background: linear-gradient(180deg, rgba(30,37,33,0.75), rgba(30,37,33,0)); pointer-events: none; }
+.sheet-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+.sheet-legend .a i { background: var(--birch); }
+.sheet-legend .s i { border: 1px solid var(--moss); }
+.sheet-note { display: none; }
+.sheet-list { margin-top: 0; }
+.pricelist button { flex-wrap: wrap; row-gap: 0; min-height: 56px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.pricelist .lead { display: none; }
+.pricelist .addr { flex: 1; }
+.pricelist .what { order: 3; flex-basis: 100%; white-space: normal; font-size: var(--fs-cap); }
+.sold-line { margin-top: var(--sp-2); line-height: 2; }
+.sold-line .item { white-space: nowrap; }
+.sold-line button { padding: 11px 3px; margin: -11px -3px; }
+/* the render is shown whole (16:9), edge to edge, title above */
+.after-build { margin-top: var(--sp-4); }
+.after-build figure { margin: var(--sp-2) calc(-1 * var(--m)) 0; }
+
+/* ---------- Houses ---------- */
+.houses .prose { margin-top: var(--sp-2); }
+.steps { margin-top: var(--sp-2); }
+
+/* ---------- Finance, closing, colophon ---------- */
+.finance a { display: inline-block; min-height: 34px; }
+.closing { height: 88svh; min-height: 540px; }
+.closing .c { top: 11vh; }
+.closing .contacts { margin-top: var(--sp-3); line-height: 1.6; }
+.colophon { padding-top: var(--sp-3); }
+.colophon > * { display: block; margin-bottom: var(--sp-2); }
+
+/* ---------- Short screens (e.g. 320×480, landscape) ---------- */
+@media (max-height: 600px) {
+  /* the pinned plan would take half the screen; let it scroll with the page */
+  .sheet-scroll { position: relative; }
+  .menu ol a { font-size: 34px; line-height: 1.15; }
+  .menu .contacts { margin-top: 20px; font-size: 19px; }
+  .menu .lang { margin-top: 14px; }
+  .menu ol { margin-top: 28px; }
+  :root { --fs-stage: 40px; --fs-hero: 22vw; }
+}
+
+/* ---------- Touch targets (44 px) for the small text controls ---------- */
+.menu-top button, .menu .lang button { min-height: 44px; padding: 0 10px; }
+.menu .lang button:first-child { padding-left: 0; }
+.menu .contacts a { display: inline-block; padding: 7px 0; }

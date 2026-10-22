@@ -297,7 +297,7 @@ section.block { padding: var(--sp-section) var(--m) 0; }
 .lightbox { position: fixed; inset: 0; z-index: 80; background: rgba(20,25,22,0.95); display: grid; place-items: center; padding: 5vh 6vw; opacity: 0; pointer-events: none; transition: opacity 0.35s var(--ease-soft); }
 .lightbox.open { opacity: 1; pointer-events: auto; }
 .lightbox img { max-width: 100%; max-height: 84vh; object-fit: contain; }
-.lightbox .close { position: absolute; top: 18px; right: 24px; font-family: var(--sans); font-size: var(--fs-ui); }
+.lightbox .close { position: absolute; top: 14px; right: 16px; min-height: 44px; padding: 0 12px; font-family: var(--sans); font-size: var(--fs-ui); }
 
 /* Menu: a typeset index of the page, used on phones */
 .menu-btn { display: none; }
