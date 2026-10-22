@@ -199,6 +199,7 @@ section.block { padding: var(--sp-section) var(--m) 0; }
 .pin { position: absolute; z-index: 2; transform: translate(-50%, -50%); width: clamp(22px, 2.85%, 40px); aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-family: var(--sans); font-weight: 500; font-size: clamp(10px, 0.82vw, 14px); transition: transform 0.35s var(--ease-out), box-shadow 0.3s, opacity 0.4s; }
 .pin.available { background: var(--birch); color: var(--night); }
 .pin.sold { background: rgb(34, 42, 37); color: var(--moss); border: 1px solid rgba(139,149,129,0.55); }
+.pin.reserved { background: var(--night); color: var(--birch); border: 2px solid var(--birch); }
 .pin.hot { transform: translate(-50%, -50%) scale(1.22); }
 .pin.selected { box-shadow: 0 0 0 4px var(--night), 0 0 0 5px var(--bone); z-index: 3; }
 @media (prefers-reduced-motion: no-preference) {
@@ -216,6 +217,7 @@ section.block { padding: var(--sp-section) var(--m) 0; }
 .pricelist .price { font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
 .pricelist button.hot, .pricelist button[aria-pressed="true"] { color: var(--birch); }
 .pricelist button.hot .what, .pricelist button[aria-pressed="true"] .what { color: var(--birch); }
+.pricelist li[data-status="reserved"] .price, .pricelist li[data-status="reserved"] .addr { color: var(--moss); }
 .sold-line { margin-top: var(--sp-2); font-style: italic; font-weight: 400; color: var(--moss); }
 .sold-line button { color: inherit; font-style: inherit; }
 .sold-line button.hot, .sold-line button[aria-pressed="true"] { color: var(--bone); text-decoration: underline; }
