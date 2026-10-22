@@ -134,3 +134,6 @@ body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-ins
 .menu-top button, .menu .lang button { min-height: 44px; padding: 0 10px; }
 .menu .lang button:first-child { padding-left: 0; }
 .menu .contacts a { display: inline-block; padding: 7px 0; }
+
+/* ---------- Cookie banner sits above the bottom bar, so the bar stays usable ---------- */
+.consent-banner { left: 10px; right: 10px; bottom: calc(var(--dock-h) + env(safe-area-inset-bottom) + 10px); padding: var(--sp-2); }
