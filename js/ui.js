@@ -105,7 +105,10 @@
     document.body.appendChild(box);
     const big = box.querySelector('img');
     const close = box.querySelector('.close');
-    const label = () => { close.textContent = t('lightbox-close', 'Aizvērt'); };
+    const label = () => {
+      close.textContent = t('lightbox-close', 'Aizvērt');
+      box.setAttribute('aria-label', t('lightbox-label', 'Foto'));
+    };
     label();
     document.addEventListener('site:translated', label);
     let last = null;

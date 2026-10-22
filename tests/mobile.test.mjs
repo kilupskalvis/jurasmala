@@ -118,3 +118,27 @@ test('top menu label leaves before the opening scrolls away', async () => {
     assert.ok(await page.$eval('.menu-btn', (b) => b.classList.contains('away')));
   });
 });
+
+test('closed lightbox is not focusable or announced', async () => {
+  await withPage({}, async (page) => {
+    await page.goto(server.url + '/', { waitUntil: 'networkidle' });
+    const closed = () => page.evaluate(() => {
+      const box = document.querySelector('.lightbox');
+      const btn = box.querySelector('.close');
+      btn.focus();
+      return { focusable: document.activeElement === btn, visibility: getComputedStyle(box).visibility, label: box.getAttribute('aria-label') };
+    });
+    let s = await closed();
+    assert.equal(s.focusable, false, 'close button not focusable while closed');
+    assert.equal(s.visibility, 'hidden');
+    assert.ok(s.label, 'dialog has a label');
+    // still opens, focuses its close button, and closes again
+    await page.$eval('img[data-zoomable]', (img) => img.click());
+    await page.waitForTimeout(100);
+    assert.ok(await page.evaluate(() => document.activeElement.classList.contains('close')));
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(500);
+    s = await closed();
+    assert.equal(s.focusable, false, 'not focusable after closing');
+  });
+});
