@@ -62,9 +62,10 @@
     document.addEventListener('site:translated', render);
     if (plots) new IntersectionObserver(([e]) => { inPlots = e.isIntersecting; render(); }, { rootMargin: '-35% 0px -35% 0px' }).observe(plots);
     const onScroll = () => {
-      const past = !stage || stage.getBoundingClientRect().bottom < innerHeight * 0.85;
-      dock.classList.toggle('on', past);
-      if (topBtn) topBtn.classList.toggle('away', past);
+      const bottom = stage ? stage.getBoundingClientRect().bottom : 0;
+      dock.classList.toggle('on', bottom < innerHeight * 0.85);
+      // the top label leaves as soon as the opening unpins, before its captions scroll up to it
+      if (topBtn) topBtn.classList.toggle('away', bottom < innerHeight + 2);
     };
     addEventListener('scroll', onScroll, { passive: true });
     addEventListener('resize', onScroll);

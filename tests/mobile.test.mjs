@@ -108,3 +108,13 @@ test('no line starts with punctuation', async () => {
     }
   }
 });
+
+test('top menu label leaves before the opening scrolls away', async () => {
+  await withPage({ width: 320, height: 480, isMobile: true }, async (page) => {
+    await page.goto(server.url + '/', { waitUntil: 'networkidle' });
+    // the moment the pinned opening starts moving up, its captions head for the label
+    await page.evaluate(() => { const s = document.querySelector('[data-stage]'); scrollTo(0, s.offsetTop + s.offsetHeight - innerHeight + 10); });
+    await page.waitForTimeout(150);
+    assert.ok(await page.$eval('.menu-btn', (b) => b.classList.contains('away')));
+  });
+});
