@@ -76,3 +76,26 @@ test('plan photo spans the plots section', async () => {
     });
   }
 });
+
+for (const script of ['motion', 'stage', 'ui', 'plan', 'i18n', 'consent']) {
+  test(`page stays readable when js/${script}.js fails to load`, async () => {
+    await withPage({}, async (page) => {
+      await page.route(`**/js/${script}.js`, (route) => route.abort());
+      await page.goto(server.url + '/', { waitUntil: 'load' });
+      await page.waitForTimeout(2500);
+      const r = await page.evaluate(() => {
+        const op = (el) => { let o = 1; for (let e = el; e; e = e.parentElement) o *= parseFloat(getComputedStyle(e).opacity); return o; };
+        return {
+          h1: op(document.querySelector('h1')),
+          frames: [...document.querySelectorAll('[data-frame]')].filter((f) => op(f) > 0.99).length,
+          hiddenPhotos: [...document.querySelectorAll('[data-reveal-image] .ph')].filter((p) => getComputedStyle(p).clipPath !== 'none' || op(p) < 0.99).length,
+        };
+      });
+      assert.ok(r.h1 > 0.99, `wordmark visible (${r.h1})`);
+      assert.ok(r.frames >= 1, 'an opening photo is visible');
+      // reveals only run once scrolled into view, so check the photos far below the opening
+      if (script !== 'motion') return;
+      assert.equal(r.hiddenPhotos, 0, 'no photo left hidden by its reveal');
+    });
+  });
+}

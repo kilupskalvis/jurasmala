@@ -75,6 +75,9 @@
   const clamp01 = (x) => Math.min(1, Math.max(0, x));
   const smooth = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
 
+  // the CSS shows a still opening until this class is set (styles.css)
+  document.documentElement.classList.add('stage-on');
+
   document.querySelectorAll('[data-stage]').forEach((section) => {
     const media = section.querySelector('.stage-media');
     const frames = [...section.querySelectorAll('[data-frame]')];

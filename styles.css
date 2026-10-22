@@ -286,14 +286,15 @@ section.block { padding: var(--sp-section) var(--m) 0; }
 .colophon .logo img { height: 46px; width: auto; }
 .colophon div { grid-column: span 3; }
 
-/* Load sequence and image reveals (motion.js sets html.is-loaded and .in) */
+/* Load sequence and image reveals. Gated on html.motion, which js/motion.js sets itself,
+   so if that one script fails to load nothing stays hidden. */
 @media (prefers-reduced-motion: no-preference) {
-  .js [data-load-item] { opacity: 0; transform: translateY(18px); transition: opacity 1.2s var(--ease-soft), transform 1.4s var(--ease-out); }
-  .js.is-loaded [data-load-item] { opacity: 1; transform: none; transition-delay: calc(0.35s + var(--i, 0) * 0.16s); }
-  .js [data-reveal-image] .ph { clip-path: inset(0 0 100% 0); transition: clip-path 1.5s var(--ease-out); }
-  .js [data-reveal-image] .ph img { transform: scale(1.12); transition: transform 2s var(--ease-out); }
-  .js [data-reveal-image].in .ph { clip-path: inset(0 0 0 0); }
-  .js [data-reveal-image].in .ph img { transform: none; }
+  .motion [data-load-item] { opacity: 0; transform: translateY(18px); transition: opacity 1.2s var(--ease-soft), transform 1.4s var(--ease-out); }
+  .motion.is-loaded [data-load-item] { opacity: 1; transform: none; transition-delay: calc(0.35s + var(--i, 0) * 0.16s); }
+  .motion [data-reveal-image] .ph { clip-path: inset(0 0 100% 0); transition: clip-path 1.5s var(--ease-out); }
+  .motion [data-reveal-image] .ph img { transform: scale(1.12); transition: transform 2s var(--ease-out); }
+  .motion [data-reveal-image].in .ph { clip-path: inset(0 0 0 0); }
+  .motion [data-reveal-image].in .ph img { transform: none; }
 }
 
 .lightbox { position: fixed; inset: 0; z-index: 80; background: rgba(20,25,22,0.95); display: grid; place-items: center; padding: 5vh 6vw; opacity: 0; pointer-events: none; transition: opacity 0.35s var(--ease-soft); }
@@ -324,12 +325,12 @@ section.block { padding: var(--sp-section) var(--m) 0; }
 .skip-link { position: absolute; left: var(--m); top: -60px; z-index: 90; padding: 10px 14px; background: var(--bone); color: var(--night); font-family: var(--sans); font-size: var(--fs-ui); }
 .skip-link:focus { top: 12px; }
 
-/* Without JavaScript the opening is a single still: first photo and the wordmark */
-html:not(.js) .stage { height: auto; }
-html:not(.js) .stage-pin { position: relative; height: 100vh; height: 100svh; }
-html:not(.js) .stage-media img:first-child { opacity: 1; }
-html:not(.js) .stage-caption[data-caption="0"] { opacity: 1; transform: none; pointer-events: auto; }
-html:not(.js) .walkline { display: none; }
+/* Until js/stage.js runs (or if it fails), the opening is a single still: first photo and the wordmark */
+html:not(.stage-on) .stage { height: auto; }
+html:not(.stage-on) .stage-pin { position: relative; height: 100vh; height: 100svh; }
+html:not(.stage-on) .stage-media img:first-child { opacity: 1; }
+html:not(.stage-on) .stage-caption[data-caption="0"] { opacity: 1; transform: none; pointer-events: auto; }
+html:not(.stage-on) .walkline { display: none; }
 
 /* Cookie consent */
 .consent-banner { position: fixed; left: var(--m); right: var(--m); bottom: var(--m); z-index: 85; display: none; max-width: 720px; margin: 0 auto; padding: var(--sp-2); background: var(--night-2); border: 1px solid var(--rule); font-family: var(--sans); font-size: var(--fs-ui); line-height: 1.45; }

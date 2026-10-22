@@ -35,7 +35,7 @@ export async function gotoSettled(page, url) {
   const response = await page.goto(url, { waitUntil: 'networkidle' });
   await page.addStyleTag({
     content: '*,*::before,*::after{transition:none!important;animation:none!important}' +
-      '.js [data-reveal-image] .ph,.js [data-load-item],.js [data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}',
+      '.motion [data-reveal-image] .ph,.motion [data-load-item],.motion [data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}',
   });
   await page.evaluate(() => document.documentElement.classList.add('is-loaded'));
   await page.waitForTimeout(300);

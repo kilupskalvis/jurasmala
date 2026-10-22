@@ -1,7 +1,7 @@
-/* Page motion: html.js / is-loaded classes, one-shot reveals, scrubbed headings. */
+/* Page motion: html.motion / is-loaded classes, one-shot reveals, scrubbed headings. */
 (() => {
   const root = document.documentElement;
-  root.classList.add('js');
+  root.classList.add('motion');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Stagger index for the load sequence

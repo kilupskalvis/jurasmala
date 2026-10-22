@@ -56,8 +56,8 @@ body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-ins
 .strip::-webkit-scrollbar { display: none; }
 .strip > figure { flex: 0 0 82%; margin: 0 !important; width: auto !important; scroll-snap-align: start; }
 .strip > figure > .ph { aspect-ratio: 4 / 5 !important; }
-.js .strip > figure > .ph { clip-path: none !important; }
-.js .strip > figure > .ph img { transform: none !important; }
+.motion .strip > figure > .ph { clip-path: none !important; }
+.motion .strip > figure > .ph img { transform: none !important; }
 .strip-count { display: flex; justify-content: space-between; align-items: baseline; margin-top: var(--sp-1); font-family: var(--sans); font-size: var(--fs-tag); color: var(--moss); }
 .strip-count .bar { flex: 1; height: 1px; margin: 0 14px; background: var(--rule); position: relative; transform: translateY(-4px); }
 .strip-count .bar i { position: absolute; left: 0; top: 0; height: 1px; background: var(--bone); width: var(--w, 20%); transform: translateX(var(--x, 0%)); transition: transform 0.25s var(--ease-out); }
