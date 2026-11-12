@@ -152,7 +152,7 @@ h2 { font-weight: 300; font-size: var(--fs-h2); line-height: 1; letter-spacing: 
 .stage-caption .s { display: block; font-style: italic; font-weight: 400; font-size: var(--fs-sub); color: var(--bone-dim); margin-top: var(--sp-1); max-width: 30em; }
 .hero-cap { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 30px; }
 .hero-cap h1 { font-weight: 300; font-size: var(--fs-hero); line-height: 0.8; letter-spacing: -0.035em; margin-left: -0.04em; padding-bottom: 0.2em; }
-.hero-cap .s { margin-top: var(--sp-2); }
+.hero-cap .s { margin-top: var(--sp-2); font-size: var(--fs-display); line-height: 1.1; color: var(--bone); letter-spacing: -0.005em; }
 .hero-cap .side { text-align: right; padding-bottom: 8px; }
 .hero-cap .side b { display: block; font-family: var(--serif); font-weight: 400; font-size: var(--fs-mid); color: var(--birch); }
 .walkline { position: absolute; right: calc(var(--m) * 0.45); top: 24vh; bottom: 24vh; width: 1px; background: rgba(233,227,212,0.3); }

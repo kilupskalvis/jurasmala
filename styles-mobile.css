@@ -41,7 +41,7 @@ body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-ins
 .stage-caption { bottom: calc(6vh + env(safe-area-inset-bottom)); }
 .hero-cap { grid-template-columns: 1fr; gap: 0; }
 .hero-cap h1 { line-height: 0.85; }
-.hero-cap .s { margin-top: var(--sp-2); }
+.hero-cap .s { margin-top: var(--sp-2); font-size: var(--fs-lead); }
 .hero-cap .side { text-align: left; margin-top: var(--sp-2); padding: 0; }
 .hero-cap .side b { display: inline; font-family: var(--serif); font-size: var(--fs-sub); margin-right: 0.3em; }
 
