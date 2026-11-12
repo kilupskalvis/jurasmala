@@ -37,7 +37,7 @@
     call: 'Call',
     'walk-house': 'house',
     'walk-sea': 'sea',
-    'hero-sub': 'A seaside village in Lembuži on the Vidzeme coast. Land and houses 400 metres from the sea.',
+    'hero-sub': 'Your home by the sea',
     'hero-count': '7 of 22',
     'hero-count-label': 'plots still free',
     'cap-village': 'The village',
