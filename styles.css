@@ -95,8 +95,9 @@
   --fs-tag: 13px;
   --lh-lead: 1.2;
   /* Spacing scale */
-  --sp-1: 12px; --sp-2: 24px; --sp-3: 40px; --sp-4: 64px; --sp-5: 120px; --sp-6: 240px;
+  --sp-1: 12px; --sp-2: 24px; --sp-3: 40px; --sp-4: 64px; --sp-5: 120px;
   --sp-section: clamp(110px, 13vw, 220px);
+  --lead: clamp(64px, 6vw, 112px);         /* gap between a section's text and its photos */
   --ease-soft: cubic-bezier(0.33, 0, 0.2, 1);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -106,9 +107,26 @@ img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; }
 :focus-visible { outline: 1px solid var(--birch); outline-offset: 4px; }
+body { isolation: isolate; }
+/* film grain over the whole page */
 body::after {
-  content: ""; position: fixed; inset: -50%; z-index: 60; pointer-events: none; opacity: 0.1;
+  content: ""; position: fixed; inset: -50%; z-index: 60; pointer-events: none; opacity: 0.2; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+/* soft light: warm from the top left, cool at the bottom right, darker edges */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(70vw 60vh at 12% 8%, rgba(214, 196, 158, 0.085), transparent 70%),
+    radial-gradient(60vw 70vh at 92% 96%, rgba(120, 150, 130, 0.06), transparent 70%),
+    radial-gradient(140vw 120vh at 50% 50%, transparent 55%, rgba(10, 14, 12, 0.45));
+}
+/* terrain contour lines behind the page body; the tile repeats seamlessly downwards and
+   never scales below 1100 px wide, so the line spacing stays the same on phones */
+main { position: relative; isolation: isolate; }
+main::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: url("data/contours.svg") center top / max(100%, 1100px) auto repeat-y; opacity: 0.07;
 }
 
 .sans { font-family: var(--sans); font-weight: 400; font-size: var(--fs-ui); line-height: 1.45; letter-spacing: 0.01em; }
@@ -163,18 +181,22 @@ h2 { font-weight: 300; font-size: var(--fs-h2); line-height: 1; letter-spacing: 
 
 section.block { padding: var(--sp-section) var(--m) 0; }
 
-/* Village: a spread with the history text set in two columns */
+/* Photo layout: every photo sits on the 12-column grid. Photos come in pairs of one big and
+   one small; the small one hangs from the big one's top edge or stands on its bottom edge,
+   and --lead is the only vertical gap. Phones replace all of this with swipe strips. */
+
+/* Village: the intro beside a portrait photo, then two offset pairs */
 .village { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto 1fr; gap: 0 clamp(16px, 2vw, 32px); }
 .village .lead-in { grid-row: 1; grid-column: 1 / span 7; }
 .village .prose { grid-row: 2; grid-column: 1 / span 6; align-self: start; margin-top: var(--sp-3); max-width: 28em; font-size: var(--fs-intro); line-height: 1.5; text-wrap: pretty; }
 .village .f1 { grid-column: 8 / span 5; grid-row: 1 / span 2; align-self: start; }
 .village .f1 .ph { aspect-ratio: 4 / 5; }
-.village .f2 { grid-column: 1 / span 6; grid-row: 3; margin-top: var(--sp-5); }
+.village .f2 { grid-column: 1 / span 7; grid-row: 3; margin-top: var(--lead); align-self: start; }
 .village .f2 .ph { aspect-ratio: 3 / 2; }
-.village .f3 { grid-column: 8 / span 4; grid-row: 3; margin-top: var(--sp-6); }
-.village .f4 { grid-column: 3 / span 8; grid-row: 4; margin-top: var(--sp-5); }
+.village .f3 { grid-column: 9 / span 4; grid-row: 3; align-self: end; }
+.village .f4 { grid-column: 4 / span 9; grid-row: 4; margin-top: var(--lead); }
 .village .f4 .ph { aspect-ratio: 16 / 9; }
-.village .f3 .ph { aspect-ratio: 4 / 5; }
+.village .f3 .ph { aspect-ratio: 1 / 1; }
 
 /* Location: a timetable, not a stat block */
 .place { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 clamp(16px, 2vw, 32px); align-items: start; }
@@ -239,31 +261,37 @@ section.block { padding: var(--sp-section) var(--m) 0; }
 .steps { grid-column: 8 / span 5; list-style: none; margin-top: var(--sp-2); counter-reset: s; }
 .steps li { counter-increment: s; display: flex; gap: 16px; padding: 4px 0; }
 .steps li::before { content: counter(s); font-variant-numeric: oldstyle-nums; color: var(--moss); width: 1em; }
-.houses .g1 { grid-column: 1 / span 7; margin-top: var(--sp-5); }
+.houses .g1 { grid-column: 1 / span 8; grid-row: 3; margin-top: var(--lead); align-self: start; }
 .houses .g1 .ph { aspect-ratio: 3 / 2; }
-.houses .g2 { grid-column: 9 / span 4; margin-top: var(--sp-6); }
+.houses .g2 { grid-column: 10 / span 3; grid-row: 3; align-self: end; }
 .houses .g2 .ph { aspect-ratio: 4 / 5; }
-.houses .g3 { grid-column: 2 / span 4; margin-top: var(--sp-5); }
+.houses .g3 { grid-column: 2 / span 3; grid-row: 4; margin-top: var(--lead); align-self: start; }
 .houses .g3 .ph { aspect-ratio: 1 / 1; }
-.houses .g4 { grid-column: 7 / span 6; margin-top: var(--sp-3); }
+.houses .g4 { grid-column: 6 / span 7; grid-row: 4; margin-top: var(--lead); align-self: start; }
 .houses .g4 .ph { aspect-ratio: 3 / 2; }
-.houses .g5 { grid-column: 1 / span 6; margin-top: var(--sp-5); }
+.houses .g5 { grid-column: 1 / span 6; grid-row: 5; margin-top: var(--lead); }
 .houses .g5 .ph { aspect-ratio: 3 / 2; }
-.houses .g6 { grid-column: 7 / span 6; margin-top: var(--sp-6); }
+.houses .g6 { grid-column: 7 / span 6; grid-row: 5; margin-top: var(--lead); }
 .houses .g6 .ph { aspect-ratio: 16 / 9; }
+/* the last two renders share one height: the second crops to the first */
+@media (min-width: 861px) {
+  .houses .g6 { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+  .houses .g6 > .ph { aspect-ratio: auto; position: relative; min-height: 0; }
+  .houses .g6 > .ph img { position: absolute; inset: 0; }
+}
 
-/* Rooms: a contact sheet of interiors with captions */
-.rooms { display: grid; grid-template-columns: repeat(12, 1fr); gap: 56px clamp(16px, 2vw, 32px); }
-.rooms h2 { grid-column: 1 / span 5; align-self: end; }
-.rooms .r1 { grid-column: 6 / span 7; }
+/* Rooms: the title beside the main room, then two offset pairs */
+.rooms { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 clamp(16px, 2vw, 32px); }
+.rooms h2 { grid-column: 1 / span 5; grid-row: 1; align-self: end; }
+.rooms .r1 { grid-column: 6 / span 7; grid-row: 1; }
 .rooms .r1 .ph { aspect-ratio: 3 / 2; }
-.rooms .r2 { grid-column: 1 / span 5; }
+.rooms .r2 { grid-column: 1 / span 7; grid-row: 2; margin-top: var(--lead); align-self: start; }
 .rooms .r2 .ph { aspect-ratio: 3 / 2; }
-.rooms .r3 { grid-column: 6 / span 3; }
+.rooms .r3 { grid-column: 9 / span 3; grid-row: 2; align-self: end; }
 .rooms .r3 .ph { aspect-ratio: 3 / 4; }
-.rooms .r4 { grid-column: 9 / span 4; }
+.rooms .r4 { grid-column: 2 / span 4; grid-row: 3; margin-top: var(--lead); align-self: start; }
 .rooms .r4 .ph { aspect-ratio: 16 / 10; }
-.rooms .r5 { grid-column: 3 / span 6; }
+.rooms .r5 { grid-column: 6 / span 7; grid-row: 3; margin-top: var(--lead); align-self: start; }
 .rooms .r5 .ph { aspect-ratio: 16 / 9; }
 [data-zoomable] { cursor: zoom-in; }
 
