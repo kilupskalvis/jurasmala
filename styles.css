@@ -88,6 +88,7 @@
   --fs-lead: clamp(28px, 2.6vw, 40px);     /* lead paragraphs, financing, contacts */
   --fs-mid: 28px;                          /* small headings */
   --fs-sub: clamp(20px, 1.7vw, 24px);      /* opening sub-captions */
+  --fs-intro: clamp(22px, 1.8vw, 30px);   /* intro paragraphs under a lead */
   --fs-body: 21px;
   --fs-cap: 17px;                          /* photo captions, notes */
   --fs-ui: 15px;                           /* sans: menu, labels, legal */
@@ -163,9 +164,9 @@ h2 { font-weight: 300; font-size: var(--fs-h2); line-height: 1; letter-spacing: 
 section.block { padding: var(--sp-section) var(--m) 0; }
 
 /* Village: a spread with the history text set in two columns */
-.village { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 clamp(16px, 2vw, 32px); }
+.village { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto 1fr; gap: 0 clamp(16px, 2vw, 32px); }
 .village .lead-in { grid-row: 1; grid-column: 1 / span 7; }
-.village .prose { grid-row: 2; grid-column: 1 / span 6; margin-top: var(--sp-3); columns: 2; column-gap: clamp(16px, 2vw, 32px); max-width: none; }
+.village .prose { grid-row: 2; grid-column: 1 / span 6; align-self: start; margin-top: var(--sp-3); max-width: 28em; font-size: var(--fs-intro); line-height: 1.5; text-wrap: pretty; }
 .village .f1 { grid-column: 8 / span 5; grid-row: 1 / span 2; align-self: start; }
 .village .f1 .ph { aspect-ratio: 4 / 5; }
 .village .f2 { grid-column: 1 / span 6; grid-row: 3; margin-top: var(--sp-5); }

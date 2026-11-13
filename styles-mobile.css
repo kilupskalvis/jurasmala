@@ -11,7 +11,7 @@
   --m: 20px; --dock-h: 58px;
   /* phone type scale (same roles as desktop) */
   --fs-hero: 25vw; --fs-stage: 46px; --fs-h2: 46px; --fs-display: 40px; --fs-lead: 27px; --fs-mid: 27px;
-  --fs-sub: 18px; --fs-body: 18px; --fs-cap: 16px; --fs-ui: 15px; --fs-tag: 13px;
+  --fs-sub: 18px; --fs-intro: 20px; --fs-body: 18px; --fs-cap: 16px; --fs-ui: 15px; --fs-tag: 13px;
   /* phone spacing scale */
   --sp-1: 12px; --sp-2: 16px; --sp-3: 32px; --sp-4: 64px; --sp-section: 96px;
 }
@@ -63,7 +63,7 @@ body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-ins
 .strip-count .bar i { position: absolute; left: 0; top: 0; height: 1px; background: var(--bone); width: var(--w, 20%); transform: translateX(var(--x, 0%)); transition: transform 0.25s var(--ease-out); }
 
 /* ---------- Village ---------- */
-.village .prose { columns: 1; margin-top: var(--sp-2); }
+.village .prose { margin-top: var(--sp-3); }
 
 /* ---------- Location ---------- */
 .place .copy h2 { margin-bottom: var(--sp-2); }
