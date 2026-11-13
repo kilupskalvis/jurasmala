@@ -92,7 +92,7 @@
     'room-living': 'Living area',
     'finance-lead': 'For buying a house you can apply for a loan at',
     'finance-or': 'or',
-    'closing-title': 'Come and see the land in person.',
+    'closing-title': 'Sea, nature, peace – see it for yourself.',
     'address-region': 'Liepupe parish, Limbaži municipality',
     'consent-text': 'We use cookies and third-party services to improve your browsing experience, analyze site traffic, and provide interactive content.',
     'consent-accept': 'Accept all',
