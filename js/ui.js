@@ -53,7 +53,7 @@
           cta.hidden = true;
         }
       } else {
-        info.textContent = t('dock-free', '7 no 22 gabaliem brīvi');
+        info.textContent = '';
         cta.textContent = t('call', 'Zvanīt');
         cta.href = 'tel:+37120440777';
       }
