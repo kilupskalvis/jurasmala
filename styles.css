@@ -154,7 +154,7 @@ h2 { font-weight: 300; font-size: var(--fs-h2); line-height: 1; letter-spacing: 
 .lang button:hover { opacity: 1; }
 .lang button[aria-pressed="true"] { color: var(--birch); opacity: 1; }
 
-/* Opening: the walk from the house to the sea (stage.js drives frames and the dissolve) */
+/* Opening: a pinned sequence from the path to the sea (stage.js drives frames and the dissolve) */
 .stage { position: relative; height: calc(var(--frames, 3) * 100vh); }
 .stage-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; }
 .stage-media { position: absolute; inset: 0; background: var(--night); }
@@ -169,15 +169,13 @@ h2 { font-weight: 300; font-size: var(--fs-h2); line-height: 1; letter-spacing: 
 .stage-caption.on { opacity: 1; transform: none; pointer-events: auto; transition: opacity 0.7s var(--ease-soft) 0.26s, transform 0.9s var(--ease-out) 0.26s; }
 .stage-caption .t { display: block; font-weight: 300; font-size: var(--fs-stage); line-height: 1; letter-spacing: -0.025em; padding-bottom: 0.12em; }
 .stage-caption .s { display: block; font-style: italic; font-weight: 400; font-size: var(--fs-sub); color: var(--bone-dim); margin-top: var(--sp-1); max-width: 30em; }
-.hero-cap { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 30px; }
 .hero-cap h1 { font-weight: 300; font-size: var(--fs-hero); line-height: 0.8; letter-spacing: -0.035em; margin-left: -0.04em; padding-bottom: 0.2em; }
 .hero-cap .s { margin-top: var(--sp-2); font-size: var(--fs-display); line-height: 1.1; color: var(--bone); letter-spacing: -0.005em; }
-.hero-cap .side { text-align: right; padding-bottom: 8px; }
-.hero-cap .side b { display: block; font-family: var(--serif); font-weight: 400; font-size: var(--fs-mid); color: var(--birch); }
 .walkline { position: absolute; right: calc(var(--m) * 0.45); top: 24vh; bottom: 24vh; width: 1px; background: rgba(233,227,212,0.3); }
 .walkline .fill { position: absolute; left: 0; top: 0; width: 1px; height: calc(var(--p, 0) * 100%); background: var(--birch); }
-.walkline span { position: absolute; right: 12px; font-style: italic; font-size: var(--fs-cap); color: var(--bone-dim); white-space: nowrap; }
-.walkline .a { top: -10px; } .walkline .b { bottom: -10px; }
+/* a way out of the opening, on every frame */
+.stage-skip { position: absolute; z-index: 1; right: var(--m); bottom: 7vh; padding: 10px 0; border-bottom: 1px solid rgba(233,227,212,0.4); color: var(--bone); }
+.stage-skip:hover { color: var(--birch); border-color: var(--birch); }
 
 section.block { padding: var(--sp-section) var(--m) 0; }
 

@@ -38,12 +38,13 @@ body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-ins
 /* ---------- Opening ---------- */
 .walkline { display: none; }
 .stage-pin { height: 100svh; }
-.stage-caption { bottom: calc(6vh + env(safe-area-inset-bottom)); }
-.hero-cap { grid-template-columns: 1fr; gap: 0; }
+/* phone captions sit higher over the photo, so the shade starts lower and is darker */
+.stage-shade { background: linear-gradient(180deg, rgba(30,37,33,0.5), rgba(30,37,33,0) 20%, rgba(30,37,33,0) 42%, rgba(30,37,33,0.72) 68%, rgba(30,37,33,0.92)); }
+/* captions make room for the link to the plots beneath them */
+.stage-caption { bottom: calc(6vh + 52px + env(safe-area-inset-bottom)); }
+.stage-skip { right: auto; left: var(--m); bottom: calc(6vh - 10px + env(safe-area-inset-bottom)); }
 .hero-cap h1 { line-height: 0.85; }
 .hero-cap .s { margin-top: var(--sp-2); font-size: var(--fs-lead); }
-.hero-cap .side { text-align: left; margin-top: var(--sp-2); padding: 0; }
-.hero-cap .side b { display: inline; font-family: var(--serif); font-size: var(--fs-sub); margin-right: 0.3em; }
 
 /* ---------- Grids collapse to a single column ---------- */
 .village, .place, .plots-head, .sheet, .after-build, .houses, .rooms, .colophon { display: block; }

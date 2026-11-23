@@ -6,7 +6,7 @@
 //   <section class="stage" data-stage>
 //     <div class="stage-pin">
 //       <div class="stage-media">
-//         <img data-frame src="..." data-zoom="1 1.18" data-origin="0.5 0.6" alt="...">
+//         <img data-frame src="..." data-zoom="1 1.18" data-origin="0.5 0.6" data-focus="0.6 0.5" alt="...">
 //         ...
 //       </div>
 //       <div class="stage-shade"></div>
@@ -14,6 +14,9 @@
 //     </div>
 //   </section>
 //
+// data-focus is the point of the photo to keep when the screen crops it (a tall phone screen shows
+// only a narrow slice of a landscape photo). On tall screens the push-in is halved, since the crop
+// is already close.
 // Without WebGL (or with reduced motion) the <img> frames crossfade with CSS instead.
 // The section exposes --p (0..1 progress) and fires 'stage:progress' events for extras.
 (() => {
@@ -25,7 +28,7 @@
     precision highp float;
     varying vec2 vUv;
     uniform sampler2D uA, uB;
-    uniform vec2 uSizeA, uSizeB, uOriginA, uOriginB, uRes;
+    uniform vec2 uSizeA, uSizeB, uOriginA, uOriginB, uFocusA, uFocusB, uRes;
     uniform float uMix, uZoomA, uZoomB, uTime, uWarm;
 
     float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -36,10 +39,11 @@
     }
     float fbm(vec2 p) { float v = 0.0, a = 0.5; for (int i = 0; i < 4; i++) { v += a * noise(p); p *= 2.03; a *= 0.5; } return v; }
 
-    vec2 cover(vec2 uv, vec2 img) {
+    // crop the photo to the screen like object-fit: cover, sliding the crop toward the focus point
+    vec2 cover(vec2 uv, vec2 img, vec2 focus) {
       float rc = uRes.x / uRes.y, ri = img.x / img.y;
       vec2 s = rc > ri ? vec2(1.0, ri / rc) : vec2(rc / ri, 1.0);
-      return (uv - 0.5) * s + 0.5;
+      return (uv - 0.5) * s + 0.5 + (focus - 0.5) * (1.0 - s);
     }
     vec2 push(vec2 uv, float z, vec2 o) { return (uv - o) / z + o; }
 
@@ -53,8 +57,8 @@
       float band = (1.0 - abs(t * 2.0 - 1.0)) * step(0.001, uMix) * step(uMix, 0.999);
 
       vec2 wob = vec2(n - 0.5, n - 0.5) * 0.025 * band;
-      vec3 a = texture2D(uA, cover(push(uv, uZoomA, uOriginA) + wob, uSizeA)).rgb;
-      vec3 b = texture2D(uB, cover(push(uv, uZoomB, uOriginB) - wob, uSizeB)).rgb;
+      vec3 a = texture2D(uA, cover(push(uv, uZoomA, uOriginA) + wob, uSizeA, uFocusA)).rgb;
+      vec3 b = texture2D(uB, cover(push(uv, uZoomB, uOriginB) - wob, uSizeB, uFocusB)).rgb;
       vec3 col = mix(a, b, t);
 
       // a thin band of sea mist where the front passes
@@ -87,7 +91,9 @@
     const cfg = frames.map((img) => {
       const [z0, z1] = (img.dataset.zoom || '1 1.12').split(' ').map(Number);
       const [ox, oy] = (img.dataset.origin || '0.5 0.5').split(' ').map(Number);
-      return { z0, z1, ox, oy };
+      const [fx, fy] = (img.dataset.focus || '0.5 0.5').split(' ').map(Number);
+      img.style.objectPosition = `${fx * 100}% ${fy * 100}%`;
+      return { z0, z1, ox, oy, fx, fy };
     });
 
     // Progress -> which pair of frames, how far through the dissolve, each frame's zoom
@@ -115,7 +121,8 @@
       const pos = state.progress * (n - 1);
       const start = Math.max(0, k - 1), end = Math.min(n - 1, k + 1);
       const local = clamp01((pos - start) / (end - start));
-      return cfg[k].z0 + (cfg[k].z1 - cfg[k].z0) * local;
+      const z = cfg[k].z0 + (cfg[k].z1 - cfg[k].z0) * local;
+      return innerWidth < innerHeight ? 1 + (z - 1) * 0.5 : z;
     };
 
     let ticking = false;
@@ -142,7 +149,7 @@
       gl.enableVertexAttribArray(loc);
       gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
       const U = {};
-      ['uA', 'uB', 'uSizeA', 'uSizeB', 'uOriginA', 'uOriginB', 'uRes', 'uMix', 'uZoomA', 'uZoomB', 'uTime', 'uWarm'].forEach((k) => { U[k] = gl.getUniformLocation(prog, k); });
+      ['uA', 'uB', 'uSizeA', 'uSizeB', 'uOriginA', 'uOriginB', 'uFocusA', 'uFocusB', 'uRes', 'uMix', 'uZoomA', 'uZoomB', 'uTime', 'uWarm'].forEach((k) => { U[k] = gl.getUniformLocation(prog, k); });
       gl.uniform1i(U.uA, 0); gl.uniform1i(U.uB, 1);
       gl.uniform1f(U.uWarm, Number(section.dataset.warm || 1));
 
@@ -191,6 +198,8 @@
         gl.uniform2f(U.uSizeB, textures[b].w, textures[b].h);
         gl.uniform2f(U.uOriginA, cfg[a].ox, cfg[a].oy);
         gl.uniform2f(U.uOriginB, cfg[b].ox, cfg[b].oy);
+        gl.uniform2f(U.uFocusA, cfg[a].fx, cfg[a].fy);
+        gl.uniform2f(U.uFocusB, cfg[b].fx, cfg[b].fy);
         gl.uniform1f(U.uZoomA, zoomOf(a));
         gl.uniform1f(U.uZoomB, zoomOf(b));
         gl.uniform1f(U.uMix, state.mix);
