@@ -51,8 +51,10 @@ test('selecting from the list', async () => {
     await intoPlots(page);
     await page.click('ol.pricelist li[data-plot="4a"] button');
     await page.waitForTimeout(300);
-    assert.match(await page.textContent('.dock-info'), /Jūras iela 4a/);
-    const href = await page.$eval('.dock-cta', (a) => a.getAttribute('href'));
+    // on phones the note rides in the pinned panel under the plan
+    assert.ok(await page.$eval('.sheet-note', (n) => n.parentElement.classList.contains('sheet-scroll')));
+    assert.match(await page.textContent('.sheet-note'), /Jūras iela 4a/);
+    const href = await page.$eval('.sheet-note a[href^="mailto:"]', (a) => a.getAttribute('href'));
     assert.ok(href.startsWith('mailto:') && decodeURIComponent(href).includes('4a'), href);
   });
 });
@@ -68,7 +70,7 @@ test('selecting a sold plot', async () => {
     await intoPlots(page);
     await page.click('.sold-line button[data-plot="9b"]');
     await page.waitForTimeout(300);
-    assert.equal(await page.$eval('.dock-cta', (a) => a.hidden), true);
+    assert.equal(await page.$$eval('.sheet-note a[href^="mailto:"]', (a) => a.length), 0);
   });
 });
 

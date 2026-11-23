@@ -29,9 +29,14 @@
   scroller.className = 'sheet-scroll';
   map.before(scroller);
   scroller.appendChild(map);
+  // on phones the chosen plot's note (with "Pieteikt apskati") rides in the pinned panel
+  const phone = matchMedia('(max-width: 860px)');
+  const placeNote = () => { if (phone.matches) scroller.appendChild(note); else scroller.after(note); };
+  phone.addEventListener('change', placeNote);
   const legend = document.createElement('p');
   legend.className = 'sheet-legend';
   scroller.appendChild(legend);
+  placeNote();
   const renderLegend = () => {
     const reserved = plots.some((p) => p.status === 'reserved')
       ? `<span class="r"><i></i>${t('legend-reserved', 'rezervēts')}</span>` : '';

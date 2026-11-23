@@ -33,7 +33,6 @@
     'nav-rooms': 'Rooms',
     menu: 'Menu',
     'menu-close': 'Close',
-    call: 'Call',
     'hero-sub': 'Your home by the sea',
     'cap-village-sub': '22 plots for detached and semi-detached houses. Electricity to every plot, a paved and lit street.',
     'cap-coast': 'The Vidzeme coast',

@@ -1,14 +1,13 @@
-/* Phone menu, bottom bar, swipe strip counters and the photo lightbox. */
+/* Phone menu, swipe strip counters and the photo lightbox. */
 (() => {
   // Labels come from js/i18n.js when it is present; Latvian is the fallback.
   const t = (key, fallback) => (window.i18n && window.i18n.t(key)) || fallback;
-  const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
-  /* Menu: opened from the top label (on the opening) or the bottom bar. Closes on a link,
-     Escape or "Aizvērt", and returns focus to whichever button opened it. */
+  /* Menu: opened from the top label. Closes on a link, Escape or "Aizvērt", and returns
+     focus to the label. */
   const menu = document.getElementById('menu');
   if (menu) {
-    const openers = [...document.querySelectorAll('.menu-btn, .dock-menu')];
+    const openers = [...document.querySelectorAll('.menu-btn')];
     let opener = null;
     const setMenu = (open, from) => {
       menu.classList.toggle('open', open);
@@ -27,50 +26,18 @@
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false); });
   }
 
-  /* Bottom bar: shown after the opening. In the plots section it carries the chosen plot
-     and "Pieteikt apskati"; elsewhere it offers a call. */
-  const dock = document.querySelector('.dock');
-  if (dock) {
-    const info = dock.querySelector('.dock-info');
-    const cta = dock.querySelector('.dock-cta');
-    const topBtn = document.querySelector('.menu-btn');
+  /* Phone menu label: transparent over the opening photo, on a dark backing once the
+     opening has scrolled away and the label sits over the page. */
+  const topBtn = document.querySelector('.menu-btn');
+  if (topBtn) {
     const stage = document.querySelector('[data-stage]');
-    const plots = document.getElementById('gabali');
-    const plan = document.querySelector('[data-plan-print]');
-    let chosen = (plan && plan.selectedPlot) || null;
-    let inPlots = false;
-    const render = () => {
-      cta.hidden = false;
-      if (inPlots && chosen) {
-        const price = chosen.status === 'available'
-          ? `<span>${fmt(chosen.price)} EUR</span>`
-          : (chosen.status === 'reserved' ? t('status-reserved', 'Rezervēts') : t('status-sold', 'Pārdots'));
-        info.innerHTML = `<b>Jūras iela ${chosen.id}</b>${price}`;
-        if (chosen.status === 'available') {
-          cta.textContent = t('request-viewing', 'Pieteikt apskati');
-          cta.href = `mailto:kristine@kilupa.lv?subject=${encodeURIComponent(`Jūrasmala, Jūras iela ${chosen.id}`)}`;
-        } else {
-          cta.hidden = true;
-        }
-      } else {
-        info.textContent = '';
-        cta.textContent = t('call', 'Zvanīt');
-        cta.href = 'tel:+37120440777';
-      }
-    };
-    document.addEventListener('plot:select', (e) => { chosen = e.detail; render(); });
-    document.addEventListener('site:translated', render);
-    if (plots) new IntersectionObserver(([e]) => { inPlots = e.isIntersecting; render(); }, { rootMargin: '-35% 0px -35% 0px' }).observe(plots);
     const onScroll = () => {
       const bottom = stage ? stage.getBoundingClientRect().bottom : 0;
-      dock.classList.toggle('on', bottom < innerHeight * 0.85);
-      // the top label leaves as soon as the opening unpins, before its captions scroll up to it
-      if (topBtn) topBtn.classList.toggle('away', bottom < innerHeight + 2);
+      topBtn.classList.toggle('solid', bottom < innerHeight * 0.15);
     };
     addEventListener('scroll', onScroll, { passive: true });
     addEventListener('resize', onScroll);
     onScroll();
-    render();
   }
 
   /* Swipe strips: a counter and a progress line under each, following the scroll position. */

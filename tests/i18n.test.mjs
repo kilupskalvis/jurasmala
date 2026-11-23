@@ -33,10 +33,6 @@ test('switching to english', async () => {
     assert.equal(await page.getAttribute('html', 'lang'), 'en');
     const en = await page.evaluate(() => window.i18n.strings.en);
     assert.equal(await page.textContent('#gabali h2'), en['plots-title']);
-    await page.evaluate(() => scrollTo(0, document.querySelector('#majas').offsetTop));
-    await page.waitForFunction(() => document.querySelector('.dock').classList.contains('on'));
-    await page.waitForTimeout(300);
-    assert.equal(await page.textContent('.dock-info'), en['dock-free']);
     assert.match(await page.textContent('.sheet-note'), new RegExp(en['request-viewing']));
   });
 });

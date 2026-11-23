@@ -23,15 +23,12 @@ for (const [width, height] of [[320, 480], [360, 740], [390, 844], [430, 932], [
   });
 }
 
-test('bottom bar', async () => {
+test('menu label stays reachable after the opening', async () => {
   await withPage(phone, async (page) => {
     await page.goto(server.url + '/', { waitUntil: 'networkidle' });
-    assert.equal(await page.$eval('.dock', (d) => d.classList.contains('on')), false, 'hidden on the opening');
     await pastOpening(page);
-    await page.waitForFunction(() => document.querySelector('.dock').classList.contains('on'));
-    await page.evaluate(() => scrollTo(0, document.querySelector('#majas').offsetTop));
-    await page.waitForTimeout(300);
-    assert.equal(await page.$eval('.dock-cta', (a) => a.getAttribute('href')), 'tel:+37120440777');
+    await page.waitForFunction(() => document.querySelector('.menu-btn').classList.contains('solid'));
+    assert.equal(await page.$eval('.menu-btn', (b) => getComputedStyle(b).opacity), '1');
   });
 });
 
@@ -39,14 +36,13 @@ test('menu', async () => {
   await withPage(phone, async (page) => {
     await page.goto(server.url + '/', { waitUntil: 'networkidle' });
     await pastOpening(page);
-    await page.waitForFunction(() => document.querySelector('.dock').classList.contains('on'));
-    await page.click('.dock-menu');
+    await page.click('.menu-btn');
     assert.ok(await page.$eval('#menu', (m) => m.classList.contains('open')));
     assert.equal(await page.evaluate(() => document.activeElement.getAttribute('href')), '#gabali');
     await page.keyboard.press('Escape');
     assert.equal(await page.$eval('#menu', (m) => m.classList.contains('open')), false);
-    assert.ok(await page.evaluate(() => document.activeElement.classList.contains('dock-menu')));
-    await page.click('.dock-menu');
+    assert.ok(await page.evaluate(() => document.activeElement.classList.contains('menu-btn')));
+    await page.click('.menu-btn');
     await page.click('#menu a[href="#lokacija"]');
     await page.waitForTimeout(800);
     assert.equal(await page.$eval('#menu', (m) => m.classList.contains('open')), false);
@@ -71,15 +67,14 @@ test('touch targets', async () => {
   await withPage(phone, async (page) => {
     await page.goto(server.url + '/', { waitUntil: 'networkidle' });
     await pastOpening(page);
-    await page.waitForFunction(() => document.querySelector('.dock').classList.contains('on'));
-    const small = async () => page.$$eval('button, .dock a, .pricelist button, .menu a', (els) => els
+    const small = async () => page.$$eval('button, .sheet-note a, .pricelist button, .menu a', (els) => els
       // map pins are an extra pointer onto the same choices as the price list (WCAG 2.5.8 equivalent control)
       .filter((e) => !e.classList.contains('pin'))
       .filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(e).visibility !== 'hidden'; })
       .filter((e) => e.getBoundingClientRect().height < 44)
       .map((e) => `${e.tagName.toLowerCase()}.${[...e.classList].join('.')} "${e.textContent.trim().slice(0, 20)}" ${Math.round(e.getBoundingClientRect().height)}px`));
     assert.deepEqual(await small(), []);
-    await page.click('.dock-menu');
+    await page.click('.menu-btn');
     assert.deepEqual(await small(), [], 'with the menu open');
   });
 });

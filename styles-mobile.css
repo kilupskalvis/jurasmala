@@ -8,32 +8,22 @@
    - touch targets at least 44 px, sizes and spacing tuned for a 360-430 px screen */
 
 :root {
-  --m: 20px; --dock-h: 58px;
+  --m: 20px;
   /* phone type scale (same roles as desktop) */
   --fs-hero: 25vw; --fs-stage: 46px; --fs-h2: 46px; --fs-display: 40px; --fs-lead: 27px; --fs-mid: 27px;
   --fs-sub: 18px; --fs-intro: 20px; --fs-body: 18px; --fs-cap: 16px; --fs-ui: 15px; --fs-tag: 13px;
   /* phone spacing scale */
   --sp-1: 12px; --sp-2: 16px; --sp-3: 32px; --sp-4: 64px; --sp-section: 96px;
 }
-body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-inset-bottom)); }
+body { line-height: 1.55; }
 
 /* ---------- Header, menu label, bottom bar ---------- */
 .header { padding: 18px var(--m); }
 .header nav { display: none; }
 .header .logo img { height: 34px; }
 .menu-btn { display: block; position: fixed; top: 10px; right: 8px; z-index: 50; min-height: 44px; padding: 0 14px; font-family: var(--sans); font-size: var(--fs-ui); color: var(--bone); transition: opacity 0.35s var(--ease-soft); }
-.menu-btn.away { opacity: 0; pointer-events: none; }
+.menu-btn.solid { background: rgba(30, 37, 33, 0.9); }
 
-.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 55; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
-  min-height: var(--dock-h); padding: 0 8px env(safe-area-inset-bottom) 8px; background: rgba(30, 37, 33, 0.96); border-top: 1px solid var(--rule);
-  font-family: var(--sans); font-size: var(--fs-ui); transform: translateY(110%); transition: transform 0.45s var(--ease-out); }
-.dock.on { transform: none; }
-.dock-menu { min-height: 44px; padding: 0 12px; }
-.dock-info { line-height: 1.25; min-width: 0; }
-.dock-info b { display: block; font-family: var(--serif); font-weight: 500; font-size: var(--fs-body); }
-.dock-info span { color: var(--birch); }
-.dock-cta { min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; background: var(--bone); color: var(--night); font-weight: 500; white-space: nowrap; }
-.dock-cta[hidden] { display: none; }
 
 /* ---------- Opening ---------- */
 .walkline { display: none; }
@@ -95,7 +85,14 @@ body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-ins
 .sheet-legend .s i { background: rgb(34, 42, 37); border: 1px solid rgba(139,149,129,0.55); }
 .sheet-legend .r i { border: 2px solid var(--birch); }
 .sheet-scroll .pin.reserved { border-width: 1.5px; }
-.sheet-note { display: none; }
+/* the chosen plot's note sits in the pinned panel, under the plan (plan.js moves it there) */
+.sheet-scroll .sheet-note { min-height: 0; margin: 0; padding: 10px var(--m) 12px; font-size: var(--fs-cap); line-height: 1.4; border-top: 1px solid var(--rule); }
+.sheet-scroll .sheet-note:empty { display: none; }
+/* note links keep a 44 px tap area without making the lines taller */
+.sheet-scroll .sheet-note a { position: relative; }
+.sheet-note .amber { white-space: nowrap; }
+.sheet-scroll .sheet-note a::before { content: ""; position: absolute; inset: -12px -4px; }
+.sheet-scroll .sheet-note .note-addr { font-size: var(--fs-body); font-weight: 400; margin-bottom: 2px; }
 .sheet-list { margin-top: 0; }
 .pricelist button { flex-wrap: wrap; row-gap: 0; min-height: 56px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
 .pricelist .lead { display: none; }
@@ -137,4 +134,4 @@ body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-ins
 .menu .contacts a { display: inline-block; padding: 7px 0; }
 
 /* ---------- Cookie banner sits above the bottom bar, so the bar stays usable ---------- */
-.consent-banner { left: 10px; right: 10px; bottom: calc(var(--dock-h) + env(safe-area-inset-bottom) + 10px); padding: var(--sp-2); }
+.consent-banner { left: 10px; right: 10px; bottom: calc(env(safe-area-inset-bottom) + 10px); padding: var(--sp-2); }
