@@ -92,7 +92,7 @@ body { line-height: 1.55; padding-bottom: calc(var(--dock-h) + env(safe-area-ins
 .sheet-legend { position: absolute; left: 0; right: 0; top: 0; z-index: 3; display: flex; gap: 14px; padding: 8px var(--m) 18px; font-family: var(--sans); font-size: var(--fs-tag); color: var(--bone); background: linear-gradient(180deg, rgba(30,37,33,0.75), rgba(30,37,33,0)); pointer-events: none; }
 .sheet-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
 .sheet-legend .a i { background: var(--birch); }
-.sheet-legend .s i { border: 1px solid var(--moss); }
+.sheet-legend .s i { background: rgb(34, 42, 37); border: 1px solid rgba(139,149,129,0.55); }
 .sheet-legend .r i { border: 2px solid var(--birch); }
 .sheet-scroll .pin.reserved { border-width: 1.5px; }
 .sheet-note { display: none; }
